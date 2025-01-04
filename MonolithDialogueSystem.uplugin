@@ -16,8 +16,13 @@
 	"Installed": false,
 	"Modules": [
 		{
-			"Name": "MonolithDialogueSystem",
+			"Name": "MonolithDialogueSystemRuntime",
 			"Type": "Runtime",
+			"LoadingPhase": "Default"
+		},
+		{
+			"Name": "MonolithDialogueSystemEditor",
+			"Type": "Editor",
 			"LoadingPhase": "Default"
 		}
 	]

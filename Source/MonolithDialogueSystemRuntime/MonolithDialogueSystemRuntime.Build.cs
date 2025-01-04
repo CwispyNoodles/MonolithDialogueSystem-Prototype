@@ -2,9 +2,9 @@
 
 using UnrealBuildTool;
 
-public class MonolithDialogueSystem : ModuleRules
+public class MonolithDialogueSystemRuntime : ModuleRules
 {
-	public MonolithDialogueSystem(ReadOnlyTargetRules Target) : base(Target)
+	public MonolithDialogueSystemRuntime(ReadOnlyTargetRules Target) : base(Target)
 	{
 		PCHUsage = ModuleRules.PCHUsageMode.UseExplicitOrSharedPCHs;
 		

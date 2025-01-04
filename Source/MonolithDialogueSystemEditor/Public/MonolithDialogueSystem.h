@@ -5,7 +5,7 @@
 #include "CoreMinimal.h"
 #include "Modules/ModuleManager.h"
 
-class FMonolithDialogueSystemModule : public IModuleInterface
+class FMonolithDialogueSystemEditorModule : public IModuleInterface
 {
 public:
 
