@@ -2,11 +2,19 @@
 
 #include "MonolithDialogueSystemEditor.h"
 
+#include "DialogueInstanceAction.h"
+#include "IAssetTools.h"
+
 #define LOCTEXT_NAMESPACE "FMonolithDialogueSystemEditorModule"
 
 void FMonolithDialogueSystemEditorModule::StartupModule()
 {
 	// This code will execute after your module is loaded into memory; the exact timing is specified in the .uplugin file per-module
+
+	IAssetTools& AssetToolsModule = IAssetTools::Get();
+	EAssetTypeCategories::Type AssetType = AssetToolsModule.RegisterAdvancedAssetCategory(FName(TEXT("MonolithDialogueSystem")), FText::FromString("Monolith Dialogue"));
+	TSharedPtr<FDialogueInstanceAction> DialogueInstanceAction = MakeShareable(new FDialogueInstanceAction(AssetType));
+	AssetToolsModule.RegisterAssetTypeActions(DialogueInstanceAction.ToSharedRef());
 }
 
 void FMonolithDialogueSystemEditorModule::ShutdownModule()
