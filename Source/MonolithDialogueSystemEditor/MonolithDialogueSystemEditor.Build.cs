@@ -38,6 +38,9 @@ public class MonolithDialogueSystemEditor : ModuleRules
 				"Engine",
 				"Slate",
 				"SlateCore",
+				"MonolithDialogueSystemRuntime",
+				"AssetTools",
+				"UnrealEd"
 				// ... add private dependencies that you statically link with here ...	
 			}
 			);
