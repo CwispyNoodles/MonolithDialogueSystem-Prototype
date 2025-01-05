@@ -12,6 +12,7 @@ void FMonolithDialogueSystemEditorModule::StartupModule()
 	// This code will execute after your module is loaded into memory; the exact timing is specified in the .uplugin file per-module
 
 	IAssetTools& AssetToolsModule = IAssetTools::Get();
+	// TODO: Change to localized text
 	EAssetTypeCategories::Type AssetType = AssetToolsModule.RegisterAdvancedAssetCategory(FName(TEXT("MonolithDialogueSystem")), FText::FromString("Monolith Dialogue"));
 	TSharedPtr<FDialogueInstanceAction> DialogueInstanceAction = MakeShareable(new FDialogueInstanceAction(AssetType));
 	AssetToolsModule.RegisterAssetTypeActions(DialogueInstanceAction.ToSharedRef());

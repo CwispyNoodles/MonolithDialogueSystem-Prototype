@@ -4,6 +4,7 @@
 #include "DialogueInstanceAction.h"
 
 #include "DialogueInstance.h"
+#include "DialogueInstanceEditorApp.h"
 
 
 FDialogueInstanceAction::FDialogueInstanceAction(EAssetTypeCategories::Type InAssetCategory)
@@ -29,7 +30,16 @@ UClass* FDialogueInstanceAction::GetSupportedClass() const
 void FDialogueInstanceAction::OpenAssetEditor(const TArray<UObject*>& inObjects,
 	TSharedPtr<IToolkitHost> editWithinLevelEditor)
 {
-	// TODO 
+	EToolkitMode::Type Mode = editWithinLevelEditor.IsValid() ? EToolkitMode::WorldCentric : EToolkitMode::Standalone;
+	for (auto Object : inObjects)
+	{
+		if (UDialogueInstance* DialogueInstance = Cast<UDialogueInstance>(Object))
+		{
+			TSharedRef<FDialogueInstanceEditorApp> Editor(new FDialogueInstanceEditorApp());
+			Editor->InitEditor(Mode, editWithinLevelEditor, DialogueInstance);
+		}
+		
+	}
 }
 
 uint32 FDialogueInstanceAction::GetCategories()
