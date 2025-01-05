@@ -1,5 +1,6 @@
 ﻿#include "DialogueInstanceEditorApp.h"
 
+#include "DialogueGraphSchema.h"
 #include "DialogueInstance.h"
 #include "DialogueInstanceAppMode.h"
 #include "Kismet2/BlueprintEditorUtils.h"
@@ -15,7 +16,7 @@ void FDialogueInstanceEditorApp::InitEditor(const EToolkitMode::Type InMode, con
 		WorkingAsset,
 		NAME_None,
 		UEdGraph::StaticClass(),
-		UEdGraphSchema::StaticClass()
+		UDialogueGraphSchema::StaticClass()
 	);
 
 	InitAssetEditor(
