@@ -2,6 +2,8 @@
 
 
 #include "DialogueGraphTabFactory.h"
+
+#include "DialogueInstance.h"
 #include "DialogueInstanceEditorApp.h"
 
 FDialogueGraphTabFactory::FDialogueGraphTabFactory(TSharedPtr<FDialogueInstanceEditorApp> InApp)
@@ -17,7 +19,32 @@ FDialogueGraphTabFactory::FDialogueGraphTabFactory(TSharedPtr<FDialogueInstanceE
 
 TSharedRef<SWidget> FDialogueGraphTabFactory::CreateTabBody(const FWorkflowTabSpawnInfo& Info) const
 {
-	return SNew(STextBlock).Text(FText::FromString(TEXT("This is a test")));
+	TSharedPtr<FDialogueInstanceEditorApp> AppSharedPtr = App.Pin();
+	FPropertyEditorModule& PropertyEditorModule = FModuleManager::LoadModuleChecked<FPropertyEditorModule>(TEXT("PropertyEditor"));
+
+	FDetailsViewArgs DetailsViewArgs;
+	{
+		DetailsViewArgs.bAllowSearch = false;
+		DetailsViewArgs.bHideSelectionTip = true;
+		DetailsViewArgs.bLockable = false;
+		DetailsViewArgs.bSearchInitialKeyFocus = true;
+		DetailsViewArgs.bUpdatesFromSelection = false;
+		DetailsViewArgs.NotifyHook = nullptr;
+		DetailsViewArgs.bShowOptions = true;
+		DetailsViewArgs.bShowModifiedPropertiesOption = false;
+		DetailsViewArgs.bShowScrollBar = false;
+	}
+
+	TSharedPtr<IDetailsView> DetailsView = PropertyEditorModule.CreateDetailView(DetailsViewArgs);
+	DetailsView->SetObject(AppSharedPtr->GetWorkingDialogueInstance());
+
+	return SNew(SVerticalBox)
+				+ SVerticalBox::Slot()
+				.FillHeight(1.0f)
+				.HAlign(HAlign_Fill)
+				[
+					DetailsView.ToSharedRef()
+				];
 }
 
 FText FDialogueGraphTabFactory::GetTabToolTipText(const FWorkflowTabSpawnInfo& Info) const

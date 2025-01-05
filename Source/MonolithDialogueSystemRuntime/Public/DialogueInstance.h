@@ -9,8 +9,12 @@
 /**
  * 
  */
-UCLASS()
+UCLASS(BlueprintType)
 class MONOLITHDIALOGUESYSTEMRUNTIME_API UDialogueInstance : public UObject
 {
 	GENERATED_BODY()
+
+public:
+	UPROPERTY(EditAnywhere)
+	FString TestString = TEXT("Test");
 };

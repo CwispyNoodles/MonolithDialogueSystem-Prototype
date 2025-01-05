@@ -3,11 +3,17 @@
 #include "CoreMinimal.h"
 #include "WorkflowOrientedApp/WorkflowCentricApplication.h"
 
+class UDialogueInstance;
+
 class FDialogueInstanceEditorApp : public FWorkflowCentricApplication, public FEditorUndoClient, public FNotifyHook
 {
 
 public:
 	void InitEditor(const EToolkitMode::Type InMode, const TSharedPtr<class IToolkitHost>& InInitToolkitHost, UObject* InObject);
+	UDialogueInstance* GetWorkingDialogueInstance() const { return WorkingAsset; }
+
+private:
+	UDialogueInstance* WorkingAsset = nullptr;
 	
 public: // FWorkflowCentricApplication Interface
 	virtual void RegisterTabSpawners(const TSharedRef<FTabManager>& InTabManager) override;
