@@ -18,9 +18,8 @@ void UDialogueNode::GetNodeContextMenuActions(UToolMenu* Menu, UGraphNodeContext
 		FUIAction(FExecuteAction::CreateLambda(
 			[Node] ()
 			{
-				Node->CreatePin(
+				Node->CreateCustomPin(
 					EGPD_Output,
-					TEXT("Outputs"),
 					TEXT("AnotherOutput"));
 				Node->GetGraph()->NotifyGraphChanged();
 				Node->GetGraph()->Modify();
@@ -58,4 +57,21 @@ void UDialogueNode::GetNodeContextMenuActions(UToolMenu* Menu, UGraphNodeContext
 				Node->GetGraph()->RemoveNode(Node);
 			}))
 	);
+}
+
+UEdGraphPin* UDialogueNode::CreateCustomPin(EEdGraphPinDirection Direction, FName Name)
+{
+	FName Category = (Direction == EGPD_Input) ? TEXT("Inputs") : TEXT("Outputs");
+	FName Subcategory = TEXT("DialoguePin");
+
+	UEdGraphPin* Pin = CreatePin
+	(
+		Direction,
+		Category,
+		Name
+	);
+
+	Pin->PinType.PinSubCategory = Subcategory;
+
+	return Pin;
 }

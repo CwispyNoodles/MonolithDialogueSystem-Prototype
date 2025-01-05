@@ -9,20 +9,19 @@
 UEdGraphNode* FNewNodeAction::PerformAction(UEdGraph* ParentGraph, UEdGraphPin* FromPin, const FVector2D MouseLocation, bool bSelectNewNode)
 {
 	UDialogueNode* Result = NewObject<UDialogueNode>(ParentGraph);
+	Result->CreateNewGuid();
 	Result->NodePosX = MouseLocation.X;
 	Result->NodePosY = MouseLocation.Y;
 
-	Result->CreatePin
+	Result->CreateCustomPin
 	(
 		EGPD_Input,
-		TEXT("Inputs"),
 		TEXT("SomeInput")
 	);
 
-	Result->CreatePin
+	Result->CreateCustomPin
 	(
 		EGPD_Output,
-		TEXT("Outputs"),
 		TEXT("SomeOutput")
 	);
 
@@ -47,4 +46,17 @@ void UDialogueGraphSchema::GetGraphContextActions(FGraphContextMenuBuilder& Cont
 	);
 
 	ContextMenuBuilder.AddAction(NewNodeAction);
+}
+
+const FPinConnectionResponse UDialogueGraphSchema::CanCreateConnection(const UEdGraphPin* A, const UEdGraphPin* B) const
+{
+	if (A == nullptr || B == nullptr)
+	{
+		return FPinConnectionResponse(CONNECT_RESPONSE_DISALLOW, TEXT("Need 2 pins"));
+	}
+	if (A->Direction == B->Direction)
+	{
+		return FPinConnectionResponse(CONNECT_RESPONSE_DISALLOW, TEXT("Inputs can only connect to outputs"));
+	}
+	return FPinConnectionResponse(CONNECT_RESPONSE_BREAK_OTHERS_AB, TEXT(""));
 }

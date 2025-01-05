@@ -42,7 +42,8 @@ public class MonolithDialogueSystemEditor : ModuleRules
 				"AssetTools",
 				"UnrealEd",
 				"PropertyEditor",
-				"ToolMenus"
+				"ToolMenus",
+				"GraphEditor"
 				// ... add private dependencies that you statically link with here ...	
 			}
 			);
