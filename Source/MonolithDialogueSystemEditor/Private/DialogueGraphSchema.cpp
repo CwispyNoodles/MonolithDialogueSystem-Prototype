@@ -3,10 +3,12 @@
 
 #include "DialogueGraphSchema.h"
 
+#include "DialogueNode.h"
+
 
 UEdGraphNode* FNewNodeAction::PerformAction(UEdGraph* ParentGraph, UEdGraphPin* FromPin, const FVector2D MouseLocation, bool bSelectNewNode)
 {
-	UEdGraphNode* Result = NewObject<UEdGraphNode>(ParentGraph);
+	UDialogueNode* Result = NewObject<UDialogueNode>(ParentGraph);
 	Result->NodePosX = MouseLocation.X;
 	Result->NodePosY = MouseLocation.Y;
 
