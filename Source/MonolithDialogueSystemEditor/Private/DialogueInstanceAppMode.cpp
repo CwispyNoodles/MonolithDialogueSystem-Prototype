@@ -5,6 +5,7 @@
 
 #include "DialogueGraphTabFactory.h"
 #include "DialogueInstanceEditorApp.h"
+#include "DialoguePropertiesTabFactory.h"
 
 
 FDialogueInstanceAppMode::FDialogueInstanceAppMode(TSharedPtr<FDialogueInstanceEditorApp> InApp)
@@ -12,13 +13,26 @@ FDialogueInstanceAppMode::FDialogueInstanceAppMode(TSharedPtr<FDialogueInstanceE
 {
 	App = InApp;
 	Tabs.RegisterFactory(MakeShareable(new FDialogueGraphTabFactory(InApp)));
-	TabLayout = FTabManager::NewLayout("DialogueInstanceAppMode_Layout_v1")
+	Tabs.RegisterFactory(MakeShareable(new FDialoguePropertiesTabFactory(InApp)));
+	
+	TabLayout = FTabManager::NewLayout("DialogueInstanceAppMode_Layout_v2")
 	->AddArea(
-		FTabManager::NewPrimaryArea()->SetOrientation(Orient_Vertical)
+		FTabManager::NewPrimaryArea()
+		->SetOrientation(Orient_Vertical)
 		->Split(
-			FTabManager::NewStack()
-			->AddTab(
-				FName(TEXT("DialogueGraphTab")), ETabState::OpenedTab
+			FTabManager::NewSplitter()
+			->SetOrientation(Orient_Horizontal)
+			->Split
+			(
+				FTabManager::NewStack()
+				->SetSizeCoefficient(0.75)
+				->AddTab(FName(TEXT("DialogueGraphTab")), ETabState::OpenedTab)
+			)
+			->Split
+			(
+				FTabManager::NewStack()
+				->SetSizeCoefficient(0.25)
+				->AddTab(FName(TEXT("DialoguePropertiesTab")), ETabState::OpenedTab)
 			)
 		)
 	);
