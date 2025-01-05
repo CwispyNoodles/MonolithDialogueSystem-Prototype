@@ -2,6 +2,7 @@
 
 #include "DialogueInstance.h"
 #include "DialogueInstanceAppMode.h"
+#include "Kismet2/BlueprintEditorUtils.h"
 
 void FDialogueInstanceEditorApp::InitEditor(const EToolkitMode::Type InMode, const TSharedPtr<IToolkitHost>& InInitToolkitHost, UObject* InObject)
 {
@@ -9,6 +10,13 @@ void FDialogueInstanceEditorApp::InitEditor(const EToolkitMode::Type InMode, con
 	ObjectsToEdit.Add(InObject);
 
 	WorkingAsset = Cast<UDialogueInstance>(InObject);
+	WorkingGraph = FBlueprintEditorUtils::CreateNewGraph
+	(
+		WorkingAsset,
+		NAME_None,
+		UEdGraph::StaticClass(),
+		UEdGraphSchema::StaticClass()
+	);
 
 	InitAssetEditor(
 		InMode,

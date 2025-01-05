@@ -26,8 +26,9 @@ TSharedRef<SWidget> FDialogueGraphTabFactory::CreateTabBody(const FWorkflowTabSp
 			.FillHeight(1.0f)
 			.HAlign(HAlign_Fill)
 			[
-				SNew(STextBlock)
-				.Text(FText::FromString(AppSharedPtr->GetWorkingDialogueInstance()->TestString))
+				SNew(SGraphEditor)
+				.IsEditable(true)
+				.GraphToEdit(AppSharedPtr->GetWorkingGraph())
 			];
 }
 

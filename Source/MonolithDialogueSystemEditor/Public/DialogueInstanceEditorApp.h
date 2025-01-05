@@ -11,9 +11,14 @@ class FDialogueInstanceEditorApp : public FWorkflowCentricApplication, public FE
 public:
 	void InitEditor(const EToolkitMode::Type InMode, const TSharedPtr<class IToolkitHost>& InInitToolkitHost, UObject* InObject);
 	UDialogueInstance* GetWorkingDialogueInstance() const { return WorkingAsset; }
+	UEdGraph* GetWorkingGraph() { return WorkingGraph; }
 
 private:
+	UPROPERTY()
 	UDialogueInstance* WorkingAsset = nullptr;
+
+	UPROPERTY()
+	UEdGraph* WorkingGraph = nullptr;
 	
 public: // FWorkflowCentricApplication Interface
 	virtual void RegisterTabSpawners(const TSharedRef<FTabManager>& InTabManager) override;
