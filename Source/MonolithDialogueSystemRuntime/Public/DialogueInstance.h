@@ -3,6 +3,7 @@
 #pragma once
 
 #include "CoreMinimal.h"
+#include "DialogueRuntimeGraph.h"
 #include "UObject/Object.h"
 #include "DialogueInstance.generated.h"
 
@@ -17,4 +18,7 @@ class MONOLITHDIALOGUESYSTEMRUNTIME_API UDialogueInstance : public UObject
 public:
 	UPROPERTY(EditAnywhere)
 	FString TestString = TEXT("Test");
+
+	UPROPERTY()
+	UDialogueRuntimeGraph* Graph = nullptr;
 };

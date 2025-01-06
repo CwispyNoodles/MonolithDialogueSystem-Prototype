@@ -12,6 +12,7 @@ public:
 	void InitEditor(const EToolkitMode::Type InMode, const TSharedPtr<class IToolkitHost>& InInitToolkitHost, UObject* InObject);
 	UDialogueInstance* GetWorkingDialogueInstance() const { return WorkingAsset; }
 	UEdGraph* GetWorkingGraph() { return WorkingGraph; }
+	void OnGraphChanged(const FEdGraphEditAction& EditAction);
 
 private:
 	UPROPERTY()
@@ -19,6 +20,12 @@ private:
 
 	UPROPERTY()
 	UEdGraph* WorkingGraph = nullptr;
+
+	FDelegateHandle GraphChangedListenerHandle;
+
+protected:
+	void UpdateWorkingAssetFromGraph();
+	void UpdateGraphFromWorkingAsset();
 	
 public: // FWorkflowCentricApplication Interface
 	virtual void RegisterTabSpawners(const TSharedRef<FTabManager>& InTabManager) override;
@@ -31,5 +38,7 @@ public: // FAssetEditorToolkit interface
 	virtual FString GetDocumentationLink() const override { return TEXT("https://github.com/CwispyNoodles"); }
 	virtual void OnToolkitHostingStarted(const TSharedRef<class IToolkit>& Toolkit) override { }
 	virtual void OnToolkitHostingFinished(const TSharedRef<class IToolkit>& Toolkit) override { }
+
+	virtual void OnClose() override;
 	
 };
