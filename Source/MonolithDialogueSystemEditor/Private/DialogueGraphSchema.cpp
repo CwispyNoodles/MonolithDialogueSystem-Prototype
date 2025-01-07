@@ -4,6 +4,7 @@
 #include "DialogueGraphSchema.h"
 
 #include "DialogueNode.h"
+#include "DialogueNodeInfo.h"
 
 
 UEdGraphNode* FNewNodeAction::PerformAction(UEdGraph* ParentGraph, UEdGraphPin* FromPin, const FVector2D MouseLocation, bool bSelectNewNode)
@@ -12,6 +13,7 @@ UEdGraphNode* FNewNodeAction::PerformAction(UEdGraph* ParentGraph, UEdGraphPin* 
 	Result->CreateNewGuid();
 	Result->NodePosX = MouseLocation.X;
 	Result->NodePosY = MouseLocation.Y;
+	Result->SetNodeInfo(NewObject<UDialogueNodeInfo>(Result));
 
 	Result->CreateCustomPin
 	(

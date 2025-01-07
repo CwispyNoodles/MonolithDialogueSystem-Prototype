@@ -2,7 +2,14 @@
 
 
 #include "DialogueNode.h"
+
+#include "DialogueNodeInfo.h"
 #include "ToolMenu.h"
+
+FText UDialogueNode::GetNodeTitle(ENodeTitleType::Type TitleType) const
+{
+	return NodeInfo->Title;
+}
 
 void UDialogueNode::GetNodeContextMenuActions(UToolMenu* Menu, UGraphNodeContextMenuContext* Context) const
 {

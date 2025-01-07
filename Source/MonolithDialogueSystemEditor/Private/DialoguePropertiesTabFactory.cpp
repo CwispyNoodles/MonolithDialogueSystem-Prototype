@@ -5,6 +5,7 @@
 
 #include "DialogueInstance.h"
 #include "DialogueInstanceEditorApp.h"
+#include "DialogueInstanceEditorApp.h"
 
 
 FDialoguePropertiesTabFactory::FDialoguePropertiesTabFactory(TSharedPtr<FDialogueInstanceEditorApp> InApp)
@@ -39,12 +40,22 @@ TSharedRef<SWidget> FDialoguePropertiesTabFactory::CreateTabBody(const FWorkflow
 	TSharedPtr<IDetailsView> DetailsView = PropertyEditorModule.CreateDetailView(DetailsViewArgs);
 	DetailsView->SetObject(AppSharedPtr->GetWorkingDialogueInstance());
 
+	TSharedPtr<IDetailsView> SelectedNodeDetailsView = PropertyEditorModule.CreateDetailView(DetailsViewArgs);
+	SelectedNodeDetailsView->SetObject(nullptr);
+	AppSharedPtr->SetSelectNodeDetailView(SelectedNodeDetailsView);
+
 	return SNew(SVerticalBox)
 			+ SVerticalBox::Slot()
 			.FillHeight(1.0f)
 			.HAlign(HAlign_Fill)
 			[
 				DetailsView.ToSharedRef()
+			]
+			+ SVerticalBox::Slot()
+			.FillHeight(1.0f)
+			.HAlign(HAlign_Fill)
+			[
+				SelectedNodeDetailsView .ToSharedRef()
 			];
 }
 

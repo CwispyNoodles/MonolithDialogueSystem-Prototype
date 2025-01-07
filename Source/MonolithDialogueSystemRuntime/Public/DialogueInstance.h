@@ -17,7 +17,7 @@ class MONOLITHDIALOGUESYSTEMRUNTIME_API UDialogueInstance : public UObject
 
 public:
 	UPROPERTY(EditAnywhere)
-	FString TestString = TEXT("Test");
+	FString DialogueName = TEXT("Enter Dialogue Name Here");
 
 	UPROPERTY()
 	UDialogueRuntimeGraph* Graph = nullptr;

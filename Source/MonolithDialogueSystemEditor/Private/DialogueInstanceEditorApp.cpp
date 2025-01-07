@@ -4,6 +4,7 @@
 #include "DialogueInstance.h"
 #include "DialogueInstanceAppMode.h"
 #include "DialogueNode.h"
+#include "DialogueNodeInfo.h"
 #include "Kismet2/BlueprintEditorUtils.h"
 
 void FDialogueInstanceEditorApp::InitEditor(const EToolkitMode::Type InMode, const TSharedPtr<IToolkitHost>& InInitToolkitHost, UObject* InObject)
@@ -46,6 +47,35 @@ void FDialogueInstanceEditorApp::OnGraphChanged(const FEdGraphEditAction& EditAc
 	UpdateWorkingAssetFromGraph();
 }
 
+void FDialogueInstanceEditorApp::SetSelectNodeDetailView(TSharedPtr<IDetailsView> InDetailsView)
+{
+	SelectedNodeDetailsView = InDetailsView;
+	SelectedNodeDetailsView->OnFinishedChangingProperties().AddRaw(this, &FDialogueInstanceEditorApp::OnNodeDetailsViewPropertiesUpdated);
+}
+
+void FDialogueInstanceEditorApp::OnGraphSelectionChanged(const FGraphPanelSelectionSet& InSelection)
+{
+	// Find the first UDialoguenode if any
+	for (UObject* Obj : InSelection)
+	{
+		UDialogueNode* Node = Cast<UDialogueNode>(Obj);
+		if (Node)
+		{
+			SelectedNodeDetailsView->SetObject(Node->GetNodeInfo());
+			return;
+		}
+		SelectedNodeDetailsView->SetObject(nullptr); 
+	}
+}
+
+void FDialogueInstanceEditorApp::OnNodeDetailsViewPropertiesUpdated(const FPropertyChangedEvent& InEvent)
+{
+	if (WorkingGraphUi)
+	{
+		WorkingGraphUi->NotifyGraphChanged();
+	}
+}
+
 void FDialogueInstanceEditorApp::OnClose()
 {
 	UpdateWorkingAssetFromGraph();
@@ -69,8 +99,10 @@ void FDialogueInstanceEditorApp::UpdateWorkingAssetFromGraph()
 	// Record all nodes
 	for (auto EditorNode : WorkingGraph->Nodes)
 	{
+		UDialogueNode* DialogueNode = Cast<UDialogueNode>(EditorNode);
 		UDialogueRuntimeNode* RuntimeNode = NewObject<UDialogueRuntimeNode>(RuntimeGraph);
 		RuntimeNode->Position = FVector2D(EditorNode->NodePosX, EditorNode->NodePosY);
+		RuntimeNode->NodeInfo = DialogueNode->GetNodeInfo();
 
 		// Record all pins connected to EditorNode
 		for (auto EditorPin : EditorNode->Pins)
@@ -127,6 +159,16 @@ void FDialogueInstanceEditorApp::UpdateGraphFromWorkingAsset()
 		NewNode->CreateNewGuid();
 		NewNode->NodePosX = RuntimeNode->Position.X;
 		NewNode->NodePosY = RuntimeNode->Position.Y;
+
+		// Recover Node Info
+		if (RuntimeNode->NodeInfo != nullptr)
+		{
+			NewNode->SetNodeInfo(DuplicateObject(RuntimeNode->NodeInfo, RuntimeNode));
+		}
+		else
+		{
+			NewNode->SetNodeInfo(NewObject<UDialogueNodeInfo>(RuntimeNode));
+		}
 
 		// Recover Input Pin
 		if (RuntimeNode->InputPin != nullptr)

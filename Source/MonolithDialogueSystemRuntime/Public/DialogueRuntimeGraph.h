@@ -3,6 +3,7 @@
 #pragma once
 
 #include "CoreMinimal.h"
+#include "DialogueNodeInfo.h"
 #include "DialogueRuntimeGraph.generated.h"
 
 UCLASS()
@@ -35,6 +36,9 @@ public:
 
 	UPROPERTY()
 	FVector2D Position;
+
+	UPROPERTY()
+	UDialogueNodeInfo* NodeInfo = nullptr;
 	
 };
 

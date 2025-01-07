@@ -13,6 +13,10 @@ public:
 	UDialogueInstance* GetWorkingDialogueInstance() const { return WorkingAsset; }
 	UEdGraph* GetWorkingGraph() { return WorkingGraph; }
 	void OnGraphChanged(const FEdGraphEditAction& EditAction);
+	void SetWorkingGraphUi(TSharedPtr<SGraphEditor> InWorkingGraphUi) { WorkingGraphUi = InWorkingGraphUi; }
+	void SetSelectNodeDetailView(TSharedPtr<IDetailsView> InDetailsView);
+	void OnGraphSelectionChanged(const FGraphPanelSelectionSet& InSelection);
+	void OnNodeDetailsViewPropertiesUpdated(const FPropertyChangedEvent& InEvent);
 
 private:
 	UPROPERTY()
@@ -20,6 +24,9 @@ private:
 
 	UPROPERTY()
 	UEdGraph* WorkingGraph = nullptr;
+
+	TSharedPtr<SGraphEditor> WorkingGraphUi = nullptr;
+	TSharedPtr<IDetailsView> SelectedNodeDetailsView = nullptr;
 
 	FDelegateHandle GraphChangedListenerHandle;
 

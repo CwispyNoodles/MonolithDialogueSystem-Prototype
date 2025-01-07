@@ -12,7 +12,7 @@ class FDialoguePropertiesTabFactory : public FWorkflowTabFactory
 public:
 	FDialoguePropertiesTabFactory(TSharedPtr<FDialogueInstanceEditorApp> InApp);
 
-private:
+protected:
 	TWeakPtr<FDialogueInstanceEditorApp> App; 
 
 public: // FWorkflowTabFactory Interface

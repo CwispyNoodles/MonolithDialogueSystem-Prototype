@@ -21,14 +21,21 @@ TSharedRef<SWidget> FDialogueGraphTabFactory::CreateTabBody(const FWorkflowTabSp
 {
 	TSharedPtr<FDialogueInstanceEditorApp> AppSharedPtr = App.Pin();
 
+	SGraphEditor::FGraphEditorEvents GraphEvents;
+	GraphEvents.OnSelectionChanged.BindRaw(AppSharedPtr.Get(), &FDialogueInstanceEditorApp::OnGraphSelectionChanged);
+
+	TSharedPtr<SGraphEditor> GraphEditor =
+		SNew(SGraphEditor)
+		.IsEditable(true)
+		.GraphEvents(GraphEvents)
+		.GraphToEdit(AppSharedPtr->GetWorkingGraph());
+	AppSharedPtr->SetWorkingGraphUi(GraphEditor);
 	return SNew(SVerticalBox)
 			+ SVerticalBox::Slot()
 			.FillHeight(1.0f)
 			.HAlign(HAlign_Fill)
 			[
-				SNew(SGraphEditor)
-				.IsEditable(true)
-				.GraphToEdit(AppSharedPtr->GetWorkingGraph())
+				GraphEditor.ToSharedRef()
 			];
 }
 
