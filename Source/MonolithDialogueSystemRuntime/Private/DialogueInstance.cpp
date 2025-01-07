@@ -2,3 +2,11 @@
 
 
 #include "DialogueInstance.h"
+
+void UDialogueInstance::PreSave(const ITargetPlatform* TargetPlatform)
+{
+	if (OnPreSaveListener)
+	{
+		OnPreSaveListener();
+	}
+}

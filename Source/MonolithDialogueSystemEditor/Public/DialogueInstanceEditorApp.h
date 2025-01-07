@@ -3,6 +3,7 @@
 #include "CoreMinimal.h"
 #include "WorkflowOrientedApp/WorkflowCentricApplication.h"
 
+class UDialogueNode;
 class UDialogueInstance;
 
 class FDialogueInstanceEditorApp : public FWorkflowCentricApplication, public FEditorUndoClient, public FNotifyHook
@@ -17,6 +18,8 @@ public:
 	void SetSelectNodeDetailView(TSharedPtr<IDetailsView> InDetailsView);
 	void OnGraphSelectionChanged(const FGraphPanelSelectionSet& InSelection);
 	void OnNodeDetailsViewPropertiesUpdated(const FPropertyChangedEvent& InEvent);
+	UDialogueNode* GetSelectedNode(const FGraphPanelSelectionSet& Selection);
+	void OnWorkingAssetPreSave(); 
 
 private:
 	UPROPERTY()
@@ -27,8 +30,6 @@ private:
 
 	TSharedPtr<SGraphEditor> WorkingGraphUi = nullptr;
 	TSharedPtr<IDetailsView> SelectedNodeDetailsView = nullptr;
-
-	FDelegateHandle GraphChangedListenerHandle;
 
 protected:
 	void UpdateWorkingAssetFromGraph();

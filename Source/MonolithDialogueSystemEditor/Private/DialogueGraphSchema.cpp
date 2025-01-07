@@ -15,17 +15,25 @@ UEdGraphNode* FNewNodeAction::PerformAction(UEdGraph* ParentGraph, UEdGraphPin* 
 	Result->NodePosY = MouseLocation.Y;
 	Result->SetNodeInfo(NewObject<UDialogueNodeInfo>(Result));
 
-	Result->CreateCustomPin
+	UEdGraphPin* InputPin = Result->CreateCustomPin
 	(
 		EGPD_Input,
 		TEXT("SomeInput")
 	);
 
+	FString DefaultResponse = TEXT("Continue");
 	Result->CreateCustomPin
 	(
 		EGPD_Output,
-		TEXT("SomeOutput")
+		FName(DefaultResponse)
 	);
+	
+	Result->GetNodeInfo()->DialogueResponses.Add(FText::FromString(DefaultResponse));
+
+	if (FromPin)
+	{
+		Result->GetSchema()->TryCreateConnection(FromPin, InputPin);
+	}
 
 	ParentGraph->Modify();
 	ParentGraph->AddNode(Result, true, true);

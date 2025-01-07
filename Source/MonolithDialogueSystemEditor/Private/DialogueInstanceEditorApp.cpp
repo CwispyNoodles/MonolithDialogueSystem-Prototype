@@ -13,6 +13,7 @@ void FDialogueInstanceEditorApp::InitEditor(const EToolkitMode::Type InMode, con
 	ObjectsToEdit.Add(InObject);
 
 	WorkingAsset = Cast<UDialogueInstance>(InObject);
+	WorkingAsset->SetPreSaveListener([this] () { OnWorkingAssetPreSave(); });
 	WorkingGraph = FBlueprintEditorUtils::CreateNewGraph
 	(
 		WorkingAsset,
@@ -36,10 +37,7 @@ void FDialogueInstanceEditorApp::InitEditor(const EToolkitMode::Type InMode, con
 
 	UpdateGraphFromWorkingAsset();
 
-	GraphChangedListenerHandle = WorkingGraph->AddOnGraphChangedHandler
-	(
-		FOnGraphChanged::FDelegate::CreateSP(this, &FDialogueInstanceEditorApp::OnGraphChanged)
-	);
+	UpdateGraphFromWorkingAsset();
 }
 
 void FDialogueInstanceEditorApp::OnGraphChanged(const FEdGraphEditAction& EditAction)
@@ -62,9 +60,12 @@ void FDialogueInstanceEditorApp::OnGraphSelectionChanged(const FGraphPanelSelect
 		if (Node)
 		{
 			SelectedNodeDetailsView->SetObject(Node->GetNodeInfo());
-			return;
 		}
-		SelectedNodeDetailsView->SetObject(nullptr); 
+		else
+		{
+			SelectedNodeDetailsView->SetObject(nullptr); 
+		}
+		
 	}
 }
 
@@ -72,14 +73,39 @@ void FDialogueInstanceEditorApp::OnNodeDetailsViewPropertiesUpdated(const FPrope
 {
 	if (WorkingGraphUi)
 	{
+		// Get the node being Modified
+		UDialogueNode* DialogueNode = GetSelectedNode(WorkingGraphUi->GetSelectedNodes());
+		if (DialogueNode)
+		{
+			DialogueNode->SyncPinsWithResponses();
+		}
 		WorkingGraphUi->NotifyGraphChanged();
 	}
+}
+
+UDialogueNode* FDialogueInstanceEditorApp::GetSelectedNode(const FGraphPanelSelectionSet& Selection)
+{
+	// Find the first UDialoguenode if any
+	for (UObject* Obj : Selection)
+	{
+		UDialogueNode* Node = Cast<UDialogueNode>(Obj);
+		if (Node)
+		{
+			return Node;
+		}
+	}
+	return nullptr;
+}
+
+void FDialogueInstanceEditorApp::OnWorkingAssetPreSave()
+{
+	UpdateWorkingAssetFromGraph();
 }
 
 void FDialogueInstanceEditorApp::OnClose()
 {
 	UpdateWorkingAssetFromGraph();
-	WorkingGraph->RemoveOnGraphChangedHandler(GraphChangedListenerHandle);
+	WorkingAsset->SetPreSaveListener(nullptr);
 	FAssetEditorToolkit::OnClose();
 }
 

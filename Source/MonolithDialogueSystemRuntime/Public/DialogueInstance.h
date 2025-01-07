@@ -5,6 +5,7 @@
 #include "CoreMinimal.h"
 #include "DialogueRuntimeGraph.h"
 #include "UObject/Object.h"
+#include <functional>
 #include "DialogueInstance.generated.h"
 
 /**
@@ -21,4 +22,12 @@ public:
 
 	UPROPERTY()
 	UDialogueRuntimeGraph* Graph = nullptr;
+
+	// Gets called everytime we save our asseta
+	virtual void PreSave(const ITargetPlatform* TargetPlatform) override;
+
+	void SetPreSaveListener(std::function<void()> InOnPreSaveListener) { OnPreSaveListener = InOnPreSaveListener; }
+
+private:
+	std::function<void()> OnPreSaveListener = nullptr;
 };
