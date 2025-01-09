@@ -37,7 +37,10 @@ public class MonolithDialogueSystemEditor : ModuleRules
 				"CoreUObject",
 				"Engine",
 				"Slate",
-				"SlateCore",
+				"SlateCore", 
+				"MonolithDialogueSystemRuntime",
+				"AssetTools",
+				"UnrealEd",
 				// ... add private dependencies that you statically link with here ...	
 			}
 			);
