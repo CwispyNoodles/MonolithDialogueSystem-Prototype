@@ -11,7 +11,11 @@
 class MONOLITHDIALOGUESYSTEMEDITOR_API FDialogueInstanceEditor : public FWorkflowCentricApplication, public FEditorUndoClient, public FNotifyHook
 {
 
+public:
+	void InitDialogueInstanceEditor(const EToolkitMode::Type Mode, const TSharedPtr<class IToolkitHost>& InitToolkitHost, UObject* InObject);
+	
 public: // FAssetEditorToolkit interface
+	virtual void RegisterTabSpawners(const TSharedRef<FTabManager>& InTabManager) override;
     virtual FName GetToolkitFName() const override;
     virtual FText GetBaseToolkitName() const override;
     virtual FString GetWorldCentricTabPrefix() const override;

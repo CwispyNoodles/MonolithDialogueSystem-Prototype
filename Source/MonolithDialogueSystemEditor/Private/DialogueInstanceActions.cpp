@@ -37,6 +37,7 @@ void FDialogueInstanceActions::OpenAssetEditor(const TArray<UObject*>& InObjects
 		if (UDialogueInstance* DialogueInstance = Cast<UDialogueInstance>(*ObjIt))
 		{
 			TSharedRef<FDialogueInstanceEditor> NewGraphEditor(new FDialogueInstanceEditor());
+			NewGraphEditor->InitDialogueInstanceEditor(Mode, EditWithinLevelEditor, DialogueInstance);
 		}
 	}
 }

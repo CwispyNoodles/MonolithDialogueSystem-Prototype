@@ -3,7 +3,29 @@
 
 #include "DialogueInstanceEditor.h"
 
+#include "DialogueInstanceEditorMode.h"
+
 #define LOCTEXT_NAMESPACE "AssetEditor_GenericGraph"
+
+const FName DialogueInstanceEditorAppName = FName(TEXT("DialogueInstanceEditorApp"));
+
+void FDialogueInstanceEditor::InitDialogueInstanceEditor(const EToolkitMode::Type Mode, const TSharedPtr<IToolkitHost>& InitToolkitHost, UObject* InObject)
+{
+	TArray<UObject*> ObjectsToEdit;
+	ObjectsToEdit.Add(InObject);
+
+	bool bCreateDefaultStandaloneMenu = true;
+	bool bCreateDefaultToolBar = true;
+	InitAssetEditor(Mode, InitToolkitHost, DialogueInstanceEditorAppName, FTabManager::FLayout::NullLayout, bCreateDefaultStandaloneMenu, bCreateDefaultToolBar, ObjectsToEdit);
+
+	AddApplicationMode(TEXT("FDialogueInstanceEditorMode"), MakeShareable(new FDialogueInstanceEditorMode(SharedThis(this))));
+	SetCurrentMode(TEXT("FDialogueInstanceEditorMode"));
+}
+
+void FDialogueInstanceEditor::RegisterTabSpawners(const TSharedRef<FTabManager>& InTabManager)
+{
+	FWorkflowCentricApplication::RegisterTabSpawners(InTabManager);
+}
 
 FName FDialogueInstanceEditor::GetToolkitFName() const
 {
