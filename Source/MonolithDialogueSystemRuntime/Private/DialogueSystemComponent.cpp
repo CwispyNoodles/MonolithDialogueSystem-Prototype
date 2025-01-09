@@ -14,6 +14,10 @@ UDialogueSystemComponent::UDialogueSystemComponent()
 	// ...
 }
 
+void UDialogueSystemComponent::StartDialogue()
+{
+}
+
 
 // Called when the game starts
 void UDialogueSystemComponent::BeginPlay()

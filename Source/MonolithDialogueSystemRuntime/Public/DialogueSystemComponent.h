@@ -7,6 +7,10 @@
 #include "DialogueSystemComponent.generated.h"
 
 
+class UDialogueInstance;
+
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FDialogueEventSignature, UObject*, Payload);
+
 UCLASS(ClassGroup=(Custom), meta=(BlueprintSpawnableComponent))
 class MONOLITHDIALOGUESYSTEMRUNTIME_API UDialogueSystemComponent : public UActorComponent
 {
@@ -16,12 +20,34 @@ public:
 	// Sets default values for this component's properties
 	UDialogueSystemComponent();
 
-protected:
-	// Called when the game starts
-	virtual void BeginPlay() override;
+	UFUNCTION(BlueprintCallable)
+	UDialogueInstance* GetWorkingDialogue() { return WorkingDialogue; }
 
-public:
+	UFUNCTION(BlueprintCallable)
+	void StartDialogue();
+
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly)
+	TSubclassOf<UDialogueInstance> Dialogue = nullptr;
+
+	UPROPERTY(BlueprintAssignable)
+	FDialogueEventSignature OnComponentInitialized;
+
+	UPROPERTY(BlueprintAssignable)
+	FDialogueEventSignature OnDialogueStart;
+
+	UPROPERTY(BlueprintAssignable)
+	FDialogueEventSignature OnDialogueEnd;
+
+private:
+	UPROPERTY()
+	UDialogueInstance* WorkingDialogue;
+
+public: // UActorComponent Interface
 	// Called every frame
 	virtual void TickComponent(float DeltaTime, ELevelTick TickType,
 	                           FActorComponentTickFunction* ThisTickFunction) override;
+
+protected:
+	// Called when the game starts
+	virtual void BeginPlay() override;
 };
