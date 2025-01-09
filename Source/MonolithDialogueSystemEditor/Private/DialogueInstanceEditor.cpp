@@ -3,7 +3,9 @@
 
 #include "DialogueInstanceEditor.h"
 
+#include "DialogueInstance.h"
 #include "DialogueInstanceEditorMode.h"
+#include "Kismet2/BlueprintEditorUtils.h"
 
 #define LOCTEXT_NAMESPACE "AssetEditor_GenericGraph"
 
@@ -14,9 +16,27 @@ void FDialogueInstanceEditor::InitDialogueInstanceEditor(const EToolkitMode::Typ
 	TArray<UObject*> ObjectsToEdit;
 	ObjectsToEdit.Add(InObject);
 
+	WorkingAsset = Cast<UDialogueInstance>(InObject);
+	WorkingGraph = FBlueprintEditorUtils::CreateNewGraph
+	(
+		WorkingAsset,
+		NAME_None,
+		UEdGraph::StaticClass(),
+		UEdGraphSchema::StaticClass()
+	);
+
 	bool bCreateDefaultStandaloneMenu = true;
 	bool bCreateDefaultToolBar = true;
-	InitAssetEditor(Mode, InitToolkitHost, DialogueInstanceEditorAppName, FTabManager::FLayout::NullLayout, bCreateDefaultStandaloneMenu, bCreateDefaultToolBar, ObjectsToEdit);
+	InitAssetEditor
+	(
+		Mode,
+		InitToolkitHost,
+		DialogueInstanceEditorAppName,
+		FTabManager::FLayout::NullLayout,
+		bCreateDefaultStandaloneMenu,
+		bCreateDefaultToolBar,
+		ObjectsToEdit
+	);
 
 	AddApplicationMode(TEXT("FDialogueInstanceEditorMode"), MakeShareable(new FDialogueInstanceEditorMode(SharedThis(this))));
 	SetCurrentMode(TEXT("FDialogueInstanceEditorMode"));

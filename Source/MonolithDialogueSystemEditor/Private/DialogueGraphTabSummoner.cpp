@@ -20,7 +20,8 @@ FDialogueGraphTabSummoner::FDialogueGraphTabSummoner(TSharedPtr<FDialogueInstanc
 
 TSharedRef<SWidget> FDialogueGraphTabSummoner::CreateTabBody(const FWorkflowTabSpawnInfo& Info) const
 {
-	return SNew(STextBlock).Text(FText::FromString(TEXT("Test")));
+	TSharedPtr<FDialogueInstanceEditor> Editor = DialogueInstanceEditor.Pin();
+	return SNew(SGraphEditor).IsEditable(true).GraphToEdit(Editor->GetWorkingGraph());
 }
 
 FText FDialogueGraphTabSummoner::GetTabToolTipText(const FWorkflowTabSpawnInfo& Info) const
