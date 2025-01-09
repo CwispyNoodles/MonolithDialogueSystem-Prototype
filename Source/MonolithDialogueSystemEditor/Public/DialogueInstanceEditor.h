@@ -3,14 +3,20 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "UObject/Object.h"
-#include "DialogueInstanceEditor.generated.h"
+#include "WorkflowOrientedApp/WorkflowCentricApplication.h"
 
 /**
  * 
  */
-UCLASS()
-class MONOLITHDIALOGUESYSTEMEDITOR_API UDialogueInstanceEditor : public UObject
+class MONOLITHDIALOGUESYSTEMEDITOR_API FDialogueInstanceEditor : public FWorkflowCentricApplication, public FEditorUndoClient, public FNotifyHook
 {
-	GENERATED_BODY()
+
+public: // FAssetEditorToolkit interface
+    virtual FName GetToolkitFName() const override;
+    virtual FText GetBaseToolkitName() const override;
+    virtual FString GetWorldCentricTabPrefix() const override;
+    virtual FLinearColor GetWorldCentricTabColorScale() const override;
+	virtual FString GetDocumentationLink() const override;
+	virtual void OnToolkitHostingStarted(const TSharedRef<class IToolkit>& Toolkit) override;
+	virtual void OnToolkitHostingFinished(const TSharedRef<class IToolkit>& Toolkit) override;
 };

@@ -8,10 +8,10 @@
 /**
  * 
  */
-class DialogueInstanceActions : public FAssetTypeActions_Base
+class FDialogueInstanceActions : public FAssetTypeActions_Base
 {
 public:
-	DialogueInstanceActions(EAssetTypeCategories::Type InAssetCategory);
+	FDialogueInstanceActions(EAssetTypeCategories::Type InAssetCategory);
 
 private:
 	EAssetTypeCategories::Type AssetCategory;

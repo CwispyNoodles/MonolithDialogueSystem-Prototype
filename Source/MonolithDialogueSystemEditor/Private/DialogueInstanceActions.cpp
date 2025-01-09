@@ -4,30 +4,31 @@
 #include "DialogueInstanceActions.h"
 
 #include "DialogueInstance.h"
+#include "DialogueInstanceEditor.h"
 
 #define LOCTEXT_NAMESPACE "DialogueInstanceActions"
 
-DialogueInstanceActions::DialogueInstanceActions(EAssetTypeCategories::Type InAssetCategory)
+FDialogueInstanceActions::FDialogueInstanceActions(EAssetTypeCategories::Type InAssetCategory)
 	: AssetCategory(InAssetCategory)
 {
 }
 
-FText DialogueInstanceActions::GetName() const
+FText FDialogueInstanceActions::GetName() const
 {
 	return NSLOCTEXT("AssetTypeActions", "DialogueInstanceActions", "Dialogue Instance");
 }
 
-FColor DialogueInstanceActions::GetTypeColor() const
+FColor FDialogueInstanceActions::GetTypeColor() const
 {
 	return FColor::Emerald;
 }
 
-UClass* DialogueInstanceActions::GetSupportedClass() const
+UClass* FDialogueInstanceActions::GetSupportedClass() const
 {
 	return UDialogueInstance::StaticClass();
 }
 
-void DialogueInstanceActions::OpenAssetEditor(const TArray<UObject*>& InObjects, TSharedPtr<IToolkitHost> EditWithinLevelEditor)
+void FDialogueInstanceActions::OpenAssetEditor(const TArray<UObject*>& InObjects, TSharedPtr<IToolkitHost> EditWithinLevelEditor)
 {
 	EToolkitMode::Type Mode = EditWithinLevelEditor.IsValid() ? EToolkitMode::WorldCentric : EToolkitMode::Standalone;
 
@@ -35,12 +36,12 @@ void DialogueInstanceActions::OpenAssetEditor(const TArray<UObject*>& InObjects,
 	{
 		if (UDialogueInstance* DialogueInstance = Cast<UDialogueInstance>(*ObjIt))
 		{
-			
+			TSharedRef<FDialogueInstanceEditor> NewGraphEditor(new FDialogueInstanceEditor());
 		}
 	}
 }
 
-uint32 DialogueInstanceActions::GetCategories()
+uint32 FDialogueInstanceActions::GetCategories()
 {
 	return AssetCategory;
 }
