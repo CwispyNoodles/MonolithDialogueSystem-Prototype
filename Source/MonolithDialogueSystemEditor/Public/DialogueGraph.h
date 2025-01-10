@@ -13,4 +13,6 @@ UCLASS()
 class MONOLITHDIALOGUESYSTEMEDITOR_API UDialogueGraph : public UEdGraph
 {
 	GENERATED_BODY()
+
+	
 };
