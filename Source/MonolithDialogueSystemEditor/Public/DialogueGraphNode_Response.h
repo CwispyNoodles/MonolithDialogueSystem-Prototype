@@ -13,4 +13,7 @@ UCLASS()
 class MONOLITHDIALOGUESYSTEMEDITOR_API UDialogueGraphNode_Response : public UDialogueGraphNode
 {
 	GENERATED_BODY()
+
+public: // UEdGraphNode Interface
+	virtual void AllocateDefaultPins() override;
 };

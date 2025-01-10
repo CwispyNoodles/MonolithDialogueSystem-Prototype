@@ -2,3 +2,8 @@
 
 
 #include "DialogueGraphNode_Response.h"
+
+void UDialogueGraphNode_Response::AllocateDefaultPins()
+{
+	
+}
