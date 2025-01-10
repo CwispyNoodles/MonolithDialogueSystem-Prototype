@@ -2,3 +2,8 @@
 
 
 #include "DialogueGraphSchema.h"
+
+void UDialogueGraphSchema::CreateDefaultNodesForGraph(UEdGraph& Graph) const
+{
+	Super::CreateDefaultNodesForGraph(Graph);
+}

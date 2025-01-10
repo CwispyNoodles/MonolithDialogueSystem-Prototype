@@ -5,6 +5,7 @@
 
 #include "DialogueInstance.h"
 #include "DialogueInstanceEditorMode.h"
+#include "DialogueGraphSchema.h"
 #include "Kismet2/BlueprintEditorUtils.h"
 
 #define LOCTEXT_NAMESPACE "AssetEditor_GenericGraph"
@@ -22,7 +23,7 @@ void FDialogueInstanceEditor::InitDialogueInstanceEditor(const EToolkitMode::Typ
 		WorkingAsset,
 		NAME_None,
 		UEdGraph::StaticClass(),
-		UEdGraphSchema::StaticClass()
+		UDialogueGraphSchema::StaticClass()
 	);
 
 	bool bCreateDefaultStandaloneMenu = true;
