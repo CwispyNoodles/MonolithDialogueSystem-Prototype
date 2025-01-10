@@ -3,7 +3,12 @@
 
 #include "DialogueGraphSchema.h"
 
+#include "DialogueGraphNode_Root.h"
+
 void UDialogueGraphSchema::CreateDefaultNodesForGraph(UEdGraph& Graph) const
 {
-	Super::CreateDefaultNodesForGraph(Graph);
+	FGraphNodeCreator<UDialogueGraphNode_Root> NodeCreator(Graph);
+	UDialogueGraphNode_Root* MyNode = NodeCreator.CreateNode(true, UDialogueGraphNode_Root::StaticClass());
+	NodeCreator.Finalize();
+	SetNodeMetaData(MyNode, FNodeMetadata::DefaultGraphNode);
 }
