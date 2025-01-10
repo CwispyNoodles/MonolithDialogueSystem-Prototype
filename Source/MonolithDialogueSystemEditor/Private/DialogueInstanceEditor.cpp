@@ -3,6 +3,7 @@
 
 #include "DialogueInstanceEditor.h"
 
+#include "DialogueGraph.h"
 #include "DialogueInstance.h"
 #include "DialogueInstanceEditorMode.h"
 #include "DialogueGraphSchema.h"
@@ -22,7 +23,7 @@ void FDialogueInstanceEditor::InitDialogueInstanceEditor(const EToolkitMode::Typ
 	(
 		WorkingAsset,
 		NAME_None,
-		UEdGraph::StaticClass(),
+		UDialogueGraph::StaticClass(),
 		UDialogueGraphSchema::StaticClass()
 	);
 

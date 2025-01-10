@@ -3,20 +3,27 @@
 
 #include "DialogueGraphSchema.h"
 
+#include "DialogueGraph.h"
+#include "DialogueGraphNode_Alias.h"
 #include "DialogueGraphNode_Query.h"
 #include "DialogueGraphNode_Response.h"
 #include "DialogueGraphNode_Root.h"
 
 UEdGraphNode* FDialogueGraphSchemaAction_NewNode::PerformAction(UEdGraph* ParentGraph, UEdGraphPin* FromPin, const FVector2D Location, bool bSelectNewNode)
 {
+	UDialogueGraph* DialogueGraph = Cast<UDialogueGraph>(ParentGraph);
+	if (!DialogueGraph)
+	{
+		return nullptr;
+	}
 	UDialogueGraphNode* MyNode = NewObject<UDialogueGraphNode>(ParentGraph, ClassTemplate);
 	MyNode->CreateNewGuid();
 	MyNode->SetPosition(Location);
 
 	MyNode->AllocateDefaultPins();
 
-	ParentGraph->Modify();
-	ParentGraph->AddNode(MyNode, true, true);
+	DialogueGraph->Modify();
+	DialogueGraph->AddNodeExplicit(MyNode, true, true);
 
 	return MyNode;
 }
@@ -41,7 +48,7 @@ void UDialogueGraphSchema::GetGraphContextActions(FGraphContextMenuBuilder& Cont
 			FText::GetEmpty(),
 			0));
 
-	TSharedPtr<FDialogueGraphSchemaAction_NewNode> NewResponseNodeAction(
+		TSharedPtr<FDialogueGraphSchemaAction_NewNode> NewResponseNodeAction(
 		new FDialogueGraphSchemaAction_NewNode(
 			UDialogueGraphNode_Response::StaticClass(),
 			FText::FromString(TEXT("Nodes")),
@@ -52,4 +59,21 @@ void UDialogueGraphSchema::GetGraphContextActions(FGraphContextMenuBuilder& Cont
 
 	ContextMenuBuilder.AddAction(NewQueryNodeAction);
 	ContextMenuBuilder.AddAction(NewResponseNodeAction);
+
+	if (const UDialogueGraph* DialogueGraph = Cast<UDialogueGraph>(ContextMenuBuilder.CurrentGraph))
+	{
+		if (DialogueGraph->bCreateNodeTest)
+		{
+			TSharedPtr<FDialogueGraphSchemaAction_NewNode> NewAliasNodeAction(
+				new FDialogueGraphSchemaAction_NewNode(
+					UDialogueGraphNode_Alias_In::StaticClass(),
+					FText::FromString(TEXT("Nodes")),
+					FText::FromString(TEXT("New Alias Node")),
+					FText::FromString(TEXT("Creates new Alias Node")),
+					FText::GetEmpty(),
+					0));
+
+			ContextMenuBuilder.AddAction(NewAliasNodeAction);
+		}
+	}
 }
