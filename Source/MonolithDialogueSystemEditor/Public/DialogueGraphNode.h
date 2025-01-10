@@ -13,4 +13,7 @@ UCLASS()
 class MONOLITHDIALOGUESYSTEMEDITOR_API UDialogueGraphNode : public UEdGraphNode
 {
 	GENERATED_BODY()
+
+public:
+	void SetPosition(FVector2D InPos);
 };

@@ -2,3 +2,9 @@
 
 
 #include "DialogueGraphNode.h"
+
+void UDialogueGraphNode::SetPosition(FVector2D InPos)
+{
+	NodePosX = InPos.X;
+	NodePosY = InPos.Y;
+}
