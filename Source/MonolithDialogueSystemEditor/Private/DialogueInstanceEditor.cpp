@@ -23,6 +23,9 @@ void FDialogueInstanceEditor::InitDialogueInstanceEditor(const EToolkitMode::Typ
 	FGenericCommands::Register();
 	FGraphEditorCommands::Register();
 
+	DialogueGraphPanelNodeFactory = MakeShareable(new FDialogueGraphPanelNodeFactory());
+	FEdGraphUtilities::RegisterVisualNodeFactory(DialogueGraphPanelNodeFactory);
+
 	WorkingAsset = Cast<UDialogueInstance>(InObject);
 	WorkingGraph = FBlueprintEditorUtils::CreateNewGraph
 	(

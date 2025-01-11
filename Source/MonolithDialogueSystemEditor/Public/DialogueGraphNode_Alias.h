@@ -14,10 +14,15 @@ class MONOLITHDIALOGUESYSTEMEDITOR_API UDialogueGraphNode_Alias : public UDialog
 {
 	GENERATED_BODY()
 
+public:
+	FText GetAliasName() const { return AliasName; }
+
+protected:
+	FText AliasName = FText::FromString("Placeholder");
+
 public: // UEdGraphNode Interface
 	virtual FLinearColor GetNodeTitleColor() const override { return FLinearColor(FColor::Black); }
 	virtual bool CanUserDeleteNode() const override { return true; }
-	
 };
 
 UCLASS()

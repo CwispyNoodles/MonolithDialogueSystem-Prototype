@@ -3,6 +3,7 @@
 #pragma once
 
 #include "CoreMinimal.h"
+#include "DialogueGraphPanelNodeFactory.h"
 #include "WorkflowOrientedApp/WorkflowCentricApplication.h"
 
 class UDialogueInstance;
@@ -20,6 +21,7 @@ public:
 private:
 	UDialogueInstance* WorkingAsset = nullptr;
 	UEdGraph* WorkingGraph = nullptr;
+	TSharedPtr<FDialogueGraphPanelNodeFactory> DialogueGraphPanelNodeFactory;
 	
 public: // FAssetEditorToolkit interface
 	virtual void RegisterTabSpawners(const TSharedRef<FTabManager>& InTabManager) override;

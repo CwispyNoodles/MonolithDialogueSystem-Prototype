@@ -3,13 +3,25 @@
 #pragma once
 
 #include "CoreMinimal.h"
+#include "SGraphNode.h"
 
+class UDialogueGraphNode_Alias;
 /**
  * 
  */
-class MONOLITHDIALOGUESYSTEMEDITOR_API SDialogueGraphNode_Alias
+class MONOLITHDIALOGUESYSTEMEDITOR_API SDialogueGraphNode_Alias : public SGraphNode
 {
 public:
-	SDialogueGraphNode_Alias();
-	~SDialogueGraphNode_Alias();
+	SLATE_BEGIN_ARGS(SDialogueGraphNode_Alias) {}
+	SLATE_END_ARGS()
+
+	void Construct(const FArguments& InArgs, UDialogueGraphNode_Alias* InNode);
+
+private:
+	FText GetAliasName() const;
+	TSharedPtr<STextBlock> AliasName;
+
+public: // SGraphNode Interface
+	virtual void UpdateGraphNode() override;
+	virtual TSharedRef<SWidget> CreateNodeContentArea() override;
 };
