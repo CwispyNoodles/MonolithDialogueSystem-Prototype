@@ -19,6 +19,7 @@ public: // UEdGraphNode Interface
 	virtual FLinearColor GetNodeTitleColor() const override { return FLinearColor(FColor::Black); }
 	virtual bool CanUserDeleteNode() const override { return true; }
 	virtual void AllocateDefaultPins() override;
+	
 };
 
 UCLASS()

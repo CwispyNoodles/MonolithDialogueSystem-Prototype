@@ -5,10 +5,10 @@
 
 void UDialogueGraphNode_Alias_In::AllocateDefaultPins()
 {
-	CreatePin(EGPD_Input, TEXT("PinCategory_Default"), TEXT("Alias In"));
+	CreatePin(EGPD_Input, TEXT("PinCategory_Default"), TEXT("In Query"));
 }
 
 void UDialogueGraphNode_Alias_Out::AllocateDefaultPins()
 {
-	CreatePin(EGPD_Output, TEXT("PinCategory_Default"), TEXT("Alias Out"));
+	CreatePin(EGPD_Output, TEXT("PinCategory_Default"), TEXT("Out Query"));
 }

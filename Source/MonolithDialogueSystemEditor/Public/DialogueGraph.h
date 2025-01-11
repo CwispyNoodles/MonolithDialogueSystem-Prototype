@@ -14,9 +14,13 @@ class MONOLITHDIALOGUESYSTEMEDITOR_API UDialogueGraph : public UEdGraph
 {
 	GENERATED_BODY()
 
+public:
+	UDialogueGraph();
+
+private:
+	void HandleThisGraphModified(const FEdGraphEditAction &InEditAction);
+
 public: // UEdGraphSchema
 	virtual void AddNode(UEdGraphNode* NodeToAdd, bool bUserAction, bool bSelectNewNode) override;
-	void AddNodeExplicit(UEdGraphNode* NodeToAdd, bool bUserAction, bool bSelectNewNode);
 
-	bool bCreateNodeTest = false;
 };

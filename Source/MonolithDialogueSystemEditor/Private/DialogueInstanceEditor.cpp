@@ -7,6 +7,8 @@
 #include "DialogueInstance.h"
 #include "DialogueInstanceEditorMode.h"
 #include "DialogueGraphSchema.h"
+#include "GraphEditorActions.h"
+#include "Framework/Commands/GenericCommands.h"
 #include "Kismet2/BlueprintEditorUtils.h"
 
 #define LOCTEXT_NAMESPACE "AssetEditor_GenericGraph"
@@ -17,6 +19,9 @@ void FDialogueInstanceEditor::InitDialogueInstanceEditor(const EToolkitMode::Typ
 {
 	TArray<UObject*> ObjectsToEdit;
 	ObjectsToEdit.Add(InObject);
+
+	FGenericCommands::Register();
+	FGraphEditorCommands::Register();
 
 	WorkingAsset = Cast<UDialogueInstance>(InObject);
 	WorkingGraph = FBlueprintEditorUtils::CreateNewGraph

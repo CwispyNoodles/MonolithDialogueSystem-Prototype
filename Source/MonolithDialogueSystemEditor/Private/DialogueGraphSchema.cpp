@@ -23,7 +23,7 @@ UEdGraphNode* FDialogueGraphSchemaAction_NewNode::PerformAction(UEdGraph* Parent
 	MyNode->AllocateDefaultPins();
 
 	DialogueGraph->Modify();
-	DialogueGraph->AddNodeExplicit(MyNode, true, true);
+	DialogueGraph->AddNode(MyNode, true, true);
 
 	return MyNode;
 }
@@ -48,7 +48,7 @@ void UDialogueGraphSchema::GetGraphContextActions(FGraphContextMenuBuilder& Cont
 			FText::GetEmpty(),
 			0));
 
-		TSharedPtr<FDialogueGraphSchemaAction_NewNode> NewResponseNodeAction(
+	TSharedPtr<FDialogueGraphSchemaAction_NewNode> NewResponseNodeAction(
 		new FDialogueGraphSchemaAction_NewNode(
 			UDialogueGraphNode_Response::StaticClass(),
 			FText::FromString(TEXT("Nodes")),
@@ -57,23 +57,21 @@ void UDialogueGraphSchema::GetGraphContextActions(FGraphContextMenuBuilder& Cont
 			FText::GetEmpty(),
 			0));
 
+	TSharedPtr<FDialogueGraphSchemaAction_NewNode> NewAliasNodeAction(
+		new FDialogueGraphSchemaAction_NewNode(
+			UDialogueGraphNode_Alias_In::StaticClass(),
+			FText::FromString(TEXT("Nodes|Alias")),
+			FText::FromString(TEXT("New Alias Node")),
+			FText::FromString(TEXT("Creates new Alias Node")),
+			FText::GetEmpty(),
+			0));
+
 	ContextMenuBuilder.AddAction(NewQueryNodeAction);
 	ContextMenuBuilder.AddAction(NewResponseNodeAction);
+	ContextMenuBuilder.AddAction(NewAliasNodeAction);
 
 	if (const UDialogueGraph* DialogueGraph = Cast<UDialogueGraph>(ContextMenuBuilder.CurrentGraph))
 	{
-		if (DialogueGraph->bCreateNodeTest)
-		{
-			TSharedPtr<FDialogueGraphSchemaAction_NewNode> NewAliasNodeAction(
-				new FDialogueGraphSchemaAction_NewNode(
-					UDialogueGraphNode_Alias_In::StaticClass(),
-					FText::FromString(TEXT("Nodes")),
-					FText::FromString(TEXT("New Alias Node")),
-					FText::FromString(TEXT("Creates new Alias Node")),
-					FText::GetEmpty(),
-					0));
 
-			ContextMenuBuilder.AddAction(NewAliasNodeAction);
-		}
 	}
 }
