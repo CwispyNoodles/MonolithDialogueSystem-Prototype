@@ -26,6 +26,9 @@ void FDialogueInstanceEditor::InitDialogueInstanceEditor(const EToolkitMode::Typ
 	DialogueGraphPanelNodeFactory = MakeShareable(new FDialogueGraphPanelNodeFactory());
 	FEdGraphUtilities::RegisterVisualNodeFactory(DialogueGraphPanelNodeFactory);
 
+	DialogueGraphPanelPinFactory = MakeShareable(new FDialogueGraphPanelPinFactory());
+	FEdGraphUtilities::RegisterVisualPinFactory(DialogueGraphPanelPinFactory);
+
 	WorkingAsset = Cast<UDialogueInstance>(InObject);
 	WorkingGraph = FBlueprintEditorUtils::CreateNewGraph
 	(

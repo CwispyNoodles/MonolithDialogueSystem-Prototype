@@ -4,6 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "DialogueGraphPanelNodeFactory.h"
+#include "DialogueGraphPanelPinFactory.h"
 #include "WorkflowOrientedApp/WorkflowCentricApplication.h"
 
 class UDialogueInstance;
@@ -22,6 +23,7 @@ private:
 	UDialogueInstance* WorkingAsset = nullptr;
 	UEdGraph* WorkingGraph = nullptr;
 	TSharedPtr<FDialogueGraphPanelNodeFactory> DialogueGraphPanelNodeFactory;
+	TSharedPtr<FDialogueGraphPanelPinFactory> DialogueGraphPanelPinFactory;
 	
 public: // FAssetEditorToolkit interface
 	virtual void RegisterTabSpawners(const TSharedRef<FTabManager>& InTabManager) override;
