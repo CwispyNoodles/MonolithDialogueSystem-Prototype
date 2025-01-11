@@ -17,4 +17,7 @@ class MONOLITHDIALOGUESYSTEMEDITOR_API UDialogueGraphNode : public UEdGraphNode
 public:
 	void SetPosition(FVector2D InPos);
 	virtual void GetNodeContextMenuActions(UToolMenu* Menu, UGraphNodeContextMenuContext* Context) const override;
+
+	UPROPERTY(EditAnywhere)
+	FText NodeTitle = FText::FromString("Placeholder");
 };
