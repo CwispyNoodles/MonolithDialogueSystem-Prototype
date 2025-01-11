@@ -57,7 +57,7 @@ void UDialogueGraphSchema::GetGraphContextActions(FGraphContextMenuBuilder& Cont
 			FText::GetEmpty(),
 			0));
 
-	TSharedPtr<FDialogueGraphSchemaAction_NewNode> NewAliasNodeAction(
+	TSharedPtr<FDialogueGraphSchemaAction_NewNode> NewAliasInNodeAction(
 		new FDialogueGraphSchemaAction_NewNode(
 			UDialogueGraphNode_Alias_In::StaticClass(),
 			FText::FromString(TEXT("Nodes|Alias")),
@@ -68,10 +68,22 @@ void UDialogueGraphSchema::GetGraphContextActions(FGraphContextMenuBuilder& Cont
 
 	ContextMenuBuilder.AddAction(NewQueryNodeAction);
 	ContextMenuBuilder.AddAction(NewResponseNodeAction);
-	ContextMenuBuilder.AddAction(NewAliasNodeAction);
+	ContextMenuBuilder.AddAction(NewAliasInNodeAction);
 
 	if (const UDialogueGraph* DialogueGraph = Cast<UDialogueGraph>(ContextMenuBuilder.CurrentGraph))
 	{
+		for (const UDialogueGraphNode_Alias_In* Alias : DialogueGraph->Aliases)
+		{
+			TSharedPtr<FDialogueGraphSchemaAction_NewNode> NewAliasOutNodeAction(
+				new FDialogueGraphSchemaAction_NewNode(
+					UDialogueGraphNode_Alias_Out::StaticClass(),
+					FText::FromString(TEXT("Nodes|Alias")),
+					FText::FromString((TEXT("Create %s Out Alias Node"), *Alias->GetAliasName().ToString())),
+					FText::FromString(TEXT("Creates new Alias Node")),
+					FText::GetEmpty(),
+					0));
 
+			ContextMenuBuilder.AddAction(NewAliasOutNodeAction);
+		}
 	}
 }

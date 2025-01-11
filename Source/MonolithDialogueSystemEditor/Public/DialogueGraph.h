@@ -6,6 +6,7 @@
 #include "EdGraph/EdGraph.h"
 #include "DialogueGraph.generated.h"
 
+class UDialogueGraphNode_Alias_In;
 /**
  * 
  */
@@ -16,6 +17,7 @@ class MONOLITHDIALOGUESYSTEMEDITOR_API UDialogueGraph : public UEdGraph
 
 public:
 	UDialogueGraph();
+	TArray<const UDialogueGraphNode_Alias_In*> Aliases;
 
 private:
 	void HandleThisGraphModified(const FEdGraphEditAction &InEditAction);

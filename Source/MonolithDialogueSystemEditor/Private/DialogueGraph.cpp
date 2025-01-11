@@ -19,20 +19,19 @@ void UDialogueGraph::HandleThisGraphModified(const FEdGraphEditAction& InEditAct
 		{
 			if (const UDialogueGraphNode_Alias_In* AliasNode = Cast<UDialogueGraphNode_Alias_In>(RemovedNode))
 			{
-				UE_LOG(LogTemp, Warning, TEXT("Alias Node Destroyed"))
+				Aliases.Remove(AliasNode);
 			}
 		}
-		
 	}
 }
 
 void UDialogueGraph::AddNode(UEdGraphNode* NodeToAdd, bool bUserAction, bool bSelectNewNode)
 {
 	Super::AddNode(NodeToAdd, bUserAction, bSelectNewNode);
-
-	if (NodeToAdd->IsA(UDialogueGraphNode_Alias_In::StaticClass()))
+	
+	if (const UDialogueGraphNode_Alias_In* AliasNode = Cast<UDialogueGraphNode_Alias_In>(NodeToAdd))
 	{
-		
+		Aliases.Add(AliasNode);
 	}
 }
 
