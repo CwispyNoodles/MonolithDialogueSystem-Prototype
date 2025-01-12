@@ -16,11 +16,17 @@ UEdGraphNode* FDialogueGraphSchemaAction_NewNode::PerformAction(UEdGraph* Parent
 	{
 		return nullptr;
 	}
+	
 	UDialogueGraphNode* MyNode = NewObject<UDialogueGraphNode>(ParentGraph, ClassTemplate);
 	MyNode->CreateNewGuid();
 	MyNode->SetPosition(Location);
 
 	MyNode->AllocateDefaultPins();
+
+	// if (FromPin)
+	// {
+	// 	MyNode->GetSchema()->TryCreateConnection(FromPin, )
+	// }
 
 	DialogueGraph->Modify();
 	DialogueGraph->AddNode(MyNode, true, true);
@@ -35,6 +41,20 @@ void UDialogueGraphSchema::CreateDefaultNodesForGraph(UEdGraph& Graph) const
 	NodeCreator.Finalize();
 	SetNodeMetaData(MyNode, FNodeMetadata::DefaultGraphNode);
 	
+}
+
+const FPinConnectionResponse UDialogueGraphSchema::CanCreateConnection(const UEdGraphPin* A, const UEdGraphPin* B) const
+{
+	if (A->LinkedTo.Num())
+	if (A == nullptr || B == nullptr) {
+		return FPinConnectionResponse(CONNECT_RESPONSE_DISALLOW, TEXT("Need 2 pins"));
+	}
+
+	if (A->Direction == B->Direction) {
+		return FPinConnectionResponse(CONNECT_RESPONSE_DISALLOW, TEXT("Inputs can only connect to outputs"));
+	}
+
+	return FPinConnectionResponse(CONNECT_RESPONSE_BREAK_OTHERS_AB, TEXT(""));
 }
 
 void UDialogueGraphSchema::GetGraphContextActions(FGraphContextMenuBuilder& ContextMenuBuilder) const

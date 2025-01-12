@@ -20,4 +20,5 @@ public:
 
 	UPROPERTY(EditAnywhere)
 	FText NodeTitle = FText::FromString("Placeholder");
+	
 };
