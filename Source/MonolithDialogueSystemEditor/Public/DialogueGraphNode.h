@@ -18,7 +18,8 @@ public:
 	void SetPosition(FVector2D InPos);
 	virtual void GetNodeContextMenuActions(UToolMenu* Menu, UGraphNodeContextMenuContext* Context) const override;
 
-	UPROPERTY(EditAnywhere)
+	UPROPERTY()
 	FText NodeTitle = FText::FromString("Placeholder");
+
 	
 };

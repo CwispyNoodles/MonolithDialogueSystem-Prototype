@@ -20,8 +20,20 @@ FDialogueInstanceEditorMode::FDialogueInstanceEditorMode(TSharedPtr<FDialogueIns
 		->SetOrientation(Orient_Vertical)
 		->Split
 		(
-			FTabManager::NewStack()
-			->AddTab(FName(TEXT("DialogueGraphTabId")), ETabState::OpenedTab)
+			FTabManager::NewSplitter()
+			->SetOrientation(Orient_Horizontal)
+			->Split
+			(
+				FTabManager::NewStack()
+				->SetSizeCoefficient(0.75f)
+				->AddTab(FName(TEXT("DialogueGraphTabId")), ETabState::OpenedTab)
+			)
+			->Split
+			(
+				FTabManager::NewStack()
+				->SetSizeCoefficient(0.25f)
+				->AddTab(FName(TEXT("DetailsTabId")), ETabState::OpenedTab)
+			)
 		)
 	);
 	
