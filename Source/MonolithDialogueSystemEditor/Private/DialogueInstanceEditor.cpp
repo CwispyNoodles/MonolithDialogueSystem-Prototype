@@ -25,6 +25,8 @@ void FDialogueInstanceEditor::InitDialogueInstanceEditor(const EToolkitMode::Typ
 	FGenericCommands::Register();
 	FGraphEditorCommands::Register();
 
+	BindGraphCommands();
+
 	DialogueGraphPanelNodeFactory = MakeShareable(new FDialogueGraphPanelNodeFactory());
 	FEdGraphUtilities::RegisterVisualNodeFactory(DialogueGraphPanelNodeFactory);
 
@@ -75,6 +77,69 @@ void FDialogueInstanceEditor::OnGraphSelectionChanged(const FGraphPanelSelection
 	{
 		SelectedNodeDetailsView->SetObject(nullptr);
 	}
+}
+
+void FDialogueInstanceEditor::BindGraphCommands()
+{
+	ToolkitCommands->MapAction(FGenericCommands::Get().Delete,
+		FExecuteAction::CreateRaw(this, &FDialogueInstanceEditor::DeleteSelectedNodes),
+		FCanExecuteAction::CreateRaw(this, &FDialogueInstanceEditor::CanDeleteNodes));
+}
+
+void FDialogueInstanceEditor::DeleteSelectedNodes()
+{
+	if (!WorkingGraphEditor.IsValid())
+	{
+		return;
+	}
+
+	const FScopedTransaction Transaction(FGenericCommands::Get().Delete->GetDescription());
+
+	WorkingGraphEditor->GetCurrentGraph()->Modify();
+
+	const FGraphPanelSelectionSet SelectedNodes = WorkingGraphEditor->GetSelectedNodes();
+	WorkingGraphEditor->ClearSelectionSet();
+
+	for (FGraphPanelSelectionSet::TConstIterator NodeIt(SelectedNodes); NodeIt; ++NodeIt)
+	{
+		UEdGraphNode* EdNode = Cast<UEdGraphNode>(*NodeIt);
+		if (EdNode == nullptr || !EdNode->CanUserDeleteNode())
+			continue;;
+
+		if (UDialogueGraphNode* EdNode_Node = Cast<UDialogueGraphNode>(EdNode))
+		{
+			EdNode_Node->Modify();
+
+			const UEdGraphSchema* Schema = EdNode_Node->GetSchema();
+			if (Schema != nullptr)
+			{
+				Schema->BreakNodeLinks(*EdNode_Node);
+			}
+
+			EdNode_Node->DestroyNode();
+		}
+		else
+		{
+			EdNode->Modify();
+			EdNode->DestroyNode();
+		}
+	}
+}
+
+bool FDialogueInstanceEditor::CanDeleteNodes()
+{
+	// If any of the nodes can be deleted then we should allow deleting
+	const FGraphPanelSelectionSet SelectedNodes = WorkingGraphEditor->GetSelectedNodes();
+	for (FGraphPanelSelectionSet::TConstIterator SelectedIter(SelectedNodes); SelectedIter; ++SelectedIter)
+	{
+		UEdGraphNode* Node = Cast<UEdGraphNode>(*SelectedIter);
+		if (Node != nullptr && Node->CanUserDeleteNode())
+		{
+			return true;
+		}
+	}
+
+	return false;
 }
 
 void FDialogueInstanceEditor::OnNodeDetailViewPropertiesUpdated(const FPropertyChangedEvent& Event)

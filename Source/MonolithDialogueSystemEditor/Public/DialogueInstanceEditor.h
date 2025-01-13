@@ -20,7 +20,6 @@ public:
 	void InitDialogueInstanceEditor(const EToolkitMode::Type Mode, const TSharedPtr<class IToolkitHost>& InitToolkitHost, UObject* InObject);
 	void SetSelectedNodeDetailsView(TSharedPtr<IDetailsView> DetailsView);
 	void OnGraphSelectionChanged(const FGraphPanelSelectionSet& Selection);
-	
 
 	void SetWorkingGraphEditor(TSharedPtr<SGraphEditor> InWorkingGraphEditor) { WorkingGraphEditor = InWorkingGraphEditor; }
 
@@ -28,6 +27,9 @@ public:
 	UEdGraph* GetWorkingGraph() { return WorkingGraph; }
 
 private:
+	void BindGraphCommands();
+	void DeleteSelectedNodes();
+	bool CanDeleteNodes(); 
 	void OnNodeDetailViewPropertiesUpdated(const FPropertyChangedEvent& Event);
 	
 	UDialogueInstance* WorkingAsset = nullptr;
