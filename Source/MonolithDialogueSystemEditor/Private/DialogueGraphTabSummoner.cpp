@@ -21,7 +21,19 @@ FDialogueGraphTabSummoner::FDialogueGraphTabSummoner(TSharedPtr<FDialogueInstanc
 TSharedRef<SWidget> FDialogueGraphTabSummoner::CreateTabBody(const FWorkflowTabSpawnInfo& Info) const
 {
 	TSharedPtr<FDialogueInstanceEditor> Editor = DialogueInstanceEditor.Pin();
-	return SNew(SGraphEditor).IsEditable(true).GraphToEdit(Editor->GetWorkingGraph());
+
+	SGraphEditor::FGraphEditorEvents GraphEvents;
+	GraphEvents.OnSelectionChanged.BindRaw(Editor.Get(), &FDialogueInstanceEditor::OnGraphSelectionChanged);
+	
+	TSharedPtr<SGraphEditor> GraphEditor =
+		SNew(SGraphEditor)
+			.IsEditable(true)
+			.GraphEvents(GraphEvents)
+			.GraphToEdit(Editor->GetWorkingGraph());
+
+	Editor->SetWorkingGraphEditor(GraphEditor);
+
+	return GraphEditor.ToSharedRef();
 }
 
 FText FDialogueGraphTabSummoner::GetTabToolTipText(const FWorkflowTabSpawnInfo& Info) const

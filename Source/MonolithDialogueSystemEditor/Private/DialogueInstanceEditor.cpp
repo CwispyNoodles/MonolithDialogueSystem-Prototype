@@ -4,9 +4,11 @@
 #include "DialogueInstanceEditor.h"
 
 #include "DialogueGraph.h"
+#include "DialogueGraphNode.h"
 #include "DialogueInstance.h"
 #include "DialogueInstanceEditorMode.h"
 #include "DialogueGraphSchema.h"
+#include "DialogueNodeData.h"
 #include "GraphEditorActions.h"
 #include "Framework/Commands/GenericCommands.h"
 #include "Kismet2/BlueprintEditorUtils.h"
@@ -55,6 +57,49 @@ void FDialogueInstanceEditor::InitDialogueInstanceEditor(const EToolkitMode::Typ
 
 	AddApplicationMode(TEXT("FDialogueInstanceEditorMode"), MakeShareable(new FDialogueInstanceEditorMode(SharedThis(this))));
 	SetCurrentMode(TEXT("FDialogueInstanceEditorMode"));
+}
+
+void FDialogueInstanceEditor::SetSelectedNodeDetailsView(TSharedPtr<IDetailsView> DetailsView)
+{
+	SelectedNodeDetailsView = DetailsView;
+	SelectedNodeDetailsView->OnFinishedChangingProperties().AddRaw(this, &FDialogueInstanceEditor::OnNodeDetailViewPropertiesUpdated);
+}
+
+void FDialogueInstanceEditor::OnGraphSelectionChanged(const FGraphPanelSelectionSet& Selection)
+{
+	if (UDialogueGraphNode* SelectedNode = GetSelectedNode(Selection))
+	{
+		SelectedNodeDetailsView->SetObject(SelectedNode);
+	}
+	else
+	{
+		SelectedNodeDetailsView->SetObject(nullptr);
+	}
+}
+
+void FDialogueInstanceEditor::OnNodeDetailViewPropertiesUpdated(const FPropertyChangedEvent& Event)
+{
+	if (WorkingGraphEditor)
+	{
+		if (UDialogueGraphNode* Node = GetSelectedNode(WorkingGraphEditor->GetSelectedNodes()))
+		{
+			Node->OnPropertiesChanged();
+		}
+		WorkingGraphEditor->NotifyGraphChanged();
+		
+	}
+}
+
+UDialogueGraphNode* FDialogueInstanceEditor::GetSelectedNode(const FGraphPanelSelectionSet& Selection)
+{
+	for (UObject* Obj : Selection)
+	{
+		if (UDialogueGraphNode* Node = Cast<UDialogueGraphNode>(Obj))
+		{
+			return Node;
+		}
+	}
+	return nullptr;
 }
 
 void FDialogueInstanceEditor::RegisterTabSpawners(const TSharedRef<FTabManager>& InTabManager)

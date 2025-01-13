@@ -3,13 +3,21 @@
 #pragma once
 
 #include "CoreMinimal.h"
+#include "WorkflowOrientedApp/WorkflowTabFactory.h"
 
+class FDialogueInstanceEditor;
 /**
  * 
  */
-class MONOLITHDIALOGUESYSTEMEDITOR_API DialogueDetailsTabSummoner
+class FDialogueDetailsTabSummoner : public FWorkflowTabFactory
 {
 public:
-	DialogueDetailsTabSummoner();
-	~DialogueDetailsTabSummoner();
+	FDialogueDetailsTabSummoner(TSharedPtr<FDialogueInstanceEditor> InDialogueInstanceEditor);
+
+private:
+	TWeakPtr<FDialogueInstanceEditor> DialogueInstanceEditor;
+ 
+public: // FWorkflowTabFactory Interface
+	virtual TSharedRef<SWidget> CreateTabBody(const FWorkflowTabSpawnInfo& Info) const override;
+	virtual FText GetTabToolTipText(const FWorkflowTabSpawnInfo& Info) const override;
 };

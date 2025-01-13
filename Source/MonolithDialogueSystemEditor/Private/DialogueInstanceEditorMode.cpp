@@ -3,6 +3,7 @@
 
 #include "DialogueInstanceEditorMode.h"
 
+#include "DialogueDetailsTabSummoner.h"
 #include "DialogueGraphTabSummoner.h"
 #include "DialogueInstanceEditor.h"
 
@@ -12,8 +13,9 @@ FDialogueInstanceEditorMode::FDialogueInstanceEditorMode(TSharedPtr<FDialogueIns
 {
 	DialogueInstanceEditor = InDialogueInstanceEditor;
 	Tabs.RegisterFactory(MakeShared<FDialogueGraphTabSummoner>(InDialogueInstanceEditor));
+	Tabs.RegisterFactory(MakeShared<FDialogueDetailsTabSummoner>(InDialogueInstanceEditor));
 
-	TabLayout = FTabManager::NewLayout("Standalone_DialogueInstanceEditorMode_Layout_v1.0")
+	TabLayout = FTabManager::NewLayout("Standalone_DialogueInstanceEditorMode_Layout_v1.1")
 	->AddArea
 	(
 		FTabManager::NewPrimaryArea()
@@ -32,7 +34,7 @@ FDialogueInstanceEditorMode::FDialogueInstanceEditorMode(TSharedPtr<FDialogueIns
 			(
 				FTabManager::NewStack()
 				->SetSizeCoefficient(0.25f)
-				->AddTab(FName(TEXT("DetailsTabId")), ETabState::OpenedTab)
+				->AddTab(FName(TEXT("DialogueDetailsTabId")), ETabState::OpenedTab)
 			)
 		)
 	);

@@ -8,6 +8,7 @@
 #include "DialogueGraphNode_Query.h"
 #include "DialogueGraphNode_Response.h"
 #include "DialogueGraphNode_Root.h"
+#include "DialogueNodeData.h"
 
 UEdGraphNode* FDialogueGraphSchemaAction_NewNode::PerformAction(UEdGraph* ParentGraph, UEdGraphPin* FromPin, const FVector2D Location, bool bSelectNewNode)
 {
@@ -22,6 +23,7 @@ UEdGraphNode* FDialogueGraphSchemaAction_NewNode::PerformAction(UEdGraph* Parent
 	MyNode->SetPosition(Location);
 
 	MyNode->AllocateDefaultPins();
+	MyNode->SetDialogueNodeData(NewObject<UDialogueNodeData>(MyNode));
 
 	// if (FromPin)
 	// {

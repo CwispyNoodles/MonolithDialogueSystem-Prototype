@@ -17,8 +17,10 @@ class MONOLITHDIALOGUESYSTEMEDITOR_API UDialogueGraphNode_Alias : public UDialog
 public:
 	FText GetAliasName() const { return AliasName; }
 
-protected:
+	UPROPERTY(EditAnywhere)
 	FText AliasName = FText::FromString("Placeholder");
+protected:
+	
 
 public: // UEdGraphNode Interface
 	virtual FLinearColor GetNodeTitleColor() const override { return FLinearColor(FColor::Black); }
