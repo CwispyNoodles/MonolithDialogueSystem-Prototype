@@ -4,8 +4,20 @@
 
 #include "CoreMinimal.h"
 #include "DialogueGraphNode.h"
+#include "DialogueNodeData.h"
 #include "DialogueGraphNode_Alias.generated.h"
 
+UCLASS()
+class MONOLITHDIALOGUESYSTEMEDITOR_API UDialogueNodeData_Alias : public UDialogueNodeData
+{
+	GENERATED_BODY()
+
+public:
+	FText GetAliasName() const { return AliasName; }
+
+	UPROPERTY(EditAnywhere)
+	FText AliasName = FText::FromString("Placeholder");
+};
 /**
  * 
  */
@@ -15,12 +27,8 @@ class MONOLITHDIALOGUESYSTEMEDITOR_API UDialogueGraphNode_Alias : public UDialog
 	GENERATED_BODY()
 
 public:
-	FText GetAliasName() const { return AliasName; }
-
-	UPROPERTY(EditAnywhere)
-	FText AliasName = FText::FromString("Placeholder");
+	UDialogueGraphNode_Alias();
 protected:
-	
 
 public: // UEdGraphNode Interface
 	virtual FLinearColor GetNodeTitleColor() const override { return FLinearColor(FColor::Black); }

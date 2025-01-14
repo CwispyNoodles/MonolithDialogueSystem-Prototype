@@ -71,7 +71,7 @@ void FDialogueInstanceEditor::OnGraphSelectionChanged(const FGraphPanelSelection
 {
 	if (UDialogueGraphNode* SelectedNode = GetSelectedNode(Selection))
 	{
-		SelectedNodeDetailsView->SetObject(SelectedNode);
+		SelectedNodeDetailsView->SetObject(SelectedNode->GetDialogueNodeData());
 	}
 	else
 	{

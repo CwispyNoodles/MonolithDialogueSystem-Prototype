@@ -21,9 +21,10 @@ UEdGraphNode* FDialogueGraphSchemaAction_NewNode::PerformAction(UEdGraph* Parent
 	UDialogueGraphNode* MyNode = NewObject<UDialogueGraphNode>(ParentGraph, ClassTemplate);
 	MyNode->CreateNewGuid();
 	MyNode->SetPosition(Location);
+	MyNode->InitializeNodeData();
 
 	MyNode->AllocateDefaultPins();
-	MyNode->SetDialogueNodeData(NewObject<UDialogueNodeData>(MyNode));
+	// MyNode->SetDialogueNodeData(NewObject<UDialogueNodeData>(MyNode));
 
 	// if (FromPin)
 	// {
@@ -96,11 +97,12 @@ void UDialogueGraphSchema::GetGraphContextActions(FGraphContextMenuBuilder& Cont
 	{
 		for (const UDialogueGraphNode_Alias_In* Alias : DialogueGraph->Aliases)
 		{
+			const UDialogueNodeData_Alias* NodeData = Cast<UDialogueNodeData_Alias>(Alias);
 			TSharedPtr<FDialogueGraphSchemaAction_NewNode> NewAliasOutNodeAction(
 				new FDialogueGraphSchemaAction_NewNode(
 					UDialogueGraphNode_Alias_Out::StaticClass(),
 					FText::FromString(TEXT("Nodes|Alias")),
-					FText::FromString((TEXT("Create %s Out Alias Node"), *Alias->GetAliasName().ToString())),
+					FText::FromString((TEXT("Create %s Out Alias Node"), *NodeData->GetAliasName().ToString())),
 					FText::FromString(TEXT("Creates new Alias Node")),
 					FText::GetEmpty(),
 					0));

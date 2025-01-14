@@ -19,7 +19,8 @@ void UDialogueGraph::HandleThisGraphModified(const FEdGraphEditAction& InEditAct
 		{
 			if (const UDialogueGraphNode_Alias_In* AliasNode = Cast<UDialogueGraphNode_Alias_In>(RemovedNode))
 			{
-				Aliases.Remove(AliasNode);
+				// UDialogueNodeData* NodeData = AliasNode->NodeData;
+				
 			}
 		}
 	}

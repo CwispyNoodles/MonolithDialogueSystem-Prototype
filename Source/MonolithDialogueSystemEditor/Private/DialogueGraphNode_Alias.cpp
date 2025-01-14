@@ -3,6 +3,12 @@
 
 #include "DialogueGraphNode_Alias.h"
 
+
+UDialogueGraphNode_Alias::UDialogueGraphNode_Alias()
+{
+	NodeDataClass = UDialogueNodeData_Alias::StaticClass();
+}
+
 void UDialogueGraphNode_Alias_In::AllocateDefaultPins()
 {
 	CreatePin(EGPD_Input, TEXT("PinCategory_Default"), TEXT("In Query"));

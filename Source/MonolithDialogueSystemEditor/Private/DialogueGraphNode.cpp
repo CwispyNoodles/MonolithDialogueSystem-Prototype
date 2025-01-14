@@ -3,6 +3,8 @@
 
 #include "DialogueGraphNode.h"
 
+#include "DialogueNodeData.h"
+
 void UDialogueGraphNode::SetPosition(FVector2D InPos)
 {
 	NodePosX = InPos.X;
@@ -24,4 +26,16 @@ void UDialogueGraphNode::GetNodeContextMenuActions(UToolMenu* Menu, UGraphNodeCo
 			}
 		))
 	);
+}
+
+void UDialogueGraphNode::InitializeNodeData()
+{
+	if (NodeDataClass)
+	{
+		DialogueNodeData = NewObject<UDialogueNodeData>(this, NodeDataClass);
+	}
+	else
+	{
+		DialogueNodeData = NewObject<UDialogueNodeData>(this);
+	}
 }

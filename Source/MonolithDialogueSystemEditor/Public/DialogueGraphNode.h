@@ -21,11 +21,15 @@ public:
 	virtual void OnPropertiesChanged() {}
 	void SetDialogueNodeData(UDialogueNodeData* InNodeData) { DialogueNodeData = InNodeData; }
 	UDialogueNodeData* GetDialogueNodeData() { return DialogueNodeData; }
+	void InitializeNodeData();
 
 	UPROPERTY()
 	FText NodeTitle = FText::FromString("Placeholder");
 
 protected:
+	UPROPERTY()
+	TSubclassOf<UDialogueNodeData> NodeDataClass;
+	
 	UPROPERTY()
 	UDialogueNodeData* DialogueNodeData = nullptr;
 	
