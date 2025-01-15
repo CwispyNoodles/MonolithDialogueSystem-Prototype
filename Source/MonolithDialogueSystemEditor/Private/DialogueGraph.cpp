@@ -19,20 +19,35 @@ void UDialogueGraph::HandleThisGraphModified(const FEdGraphEditAction& InEditAct
 		{
 			if (const UDialogueGraphNode_Alias_In* AliasNode = Cast<UDialogueGraphNode_Alias_In>(RemovedNode))
 			{
-				// UDialogueNodeData* NodeData = AliasNode->NodeData;
-				
+				UDialogueNodeData_Alias* NodeData = Cast<UDialogueNodeData_Alias>(AliasNode->GetDialogueNodeData());
+				AliasCounter.Unsubscribe(NodeData->Ticket);
 			}
 		}
 	}
+
+	if (InEditAction.Action == GRAPHACTION_EditNode)
+	{
+		for (const UEdGraphNode* RemovedNode : InEditAction.Nodes)
+		{
+			if (const UDialogueGraphNode_Alias_In* AliasNode = Cast<UDialogueGraphNode_Alias_In>(RemovedNode))
+			{
+				UDialogueNodeData_Alias* NodeData = Cast<UDialogueNodeData_Alias>(AliasNode->GetDialogueNodeData());
+				AliasCounter.Unsubscribe(NodeData->Ticket);
+				NodeData->Ticket = AliasCounter.Subscribe(NodeData->GetAliasName().ToString());
+			}
+		}
+	}
+	
 }
 
 void UDialogueGraph::AddNode(UEdGraphNode* NodeToAdd, bool bUserAction, bool bSelectNewNode)
 {
 	Super::AddNode(NodeToAdd, bUserAction, bSelectNewNode);
 	
-	if (const UDialogueGraphNode_Alias_In* AliasNode = Cast<UDialogueGraphNode_Alias_In>(NodeToAdd))
+	if (UDialogueGraphNode_Alias_In* AliasNode = Cast<UDialogueGraphNode_Alias_In>(NodeToAdd))
 	{
-		Aliases.Add(AliasNode);
+		UDialogueNodeData_Alias* NodeData = Cast<UDialogueNodeData_Alias>(AliasNode->GetDialogueNodeData());
+		NodeData->Ticket = AliasCounter.Subscribe(NodeData->GetAliasName().ToString());
 	}
 }
 

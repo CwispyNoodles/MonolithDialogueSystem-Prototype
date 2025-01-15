@@ -95,14 +95,16 @@ void UDialogueGraphSchema::GetGraphContextActions(FGraphContextMenuBuilder& Cont
 
 	if (const UDialogueGraph* DialogueGraph = Cast<UDialogueGraph>(ContextMenuBuilder.CurrentGraph))
 	{
-		for (const UDialogueGraphNode_Alias_In* Alias : DialogueGraph->Aliases)
+		TArray<FString> Subjects;
+		DialogueGraph->AliasCounter.GetSubjects(Subjects);
+		for (FString Alias : Subjects)
 		{
-			const UDialogueNodeData_Alias* NodeData = Cast<UDialogueNodeData_Alias>(Alias);
+			// const UDialogueNodeData_Alias* NodeData = Cast<UDialogueNodeData_Alias>(Alias);
 			TSharedPtr<FDialogueGraphSchemaAction_NewNode> NewAliasOutNodeAction(
 				new FDialogueGraphSchemaAction_NewNode(
 					UDialogueGraphNode_Alias_Out::StaticClass(),
 					FText::FromString(TEXT("Nodes|Alias")),
-					FText::FromString((TEXT("Create %s Out Alias Node"), *NodeData->GetAliasName().ToString())),
+					FText::FromString((TEXT("Create %s Out Alias Node"), *Alias)),
 					FText::FromString(TEXT("Creates new Alias Node")),
 					FText::GetEmpty(),
 					0));

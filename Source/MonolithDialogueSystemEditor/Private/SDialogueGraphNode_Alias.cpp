@@ -19,7 +19,7 @@ FText SDialogueGraphNode_Alias::GetAliasName() const
 	check(AliasNode);
 
 	UDialogueNodeData_Alias* NodeData = Cast<UDialogueNodeData_Alias>(AliasNode->GetDialogueNodeData());
-	return NodeData->GetAliasName();
+	return NodeData->AliasName;
 }
 
 void SDialogueGraphNode_Alias::UpdateGraphNode()

@@ -3,10 +3,15 @@
 #pragma once
 
 #include "CoreMinimal.h"
+#include "DialogueGraphNode_Alias.h"
 #include "EdGraph/EdGraph.h"
 #include "DialogueGraph.generated.h"
 
 class UDialogueGraphNode_Alias_In;
+class UDialogueNodeData_Alias;
+
+
+
 /**
  * 
  */
@@ -18,6 +23,7 @@ class MONOLITHDIALOGUESYSTEMEDITOR_API UDialogueGraph : public UEdGraph
 public:
 	UDialogueGraph();
 	TArray<const UDialogueGraphNode_Alias_In*> Aliases;
+	FAliasCounter AliasCounter;
 
 private:
 	void HandleThisGraphModified(const FEdGraphEditAction &InEditAction);

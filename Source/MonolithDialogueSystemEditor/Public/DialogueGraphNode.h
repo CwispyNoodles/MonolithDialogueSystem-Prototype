@@ -6,6 +6,8 @@
 #include "EdGraph/EdGraphNode.h"
 #include "DialogueGraphNode.generated.h"
 
+DECLARE_MULTICAST_DELEGATE_OneParam(FDialogueNodeEventSignature, UEdGraphNode*)
+
 class UDialogueNodeData;
 /**
  * 
@@ -18,11 +20,14 @@ class MONOLITHDIALOGUESYSTEMEDITOR_API UDialogueGraphNode : public UEdGraphNode
 public:
 	void SetPosition(FVector2D InPos);
 	virtual void GetNodeContextMenuActions(UToolMenu* Menu, UGraphNodeContextMenuContext* Context) const override;
-	virtual void OnPropertiesChanged() {}
+	virtual void OnPropertiesChanged() { GetGraph()->NotifyNodeChanged(this); }
 	void SetDialogueNodeData(UDialogueNodeData* InNodeData) { DialogueNodeData = InNodeData; }
-	UDialogueNodeData* GetDialogueNodeData() { return DialogueNodeData; }
+	UDialogueNodeData* GetDialogueNodeData() const { return DialogueNodeData; }
 	void InitializeNodeData();
 
+	// UPROPERTY()
+	// FDialogueNodeEventSignature OnPropertiesChangedDelegate;
+	
 	UPROPERTY()
 	FText NodeTitle = FText::FromString("Placeholder");
 
