@@ -22,7 +22,7 @@ class MONOLITHDIALOGUESYSTEMEDITOR_API UDialogueGraph : public UEdGraph
 
 public:
 	UDialogueGraph();
-	TArray<const UDialogueGraphNode_Alias_In*> Aliases;
+	
 	FAliasCounter AliasCounter;
 
 private:
