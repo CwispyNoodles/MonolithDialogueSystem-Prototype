@@ -108,8 +108,12 @@ UCLASS()
 class MONOLITHDIALOGUESYSTEMEDITOR_API UDialogueGraphNode_Alias_Out : public UDialogueGraphNode_Alias
 {
 	GENERATED_BODY()
+
+public:
+	virtual void InitializeNodeData() override;
 	
 public: // UEdGraphNode Interface
 	virtual FText GetNodeTitle(ENodeTitleType::Type titalType) const override { return FText::FromString("Alias Out"); }
 	virtual void AllocateDefaultPins() override;
+	
 };

@@ -46,6 +46,26 @@ public:
 protected:
 	UClass* ClassTemplate = nullptr;
 };
+
+USTRUCT()
+struct MONOLITHDIALOGUESYSTEMEDITOR_API FDialogueGraphSchemaAction_NewNode_AliasOut : public FDialogueGraphSchemaAction_NewNode
+{
+	GENERATED_BODY()
+
+public:
+	FDialogueGraphSchemaAction_NewNode_AliasOut() 
+		: FDialogueGraphSchemaAction_NewNode()
+	{}
+
+	FDialogueGraphSchemaAction_NewNode_AliasOut(UClass* InClassTemplate, FText InAliasName, FText InNodeCategory, FText InMenuDesc, FText InToolTip, FText InKeywords = FText::GetEmpty(), int32 InGrouping = 0)
+		: FDialogueGraphSchemaAction_NewNode(InClassTemplate, InNodeCategory, InMenuDesc, InToolTip, InKeywords, InGrouping), AliasName(InAliasName)
+	{}
+
+	virtual UEdGraphNode* PerformAction(UEdGraph* ParentGraph, UEdGraphPin* FromPin, const FVector2D Location, bool bSelectNewNode) override;
+
+protected:
+	 FText AliasName;
+};
 /**
  * 
  */

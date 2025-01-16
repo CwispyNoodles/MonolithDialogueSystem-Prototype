@@ -18,3 +18,9 @@ void UDialogueGraphNode_Alias_Out::AllocateDefaultPins()
 {
 	CreatePin(EGPD_Output, TEXT("PinCategory_Default"), TEXT("Out Query"));
 }
+
+void UDialogueGraphNode_Alias_Out::InitializeNodeData()
+{
+	Super::InitializeNodeData();
+	
+}

@@ -19,17 +19,10 @@ class MONOLITHDIALOGUESYSTEMEDITOR_API UDialogueGraphNode : public UEdGraphNode
 
 public:
 	void SetPosition(FVector2D InPos);
-	virtual void GetNodeContextMenuActions(UToolMenu* Menu, UGraphNodeContextMenuContext* Context) const override;
 	virtual void OnPropertiesChanged() { GetGraph()->NotifyNodeChanged(this); }
 	void SetDialogueNodeData(UDialogueNodeData* InNodeData) { DialogueNodeData = InNodeData; }
 	UDialogueNodeData* GetDialogueNodeData() const { return DialogueNodeData; }
-	void InitializeNodeData();
-
-	// UPROPERTY()
-	// FDialogueNodeEventSignature OnPropertiesChangedDelegate;
-	
-	UPROPERTY()
-	FText NodeTitle = FText::FromString("Placeholder");
+	virtual void InitializeNodeData();
 
 protected:
 	UPROPERTY()
@@ -37,5 +30,8 @@ protected:
 	
 	UPROPERTY()
 	UDialogueNodeData* DialogueNodeData = nullptr;
+
+public: // UEdGraphNode Interface
+	virtual void GetNodeContextMenuActions(UToolMenu* Menu, UGraphNodeContextMenuContext* Context) const override;
 	
 };

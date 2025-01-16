@@ -37,6 +37,20 @@ UEdGraphNode* FDialogueGraphSchemaAction_NewNode::PerformAction(UEdGraph* Parent
 	return MyNode;
 }
 
+UEdGraphNode* FDialogueGraphSchemaAction_NewNode_AliasOut::PerformAction(UEdGraph* ParentGraph, UEdGraphPin* FromPin,
+	const FVector2D Location, bool bSelectNewNode)
+{
+	UEdGraphNode* MyNode = FDialogueGraphSchemaAction_NewNode::PerformAction(ParentGraph, FromPin, Location, bSelectNewNode);
+
+	if (UDialogueGraphNode_Alias_Out* AliasNode = Cast<UDialogueGraphNode_Alias_Out>(MyNode))
+	{
+		UDialogueNodeData_Alias* NodeData = Cast<UDialogueNodeData_Alias>(AliasNode->GetDialogueNodeData());
+		NodeData->AliasName = AliasName;
+	}
+
+	return MyNode;
+}
+
 void UDialogueGraphSchema::CreateDefaultNodesForGraph(UEdGraph& Graph) const
 {
 	FGraphNodeCreator<UDialogueGraphNode_Root> NodeCreator(Graph);
@@ -103,9 +117,10 @@ void UDialogueGraphSchema::GetGraphContextActions(FGraphContextMenuBuilder& Cont
 			InMenuDesc = FString::Format(*InMenuDesc, {Alias});
 			
 			// const UDialogueNodeData_Alias* NodeData = Cast<UDialogueNodeData_Alias>(Alias);
-			TSharedPtr<FDialogueGraphSchemaAction_NewNode> NewAliasOutNodeAction(
-				new FDialogueGraphSchemaAction_NewNode(
+			TSharedPtr<FDialogueGraphSchemaAction_NewNode_AliasOut> NewAliasOutNodeAction(
+				new FDialogueGraphSchemaAction_NewNode_AliasOut(
 					UDialogueGraphNode_Alias_Out::StaticClass(),
+					FText::FromString(Alias),
 					FText::FromString(TEXT("Nodes|Alias")),
 					FText::FromString(InMenuDesc),
 					FText::FromString(TEXT("Creates new Alias Output")),
