@@ -84,8 +84,8 @@ void UDialogueGraphSchema::GetGraphContextActions(FGraphContextMenuBuilder& Cont
 		new FDialogueGraphSchemaAction_NewNode(
 			UDialogueGraphNode_Alias_In::StaticClass(),
 			FText::FromString(TEXT("Nodes|Alias")),
-			FText::FromString(TEXT("New Alias Node")),
-			FText::FromString(TEXT("Creates new Alias Node")),
+			FText::FromString(TEXT("New Alias Input")),
+			FText::FromString(TEXT("Creates new Alias Input")),
 			FText::GetEmpty(),
 			0));
 
@@ -99,13 +99,16 @@ void UDialogueGraphSchema::GetGraphContextActions(FGraphContextMenuBuilder& Cont
 		DialogueGraph->AliasCounter.GetSubjects(Subjects);
 		for (FString Alias : Subjects)
 		{
+			FString InMenuDesc = FString(TEXT("New '{0}' Alias Output"));
+			InMenuDesc = FString::Format(*InMenuDesc, {Alias});
+			
 			// const UDialogueNodeData_Alias* NodeData = Cast<UDialogueNodeData_Alias>(Alias);
 			TSharedPtr<FDialogueGraphSchemaAction_NewNode> NewAliasOutNodeAction(
 				new FDialogueGraphSchemaAction_NewNode(
 					UDialogueGraphNode_Alias_Out::StaticClass(),
 					FText::FromString(TEXT("Nodes|Alias")),
-					FText::FromString((TEXT("Create %s Out Alias Node"), *Alias)),
-					FText::FromString(TEXT("Creates new Alias Node")),
+					FText::FromString(InMenuDesc),
+					FText::FromString(TEXT("Creates new Alias Output")),
 					FText::GetEmpty(),
 					0));
 
