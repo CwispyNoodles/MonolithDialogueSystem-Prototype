@@ -17,6 +17,8 @@ public:
 
 	void Construct(const FArguments& InArgs, UDialogueGraphNode* InNode);
 
+	FText GetDialogueText() const;
+
 	TSharedPtr<STextBlock> DialogueText;
 
 public: // SGraphNode Interface

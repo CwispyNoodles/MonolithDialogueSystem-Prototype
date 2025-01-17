@@ -3,14 +3,14 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "DialogueGraphNode.h"
+#include "DialogueGraphNode_Dialogue.h"
 #include "DialogueGraphNode_Response.generated.h"
 
 /**
  * 
  */
 UCLASS()
-class MONOLITHDIALOGUESYSTEMEDITOR_API UDialogueGraphNode_Response : public UDialogueGraphNode
+class MONOLITHDIALOGUESYSTEMEDITOR_API UDialogueGraphNode_Response : public UDialogueGraphNode_Dialogue
 {
 	GENERATED_BODY()
 
