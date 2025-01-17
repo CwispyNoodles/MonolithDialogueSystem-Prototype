@@ -3,7 +3,7 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "DialogueGraphNode.h"
+#include "DialogueGraphNode_Base.h"
 #include "DialogueGraphNode_Root.generated.h"
 
 /**

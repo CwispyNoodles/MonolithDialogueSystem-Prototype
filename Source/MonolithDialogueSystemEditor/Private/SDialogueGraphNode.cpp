@@ -3,7 +3,7 @@
 
 #include "SDialogueGraphNode.h"
 
-#include "DialogueGraphNode.h"
+#include "..\Public\DialogueGraphNode_Base.h"
 
 void SDialogueGraphNode::Construct(const FArguments& InArgs, UDialogueGraphNode* InNode)
 {

@@ -4,7 +4,7 @@
 #include "DialogueInstanceEditor.h"
 
 #include "DialogueGraph.h"
-#include "DialogueGraphNode.h"
+#include "..\Public\DialogueGraphNode_Base.h"
 #include "DialogueInstance.h"
 #include "DialogueInstanceEditorMode.h"
 #include "DialogueGraphSchema.h"

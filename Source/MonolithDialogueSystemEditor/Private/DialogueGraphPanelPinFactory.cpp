@@ -3,7 +3,7 @@
 
 #include "DialogueGraphPanelPinFactory.h"
 
-#include "DialogueGraphNode.h"
+#include "..\Public\DialogueGraphNode_Base.h"
 
 
 TSharedPtr<SGraphPin> FDialogueGraphPanelPinFactory::CreatePin(UEdGraphPin* InPin) const

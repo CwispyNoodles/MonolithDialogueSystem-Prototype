@@ -4,7 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "EdGraph/EdGraphNode.h"
-#include "DialogueGraphNode.generated.h"
+#include "DialogueGraphNode_Base.generated.h"
 
 DECLARE_MULTICAST_DELEGATE_OneParam(FDialogueNodeEventSignature, UEdGraphNode*)
 
