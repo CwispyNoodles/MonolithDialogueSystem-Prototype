@@ -116,7 +116,6 @@ void UDialogueGraphSchema::GetGraphContextActions(FGraphContextMenuBuilder& Cont
 			FString InMenuDesc = FString(TEXT("New '{0}' Alias Output"));
 			InMenuDesc = FString::Format(*InMenuDesc, {Alias});
 			
-			// const UDialogueNodeData_Alias* NodeData = Cast<UDialogueNodeData_Alias>(Alias);
 			TSharedPtr<FDialogueGraphSchemaAction_NewNode_AliasOut> NewAliasOutNodeAction(
 				new FDialogueGraphSchemaAction_NewNode_AliasOut(
 					UDialogueGraphNode_Alias_Out::StaticClass(),

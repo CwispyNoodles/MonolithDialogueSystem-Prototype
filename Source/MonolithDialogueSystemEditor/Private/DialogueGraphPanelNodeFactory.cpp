@@ -13,5 +13,6 @@ TSharedPtr<SGraphNode> FDialogueGraphPanelNodeFactory::CreateNode(UEdGraphNode* 
 	{
 		return SNew(SDialogueGraphNode_Alias, AliasNode);
 	}
+	
 	return nullptr;
 }
