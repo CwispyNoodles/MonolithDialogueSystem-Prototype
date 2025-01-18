@@ -13,4 +13,8 @@ UCLASS()
 class MONOLITHDIALOGUESYSTEMRUNTIME_API UDialogueNodeData_Dialogue : public UDialogueNodeData_Base
 {
 	GENERATED_BODY()
+
+public:
+	UPROPERTY(EditAnywhere, meta=(MultiLine))
+	FText DialogueText;
 };

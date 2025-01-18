@@ -3,6 +3,8 @@
 
 #include "SDialogueGraphNode.h"
 
+#include "DialogueGraphNode_Dialogue.h"
+#include "DialogueNodeData_Dialogue.h"
 #include "..\Public\DialogueGraphNode_Base.h"
 
 void SDialogueGraphNode::Construct(const FArguments& InArgs, UDialogueGraphNode* InNode)
@@ -13,13 +15,11 @@ void SDialogueGraphNode::Construct(const FArguments& InArgs, UDialogueGraphNode*
 
 FText SDialogueGraphNode::GetDialogueText() const
 {
-	// UDialogueGraphNode_Alias* AliasNode = Cast<UDialogueGraphNode_Alias>(GraphNode);
-	// check(AliasNode);
-	//
-	// UDialogueNodeData_Alias* NodeData = Cast<UDialogueNodeData_Alias>(AliasNode->GetDialogueNodeData());
-	// return NodeData->AliasName;
+	UDialogueGraphNode_Dialogue* DialogueNode = Cast<UDialogueGraphNode_Dialogue>(GraphNode);
+	check(DialogueNode)
 
-	return FText::FromString("Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.  ");
+	UDialogueNodeData_Dialogue* NodeData = Cast<UDialogueNodeData_Dialogue>(DialogueNode->GetDialogueNodeData());
+	return NodeData->DialogueText;
 }
 
 void SDialogueGraphNode::UpdateGraphNode()
