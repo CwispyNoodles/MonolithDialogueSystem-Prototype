@@ -49,10 +49,16 @@ TSharedRef<SWidget> SDialogueGraphNode::CreateNodeContentArea()
 			.HAlign(HAlign_Center)
 			.Padding(10.0f, 5.0f)
 			[
-				// DIALOGUE TEXT
-				SAssignNew(DialogueText, STextBlock)
-				.Text(this, &SDialogueGraphNode::GetDialogueText)
-				.WrapTextAt(250.0f)
+				SNew(SBorder)
+				.BorderBackgroundColor(FSlateColor(FLinearColor::Gray))
+				.Padding(10.0f)
+				.Content()
+				[
+					SAssignNew(DialogueText, STextBlock)
+					.MinDesiredWidth(260.0f)
+					.Text(this, &SDialogueGraphNode::GetDialogueText)
+					.WrapTextAt(250.0f)
+				]
 			]
 			+SHorizontalBox::Slot()
 			.AutoWidth()
