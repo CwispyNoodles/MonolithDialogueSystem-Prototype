@@ -8,7 +8,7 @@
 #include "DialogueInstance.h"
 #include "DialogueInstanceEditorMode.h"
 #include "DialogueGraphSchema.h"
-#include "DialogueNodeData.h"
+#include "..\..\MonolithDialogueSystemRuntime\Public\DialogueNodeData_Base.h"
 #include "GraphEditorActions.h"
 #include "Framework/Commands/GenericCommands.h"
 #include "Kismet2/BlueprintEditorUtils.h"

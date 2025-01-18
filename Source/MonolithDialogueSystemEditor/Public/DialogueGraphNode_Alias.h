@@ -4,7 +4,6 @@
 
 #include "CoreMinimal.h"
 #include "DialogueGraphNode_Base.h"
-#include "DialogueNodeData.h"
 #include "DialogueGraphNode_Alias.generated.h"
 
 

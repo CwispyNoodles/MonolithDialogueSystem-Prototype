@@ -3,7 +3,7 @@
 
 #include "..\Public\DialogueGraphNode_Base.h"
 
-#include "DialogueNodeData.h"
+#include "..\..\MonolithDialogueSystemRuntime\Public\DialogueNodeData_Base.h"
 
 void UDialogueGraphNode::SetPosition(FVector2D InPos)
 {

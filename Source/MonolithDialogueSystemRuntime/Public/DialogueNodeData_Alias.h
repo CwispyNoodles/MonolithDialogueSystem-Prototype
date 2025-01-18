@@ -3,7 +3,7 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "DialogueNodeData.h"
+#include "DialogueNodeData_Base.h"
 #include "DialogueNodeData_Alias.generated.h"
 
 USTRUCT()

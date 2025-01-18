@@ -4,7 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "UObject/Object.h"
-#include "DialogueNodeData.generated.h"
+#include "DialogueNodeData_Base.generated.h"
 
 /**
  * 
