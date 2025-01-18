@@ -7,7 +7,7 @@
 #include "DialogueNodeData_Dialogue.h"
 #include "..\Public\DialogueGraphNode_Base.h"
 
-void SDialogueGraphNode::Construct(const FArguments& InArgs, UDialogueGraphNode* InNode)
+void SDialogueGraphNode::Construct(const FArguments& InArgs, UDialogueGraphNode_Base* InNode)
 {
 	GraphNode = InNode;
 	UpdateGraphNode();

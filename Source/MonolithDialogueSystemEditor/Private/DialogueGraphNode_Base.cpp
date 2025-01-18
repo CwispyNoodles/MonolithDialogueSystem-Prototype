@@ -5,16 +5,16 @@
 
 #include "..\..\MonolithDialogueSystemRuntime\Public\DialogueNodeData_Base.h"
 
-void UDialogueGraphNode::SetPosition(FVector2D InPos)
+void UDialogueGraphNode_Base::SetPosition(FVector2D InPos)
 {
 	NodePosX = InPos.X;
 	NodePosY = InPos.Y;
 }
 
-void UDialogueGraphNode::GetNodeContextMenuActions(UToolMenu* Menu, UGraphNodeContextMenuContext* Context) const
+void UDialogueGraphNode_Base::GetNodeContextMenuActions(UToolMenu* Menu, UGraphNodeContextMenuContext* Context) const
 {
 	FToolMenuSection& Section = Menu->AddSection(TEXT("SectionName"), FText::FromString(TEXT("Dialog Node Actions")));
-	UDialogueGraphNode* node = (UDialogueGraphNode*)this;
+	UDialogueGraphNode_Base* node = (UDialogueGraphNode_Base*)this;
 	Section.AddMenuEntry(
 		TEXT("DeleteEntry"),
 		FText::FromString(TEXT("Delete Node")),
@@ -28,7 +28,7 @@ void UDialogueGraphNode::GetNodeContextMenuActions(UToolMenu* Menu, UGraphNodeCo
 	);
 }
 
-void UDialogueGraphNode::InitializeNodeData()
+void UDialogueGraphNode_Base::InitializeNodeData()
 {
 	if (NodeDataClass)
 	{

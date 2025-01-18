@@ -72,7 +72,7 @@ void FDialogueInstanceEditor::SetSelectedNodeDetailsView(TSharedPtr<IDetailsView
 
 void FDialogueInstanceEditor::OnGraphSelectionChanged(const FGraphPanelSelectionSet& Selection)
 {
-	if (UDialogueGraphNode* SelectedNode = GetSelectedNode(Selection))
+	if (UDialogueGraphNode_Base* SelectedNode = GetSelectedNode(Selection))
 	{
 		SelectedNodeDetailsView->SetObject(SelectedNode->GetDialogueNodeData());
 	}
@@ -109,7 +109,7 @@ void FDialogueInstanceEditor::DeleteSelectedNodes()
 		if (EdNode == nullptr || !EdNode->CanUserDeleteNode())
 			continue;;
 
-		if (UDialogueGraphNode* EdNode_Node = Cast<UDialogueGraphNode>(EdNode))
+		if (UDialogueGraphNode_Base* EdNode_Node = Cast<UDialogueGraphNode_Base>(EdNode))
 		{
 			EdNode_Node->Modify();
 
@@ -149,7 +149,7 @@ void FDialogueInstanceEditor::OnNodeDetailViewPropertiesUpdated(const FPropertyC
 {
 	if (WorkingGraphEditor)
 	{
-		if (UDialogueGraphNode* Node = GetSelectedNode(WorkingGraphEditor->GetSelectedNodes()))
+		if (UDialogueGraphNode_Base* Node = GetSelectedNode(WorkingGraphEditor->GetSelectedNodes()))
 		{
 			Node->OnPropertiesChanged();
 		}
@@ -158,11 +158,11 @@ void FDialogueInstanceEditor::OnNodeDetailViewPropertiesUpdated(const FPropertyC
 	}
 }
 
-UDialogueGraphNode* FDialogueInstanceEditor::GetSelectedNode(const FGraphPanelSelectionSet& Selection)
+UDialogueGraphNode_Base* FDialogueInstanceEditor::GetSelectedNode(const FGraphPanelSelectionSet& Selection)
 {
 	for (UObject* Obj : Selection)
 	{
-		if (UDialogueGraphNode* Node = Cast<UDialogueGraphNode>(Obj))
+		if (UDialogueGraphNode_Base* Node = Cast<UDialogueGraphNode_Base>(Obj))
 		{
 			return Node;
 		}

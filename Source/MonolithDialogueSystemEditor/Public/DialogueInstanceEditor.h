@@ -7,7 +7,7 @@
 #include "DialogueGraphPanelPinFactory.h"
 #include "WorkflowOrientedApp/WorkflowCentricApplication.h"
 
-class UDialogueGraphNode;
+class UDialogueGraphNode_Base;
 class UDialogueInstance;
 class IDetailsView;
 /**
@@ -40,7 +40,7 @@ private:
 	TSharedPtr<SGraphEditor> WorkingGraphEditor = nullptr;
 
 protected:
-	UDialogueGraphNode* GetSelectedNode(const FGraphPanelSelectionSet& Selection);
+	UDialogueGraphNode_Base* GetSelectedNode(const FGraphPanelSelectionSet& Selection);
 	
 public: // FAssetEditorToolkit interface
 	virtual void RegisterTabSpawners(const TSharedRef<FTabManager>& InTabManager) override;

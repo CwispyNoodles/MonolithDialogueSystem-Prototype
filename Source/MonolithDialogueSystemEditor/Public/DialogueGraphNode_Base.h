@@ -13,7 +13,7 @@ class UDialogueNodeData_Base;
  * 
  */
 UCLASS()
-class MONOLITHDIALOGUESYSTEMEDITOR_API UDialogueGraphNode : public UEdGraphNode
+class MONOLITHDIALOGUESYSTEMEDITOR_API UDialogueGraphNode_Base : public UEdGraphNode
 {
 	GENERATED_BODY()
 
@@ -23,6 +23,7 @@ public:
 	void SetDialogueNodeData(UDialogueNodeData_Base* InNodeData) { DialogueNodeData = InNodeData; }
 	UDialogueNodeData_Base* GetDialogueNodeData() const { return DialogueNodeData; }
 	virtual void InitializeNodeData();
+	UEdGraphPin* GetDefaultInputPin() { return DefaultInputPin; }
 
 protected:
 	UPROPERTY()
@@ -30,6 +31,8 @@ protected:
 	
 	UPROPERTY()
 	UDialogueNodeData_Base* DialogueNodeData = nullptr;
+	
+	UEdGraphPin* DefaultInputPin = nullptr;
 
 public: // UEdGraphNode Interface
 	virtual void GetNodeContextMenuActions(UToolMenu* Menu, UGraphNodeContextMenuContext* Context) const override;

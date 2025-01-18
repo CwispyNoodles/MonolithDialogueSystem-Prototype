@@ -12,7 +12,7 @@
  * 
  */
 UCLASS()
-class MONOLITHDIALOGUESYSTEMEDITOR_API UDialogueGraphNode_Alias : public UDialogueGraphNode
+class MONOLITHDIALOGUESYSTEMEDITOR_API UDialogueGraphNode_Alias : public UDialogueGraphNode_Base
 {
 	GENERATED_BODY()
 

@@ -5,6 +5,6 @@
 
 void UDialogueGraphNode_Response::AllocateDefaultPins()
 {
-	CreatePin(EGPD_Input, TEXT("PinCategory_Default"), TEXT("Response In"));
+	DefaultInputPin = CreatePin(EGPD_Input, TEXT("PinCategory_Default"), TEXT("Response In"));
 	CreatePin(EGPD_Output, TEXT("PinCategory_Default"), TEXT("Response Out"));
 }

@@ -15,12 +15,13 @@ UEdGraphNode* FDialogueGraphSchemaAction_NewNode::PerformAction(UEdGraph* Parent
 	UDialogueGraph* DialogueGraph = Cast<UDialogueGraph>(ParentGraph);
 	
 	UEdGraphNode* MyNode = CreateNode(ParentGraph, Location);
+	UDialogueGraphNode_Base* DialogueNode = Cast<UDialogueGraphNode_Base>(MyNode);
 	// MyNode->SetDialogueNodeData(NewObject<UDialogueNodeData_Base>(MyNode));
 
-	// if (FromPin)
-	// {
-	// 	MyNode->GetSchema()->TryCreateConnection(FromPin, )
-	// }
+	if (FromPin && DialogueNode->GetDefaultInputPin())
+	{
+		MyNode->GetSchema()->TryCreateConnection(FromPin, DialogueNode->GetDefaultInputPin());
+	}
 
 	DialogueGraph->Modify();
 	DialogueGraph->AddNode(MyNode, true, true);
@@ -30,7 +31,7 @@ UEdGraphNode* FDialogueGraphSchemaAction_NewNode::PerformAction(UEdGraph* Parent
 
 UEdGraphNode* FDialogueGraphSchemaAction_NewNode::CreateNode(UEdGraph* InParentGraph, FVector2D InLocation)
 {
-	UDialogueGraphNode* MyNode = NewObject<UDialogueGraphNode>(InParentGraph, ClassTemplate);
+	UDialogueGraphNode_Base* MyNode = NewObject<UDialogueGraphNode_Base>(InParentGraph, ClassTemplate);
 	MyNode->CreateNewGuid();
 	MyNode->SetPosition(InLocation);
 	MyNode->InitializeNodeData();

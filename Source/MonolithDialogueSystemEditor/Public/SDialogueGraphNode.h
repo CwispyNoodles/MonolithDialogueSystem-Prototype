@@ -5,7 +5,7 @@
 #include "CoreMinimal.h"
 #include "SGraphNode.h"
 
-class UDialogueGraphNode;
+class UDialogueGraphNode_Base;
 /**
  * 
  */
@@ -15,7 +15,7 @@ public:
 	SLATE_BEGIN_ARGS(SDialogueGraphNode) {}
 	SLATE_END_ARGS()
 
-	void Construct(const FArguments& InArgs, UDialogueGraphNode* InNode);
+	void Construct(const FArguments& InArgs, UDialogueGraphNode_Base* InNode);
 
 	FText GetDialogueText() const;
 

@@ -8,7 +8,7 @@
 
 TSharedPtr<SGraphPin> FDialogueGraphPanelPinFactory::CreatePin(UEdGraphPin* InPin) const
 {
-	if (InPin->GetOwningNode()->IsA(UDialogueGraphNode::StaticClass()))
+	if (InPin->GetOwningNode()->IsA(UDialogueGraphNode_Base::StaticClass()))
 	{
 		return SNew(SDialogueGraphPin, InPin);
 	}

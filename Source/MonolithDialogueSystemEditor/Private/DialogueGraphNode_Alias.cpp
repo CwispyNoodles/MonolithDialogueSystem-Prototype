@@ -12,7 +12,7 @@ UDialogueGraphNode_Alias_In::UDialogueGraphNode_Alias_In()
 
 void UDialogueGraphNode_Alias_In::AllocateDefaultPins()
 {
-	CreatePin(EGPD_Input, TEXT("PinCategory_Default"), TEXT("In Query"));
+	DefaultInputPin = CreatePin(EGPD_Input, TEXT("PinCategory_Default"), TEXT("In Query"));
 }
 
 UDialogueGraphNode_Alias_Out::UDialogueGraphNode_Alias_Out()
