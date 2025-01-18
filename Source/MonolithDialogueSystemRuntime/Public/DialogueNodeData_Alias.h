@@ -78,3 +78,13 @@ public:
 	UPROPERTY()
 	FAliasCounterTicket Ticket;
 };
+
+UCLASS()
+class MONOLITHDIALOGUESYSTEMRUNTIME_API UDialogueNodeData_Alias_Out : public UDialogueNodeData
+{
+	GENERATED_BODY()
+
+public:
+	UPROPERTY()
+	FText AliasName;
+};

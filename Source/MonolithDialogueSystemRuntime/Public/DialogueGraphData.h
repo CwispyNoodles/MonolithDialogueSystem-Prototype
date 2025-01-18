@@ -18,4 +18,6 @@ class MONOLITHDIALOGUESYSTEMRUNTIME_API UDialogueGraphData : public UObject
 public:
 	FAliasCounter AliasCounter;
 
+	UPROPERTY()
+	TMap<FString, UDialogueNodeData_Alias_Out*> AliasToOutputMap;
 };

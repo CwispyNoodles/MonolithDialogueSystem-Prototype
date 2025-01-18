@@ -16,11 +16,22 @@ void SDialogueGraphNode_Alias::Construct(const FArguments& InArgs, UDialogueGrap
 
 FText SDialogueGraphNode_Alias::GetAliasName() const
 {
-	UDialogueGraphNode_Alias* AliasNode = Cast<UDialogueGraphNode_Alias>(GraphNode);
-	check(AliasNode);
+	// UDialogueGraphNode_Alias* AliasNode = Cast<UDialogueGraphNode_Alias>(GraphNode);
+	// check(AliasNode);
+	//
+	// UDialogueNodeData_Alias_In* NodeData = Cast<UDialogueNodeData_Alias_In>(AliasNode->GetDialogueNodeData());
+	// return NodeData->AliasName;
 
-	UDialogueNodeData_Alias_In* NodeData = Cast<UDialogueNodeData_Alias_In>(AliasNode->GetDialogueNodeData());
-	return NodeData->AliasName;
+	if (UDialogueGraphNode_Alias_In* Alias_In = Cast<UDialogueGraphNode_Alias_In>(GraphNode))
+	{
+		return Cast<UDialogueNodeData_Alias_In>(Alias_In->GetDialogueNodeData())->AliasName;
+	}
+
+	if (UDialogueGraphNode_Alias_Out* Alias_Out = Cast<UDialogueGraphNode_Alias_Out>(GraphNode))
+	{
+		return Cast<UDialogueNodeData_Alias_Out>(Alias_Out->GetDialogueNodeData())->AliasName;
+	}
+	return FText();
 }
 
 void SDialogueGraphNode_Alias::UpdateGraphNode()

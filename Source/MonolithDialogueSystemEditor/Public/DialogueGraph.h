@@ -25,8 +25,6 @@ public:
 
 	UPROPERTY()
 	UDialogueGraphData* DialogueGraphData;
-	
-	FAliasCounter AliasCounter;
 
 private:
 	void HandleThisGraphModified(const FEdGraphEditAction &InEditAction);

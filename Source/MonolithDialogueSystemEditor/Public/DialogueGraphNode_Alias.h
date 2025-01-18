@@ -17,10 +17,6 @@ class MONOLITHDIALOGUESYSTEMEDITOR_API UDialogueGraphNode_Alias : public UDialog
 {
 	GENERATED_BODY()
 
-public:
-	UDialogueGraphNode_Alias();
-protected:
-
 public: // UEdGraphNode Interface
 	virtual FLinearColor GetNodeTitleColor() const override { return FLinearColor(FColor::Black); }
 	virtual bool CanUserDeleteNode() const override { return true; }
@@ -30,6 +26,9 @@ UCLASS()
 class MONOLITHDIALOGUESYSTEMEDITOR_API UDialogueGraphNode_Alias_In : public UDialogueGraphNode_Alias
 {
 	GENERATED_BODY()
+
+public:
+	UDialogueGraphNode_Alias_In();
 
 public: // UEdGraphNode Interface
 	virtual FText GetNodeTitle(ENodeTitleType::Type titalType) const override { return FText::FromString("Alias In"); }
@@ -43,7 +42,7 @@ class MONOLITHDIALOGUESYSTEMEDITOR_API UDialogueGraphNode_Alias_Out : public UDi
 	GENERATED_BODY()
 
 public:
-	virtual void InitializeNodeData() override;
+	UDialogueGraphNode_Alias_Out();
 	
 public: // UEdGraphNode Interface
 	virtual FText GetNodeTitle(ENodeTitleType::Type titalType) const override { return FText::FromString("Alias Out"); }

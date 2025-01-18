@@ -13,10 +13,6 @@
 UEdGraphNode* FDialogueGraphSchemaAction_NewNode::PerformAction(UEdGraph* ParentGraph, UEdGraphPin* FromPin, const FVector2D Location, bool bSelectNewNode)
 {
 	UDialogueGraph* DialogueGraph = Cast<UDialogueGraph>(ParentGraph);
-	if (!DialogueGraph)
-	{
-		return nullptr;
-	}
 	
 	UDialogueGraphNode* MyNode = NewObject<UDialogueGraphNode>(ParentGraph, ClassTemplate);
 	MyNode->CreateNewGuid();
@@ -44,7 +40,7 @@ UEdGraphNode* FDialogueGraphSchemaAction_NewNode_AliasOut::PerformAction(UEdGrap
 
 	if (UDialogueGraphNode_Alias_Out* AliasNode = Cast<UDialogueGraphNode_Alias_Out>(MyNode))
 	{
-		UDialogueNodeData_Alias_In* NodeData = Cast<UDialogueNodeData_Alias_In>(AliasNode->GetDialogueNodeData());
+		UDialogueNodeData_Alias_Out* NodeData = Cast<UDialogueNodeData_Alias_Out>(AliasNode->GetDialogueNodeData());
 		NodeData->AliasName = AliasName;
 	}
 
