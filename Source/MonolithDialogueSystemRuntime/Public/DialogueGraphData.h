@@ -17,4 +17,5 @@ class MONOLITHDIALOGUESYSTEMRUNTIME_API UDialogueGraphData : public UObject
 
 public:
 	FAliasCounter AliasCounter;
+
 };

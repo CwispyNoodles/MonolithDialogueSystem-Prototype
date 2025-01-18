@@ -8,7 +8,7 @@
 
 UDialogueGraphNode_Alias::UDialogueGraphNode_Alias()
 {
-	NodeDataClass = UDialogueNodeData_Alias::StaticClass();
+	NodeDataClass = UDialogueNodeData_Alias_In::StaticClass();
 }
 
 void UDialogueGraphNode_Alias_In::AllocateDefaultPins()

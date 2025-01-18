@@ -65,7 +65,7 @@ struct MONOLITHDIALOGUESYSTEMRUNTIME_API FAliasCounter
  * 
  */
 UCLASS()
-class MONOLITHDIALOGUESYSTEMRUNTIME_API UDialogueNodeData_Alias : public UDialogueNodeData
+class MONOLITHDIALOGUESYSTEMRUNTIME_API UDialogueNodeData_Alias_In : public UDialogueNodeData
 {
 	GENERATED_BODY()
 

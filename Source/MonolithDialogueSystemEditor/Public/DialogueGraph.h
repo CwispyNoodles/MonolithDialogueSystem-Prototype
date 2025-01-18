@@ -8,7 +8,7 @@
 #include "DialogueGraph.generated.h"
 
 class UDialogueGraphNode_Alias_In;
-class UDialogueNodeData_Alias;
+class UDialogueNodeData_Alias_In;
 
 
 

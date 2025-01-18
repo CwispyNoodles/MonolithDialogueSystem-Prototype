@@ -44,7 +44,7 @@ UEdGraphNode* FDialogueGraphSchemaAction_NewNode_AliasOut::PerformAction(UEdGrap
 
 	if (UDialogueGraphNode_Alias_Out* AliasNode = Cast<UDialogueGraphNode_Alias_Out>(MyNode))
 	{
-		UDialogueNodeData_Alias* NodeData = Cast<UDialogueNodeData_Alias>(AliasNode->GetDialogueNodeData());
+		UDialogueNodeData_Alias_In* NodeData = Cast<UDialogueNodeData_Alias_In>(AliasNode->GetDialogueNodeData());
 		NodeData->AliasName = AliasName;
 	}
 
