@@ -57,7 +57,7 @@ void UDialogueGraph::AddNode(UEdGraphNode* NodeToAdd, bool bUserAction, bool bSe
 		NodeData->Ticket = DialogueGraphData->AliasCounter.Subscribe(NodeData->GetAliasName().ToString());
 	}
 
-	if (const UDialogueGraphNode_Alias_Out* Alias_Out = Cast<UDialogueGraphNode_Alias_Out>(NodeToAdd))
+	if (UDialogueGraphNode_Alias_Out* Alias_Out = Cast<UDialogueGraphNode_Alias_Out>(NodeToAdd))
 	{
 		UDialogueNodeData_Alias_Out* NodeData = Cast<UDialogueNodeData_Alias_Out>(Alias_Out->GetDialogueNodeData());
 		DialogueGraphData->AliasToOutputMap.Add(NodeData->AliasName.ToString(), NodeData);

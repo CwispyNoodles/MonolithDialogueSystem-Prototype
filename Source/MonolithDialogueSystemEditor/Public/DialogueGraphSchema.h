@@ -42,7 +42,7 @@ public:
 	{}
 
 	virtual UEdGraphNode* PerformAction(UEdGraph* ParentGraph, UEdGraphPin* FromPin, const FVector2D Location, bool bSelectNewNode = true) override;
-
+	UEdGraphNode* CreateNode(UEdGraph* InParentGraph, FVector2D InLocation);
 protected:
 	UClass* ClassTemplate = nullptr;
 };

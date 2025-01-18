@@ -14,12 +14,7 @@ UEdGraphNode* FDialogueGraphSchemaAction_NewNode::PerformAction(UEdGraph* Parent
 {
 	UDialogueGraph* DialogueGraph = Cast<UDialogueGraph>(ParentGraph);
 	
-	UDialogueGraphNode* MyNode = NewObject<UDialogueGraphNode>(ParentGraph, ClassTemplate);
-	MyNode->CreateNewGuid();
-	MyNode->SetPosition(Location);
-	MyNode->InitializeNodeData();
-
-	MyNode->AllocateDefaultPins();
+	UEdGraphNode* MyNode = CreateNode(ParentGraph, Location);
 	// MyNode->SetDialogueNodeData(NewObject<UDialogueNodeData>(MyNode));
 
 	// if (FromPin)
@@ -33,16 +28,27 @@ UEdGraphNode* FDialogueGraphSchemaAction_NewNode::PerformAction(UEdGraph* Parent
 	return MyNode;
 }
 
-UEdGraphNode* FDialogueGraphSchemaAction_NewNode_AliasOut::PerformAction(UEdGraph* ParentGraph, UEdGraphPin* FromPin,
-	const FVector2D Location, bool bSelectNewNode)
+UEdGraphNode* FDialogueGraphSchemaAction_NewNode::CreateNode(UEdGraph* InParentGraph, FVector2D InLocation)
 {
-	UEdGraphNode* MyNode = FDialogueGraphSchemaAction_NewNode::PerformAction(ParentGraph, FromPin, Location, bSelectNewNode);
+	UDialogueGraphNode* MyNode = NewObject<UDialogueGraphNode>(InParentGraph, ClassTemplate);
+	MyNode->CreateNewGuid();
+	MyNode->SetPosition(InLocation);
+	MyNode->InitializeNodeData();
 
-	if (UDialogueGraphNode_Alias_Out* AliasNode = Cast<UDialogueGraphNode_Alias_Out>(MyNode))
-	{
-		UDialogueNodeData_Alias_Out* NodeData = Cast<UDialogueNodeData_Alias_Out>(AliasNode->GetDialogueNodeData());
-		NodeData->AliasName = AliasName;
-	}
+	MyNode->AllocateDefaultPins();
+	return MyNode;
+}
+
+UEdGraphNode* FDialogueGraphSchemaAction_NewNode_AliasOut::PerformAction(UEdGraph* ParentGraph, UEdGraphPin* FromPin,
+                                                                         const FVector2D Location, bool bSelectNewNode)
+{
+	UEdGraphNode* MyNode = CreateNode(ParentGraph, Location);
+	UDialogueGraphNode_Alias_Out* AliasNode = Cast<UDialogueGraphNode_Alias_Out>(MyNode);
+	UDialogueNodeData_Alias_Out* NodeData = Cast<UDialogueNodeData_Alias_Out>(AliasNode->GetDialogueNodeData());
+	NodeData->AliasName = AliasName;
+
+	ParentGraph->Modify();
+	ParentGraph->AddNode(MyNode, true, true);
 
 	return MyNode;
 }
@@ -109,6 +115,11 @@ void UDialogueGraphSchema::GetGraphContextActions(FGraphContextMenuBuilder& Cont
 		DialogueGraph->DialogueGraphData->AliasCounter.GetSubjects(Subjects);
 		for (FString Alias : Subjects)
 		{
+			// Only want one alias output per alias at a time.
+			if (DialogueGraph->DialogueGraphData->AliasToOutputMap.Find(Alias))
+			{
+				continue;
+			}
 			FString InMenuDesc = FString(TEXT("New '{0}' Alias Output"));
 			InMenuDesc = FString::Format(*InMenuDesc, {Alias});
 			
