@@ -4,6 +4,7 @@
 #include "SDialogueGraphNode_Alias.h"
 
 #include "DialogueGraphNode_Alias.h"
+#include "DialogueNodeData_Alias.h"
 
 
 void SDialogueGraphNode_Alias::Construct(const FArguments& InArgs, UDialogueGraphNode_Alias* InNode)

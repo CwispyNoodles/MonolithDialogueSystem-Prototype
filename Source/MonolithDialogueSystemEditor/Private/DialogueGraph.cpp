@@ -4,6 +4,7 @@
 #include "DialogueGraph.h"
 
 #include "DialogueGraphNode_Alias.h"
+#include "DialogueNodeData_Alias.h"
 #include "GraphEditAction.h"
 
 UDialogueGraph::UDialogueGraph()

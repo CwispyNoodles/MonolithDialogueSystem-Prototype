@@ -3,6 +3,8 @@
 
 #include "DialogueGraphNode_Alias.h"
 
+#include "DialogueNodeData_Alias.h"
+
 
 UDialogueGraphNode_Alias::UDialogueGraphNode_Alias()
 {
