@@ -8,7 +8,7 @@
 
 DECLARE_MULTICAST_DELEGATE_OneParam(FDialogueNodeEventSignature, UEdGraphNode*)
 
-class UDialogueNodeData;
+class UDialogueNodeData_Base;
 /**
  * 
  */
@@ -20,16 +20,16 @@ class MONOLITHDIALOGUESYSTEMEDITOR_API UDialogueGraphNode : public UEdGraphNode
 public:
 	void SetPosition(FVector2D InPos);
 	virtual void OnPropertiesChanged() { GetGraph()->NotifyNodeChanged(this); }
-	void SetDialogueNodeData(UDialogueNodeData* InNodeData) { DialogueNodeData = InNodeData; }
-	UDialogueNodeData* GetDialogueNodeData() const { return DialogueNodeData; }
+	void SetDialogueNodeData(UDialogueNodeData_Base* InNodeData) { DialogueNodeData = InNodeData; }
+	UDialogueNodeData_Base* GetDialogueNodeData() const { return DialogueNodeData; }
 	virtual void InitializeNodeData();
 
 protected:
 	UPROPERTY()
-	TSubclassOf<UDialogueNodeData> NodeDataClass;
+	TSubclassOf<UDialogueNodeData_Base> NodeDataClass;
 	
 	UPROPERTY()
-	UDialogueNodeData* DialogueNodeData = nullptr;
+	UDialogueNodeData_Base* DialogueNodeData = nullptr;
 
 public: // UEdGraphNode Interface
 	virtual void GetNodeContextMenuActions(UToolMenu* Menu, UGraphNodeContextMenuContext* Context) const override;

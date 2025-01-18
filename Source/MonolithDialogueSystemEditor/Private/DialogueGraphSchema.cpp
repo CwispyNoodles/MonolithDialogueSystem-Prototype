@@ -15,7 +15,7 @@ UEdGraphNode* FDialogueGraphSchemaAction_NewNode::PerformAction(UEdGraph* Parent
 	UDialogueGraph* DialogueGraph = Cast<UDialogueGraph>(ParentGraph);
 	
 	UEdGraphNode* MyNode = CreateNode(ParentGraph, Location);
-	// MyNode->SetDialogueNodeData(NewObject<UDialogueNodeData>(MyNode));
+	// MyNode->SetDialogueNodeData(NewObject<UDialogueNodeData_Base>(MyNode));
 
 	// if (FromPin)
 	// {

@@ -10,7 +10,7 @@
  * 
  */
 UCLASS()
-class MONOLITHDIALOGUESYSTEMRUNTIME_API UDialogueNodeData : public UObject
+class MONOLITHDIALOGUESYSTEMRUNTIME_API UDialogueNodeData_Base : public UObject
 {
 	GENERATED_BODY()
 	

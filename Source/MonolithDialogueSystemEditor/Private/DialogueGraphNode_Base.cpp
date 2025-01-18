@@ -32,10 +32,10 @@ void UDialogueGraphNode::InitializeNodeData()
 {
 	if (NodeDataClass)
 	{
-		DialogueNodeData = NewObject<UDialogueNodeData>(this, NodeDataClass);
+		DialogueNodeData = NewObject<UDialogueNodeData_Base>(this, NodeDataClass);
 	}
 	else
 	{
-		DialogueNodeData = NewObject<UDialogueNodeData>(this);
+		DialogueNodeData = NewObject<UDialogueNodeData_Base>(this);
 	}
 }
