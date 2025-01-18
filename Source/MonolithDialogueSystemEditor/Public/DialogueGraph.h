@@ -3,7 +3,7 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "DialogueNodeData_Alias.h"
+#include "DialogueGraphData.h"
 #include "EdGraph/EdGraph.h"
 #include "DialogueGraph.generated.h"
 
@@ -22,6 +22,9 @@ class MONOLITHDIALOGUESYSTEMEDITOR_API UDialogueGraph : public UEdGraph
 
 public:
 	UDialogueGraph();
+
+	UPROPERTY()
+	UDialogueGraphData* DialogueGraphData;
 	
 	FAliasCounter AliasCounter;
 

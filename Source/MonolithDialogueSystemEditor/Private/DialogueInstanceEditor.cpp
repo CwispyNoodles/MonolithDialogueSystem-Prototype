@@ -44,6 +44,9 @@ void FDialogueInstanceEditor::InitDialogueInstanceEditor(const EToolkitMode::Typ
 
 	WorkingGraph->GetSchema()->CreateDefaultNodesForGraph(*WorkingGraph);
 
+	UDialogueGraph* DialogueGraph = Cast<UDialogueGraph>(WorkingGraph);
+	DialogueGraph->DialogueGraphData = NewObject<UDialogueGraphData>(WorkingGraph);
+
 	bool bCreateDefaultStandaloneMenu = true;
 	bool bCreateDefaultToolBar = true;
 	InitAssetEditor

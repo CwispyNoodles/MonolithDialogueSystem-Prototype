@@ -110,7 +110,7 @@ void UDialogueGraphSchema::GetGraphContextActions(FGraphContextMenuBuilder& Cont
 	if (const UDialogueGraph* DialogueGraph = Cast<UDialogueGraph>(ContextMenuBuilder.CurrentGraph))
 	{
 		TArray<FString> Subjects;
-		DialogueGraph->AliasCounter.GetSubjects(Subjects);
+		DialogueGraph->DialogueGraphData->AliasCounter.GetSubjects(Subjects);
 		for (FString Alias : Subjects)
 		{
 			FString InMenuDesc = FString(TEXT("New '{0}' Alias Output"));
