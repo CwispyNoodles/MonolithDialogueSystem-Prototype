@@ -1,19 +1,19 @@
 ﻿// Fill out your copyright notice in the Description page of Project Settings.
 
 
-#include "SDialogueGraphNode.h"
+#include "..\Public\SDialogueGraphNode_Query.h"
 
 #include "DialogueGraphNode_Dialogue.h"
 #include "DialogueNodeData_Dialogue.h"
 #include "..\Public\DialogueGraphNode_Base.h"
 
-void SDialogueGraphNode_Response::Construct(const FArguments& InArgs, UDialogueGraphNode_Base* InNode)
+void SDialogueGraphNode_Query::Construct(const FArguments& InArgs, UDialogueGraphNode_Base* InNode)
 {
 	GraphNode = InNode;
 	UpdateGraphNode();
 }
 
-FText SDialogueGraphNode_Response::GetDialogueText() const
+FText SDialogueGraphNode_Query::GetDialogueText() const
 {
 	UDialogueGraphNode_Dialogue* DialogueNode = Cast<UDialogueGraphNode_Dialogue>(GraphNode);
 	check(DialogueNode)
@@ -22,12 +22,12 @@ FText SDialogueGraphNode_Response::GetDialogueText() const
 	return NodeData->QueryText;
 }
 
-void SDialogueGraphNode_Response::UpdateGraphNode()
+void SDialogueGraphNode_Query::UpdateGraphNode()
 {
 	SGraphNode::UpdateGraphNode();
 }
 
-TSharedRef<SWidget> SDialogueGraphNode_Response::CreateNodeContentArea()
+TSharedRef<SWidget> SDialogueGraphNode_Query::CreateNodeContentArea()
 {
 	// NODE CONTENT AREA
 	return SNew(SBorder)
@@ -56,7 +56,7 @@ TSharedRef<SWidget> SDialogueGraphNode_Response::CreateNodeContentArea()
 				[
 					SAssignNew(DialogueText, STextBlock)
 					.MinDesiredWidth(260.0f)
-					.Text(this, &SDialogueGraphNode_Response::GetDialogueText)
+					.Text(this, &SDialogueGraphNode_Query::GetDialogueText)
 					.WrapTextAt(250.0f)
 				]
 			]

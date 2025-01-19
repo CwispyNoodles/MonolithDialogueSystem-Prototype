@@ -9,10 +9,10 @@ class UDialogueGraphNode_Base;
 /**
  * 
  */
-class MONOLITHDIALOGUESYSTEMEDITOR_API SDialogueGraphNode_Response : public SGraphNode
+class MONOLITHDIALOGUESYSTEMEDITOR_API SDialogueGraphNode_Query : public SGraphNode
 {
 public:
-	SLATE_BEGIN_ARGS(SDialogueGraphNode_Response) {}
+	SLATE_BEGIN_ARGS(SDialogueGraphNode_Query) {}
 	SLATE_END_ARGS()
 
 	void Construct(const FArguments& InArgs, UDialogueGraphNode_Base* InNode);
