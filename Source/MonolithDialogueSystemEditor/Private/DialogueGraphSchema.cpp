@@ -65,7 +65,6 @@ void UDialogueGraphSchema::CreateDefaultNodesForGraph(UEdGraph& Graph) const
 
 const FPinConnectionResponse UDialogueGraphSchema::CanCreateConnection(const UEdGraphPin* A, const UEdGraphPin* B) const
 {
-	if (A->LinkedTo.Num())
 	if (A == nullptr || B == nullptr) {
 		return FPinConnectionResponse(CONNECT_RESPONSE_DISALLOW, TEXT("Need 2 pins"));
 	}
@@ -74,7 +73,55 @@ const FPinConnectionResponse UDialogueGraphSchema::CanCreateConnection(const UEd
 		return FPinConnectionResponse(CONNECT_RESPONSE_DISALLOW, TEXT("Inputs can only connect to outputs"));
 	}
 
-	return FPinConnectionResponse(CONNECT_RESPONSE_BREAK_OTHERS_AB, TEXT(""));
+	// Root Node Conditions
+	if (A->GetOwningNode()->IsA(UDialogueGraphNode_Root::StaticClass()))
+	{
+		if (B->GetOwningNode()->IsA(UDialogueGraphNode_Alias_In::StaticClass()))
+		{
+			return FPinConnectionResponse(CONNECT_RESPONSE_BREAK_OTHERS_AB, TEXT(""));
+		}
+		if (B->GetOwningNode()->IsA(UDialogueGraphNode_Query::StaticClass()))
+		{
+			return FPinConnectionResponse(CONNECT_RESPONSE_BREAK_OTHERS_AB, TEXT(""));
+		}
+		return FPinConnectionResponse(CONNECT_RESPONSE_DISALLOW, TEXT(""));
+	}
+
+	// Query Conditions
+	if (A->GetOwningNode()->IsA(UDialogueGraphNode_Query::StaticClass()))
+	{
+		if (B->GetOwningNode()->IsA(UDialogueGraphNode_Response::StaticClass()))
+		{
+			return FPinConnectionResponse(CONNECT_RESPONSE_MAKE, TEXT(""));
+		}
+		return FPinConnectionResponse(CONNECT_RESPONSE_DISALLOW, TEXT(""));
+	}
+
+	// Alias Out Conditions
+	if (A->GetOwningNode()->IsA(UDialogueGraphNode_Alias_Out::StaticClass()))
+	{
+		if (B->GetOwningNode()->IsA(UDialogueGraphNode_Query::StaticClass()))
+		{
+			return FPinConnectionResponse(CONNECT_RESPONSE_BREAK_OTHERS_AB, TEXT(""));
+		}
+		return FPinConnectionResponse(CONNECT_RESPONSE_DISALLOW, TEXT(""));
+	}
+
+	// Response conditions
+	if (A->GetOwningNode()->IsA(UDialogueGraphNode_Response::StaticClass()))
+	{
+		if (B->GetOwningNode()->IsA(UDialogueGraphNode_Query::StaticClass()))
+		{
+			return FPinConnectionResponse(CONNECT_RESPONSE_BREAK_OTHERS_AB, TEXT(""));
+		}
+		if (B->GetOwningNode()->IsA(UDialogueGraphNode_Alias_In::StaticClass()))
+		{
+			return FPinConnectionResponse(CONNECT_RESPONSE_BREAK_OTHERS_AB, TEXT(""));
+		}
+		return FPinConnectionResponse(CONNECT_RESPONSE_DISALLOW, TEXT(""));
+	}
+
+	return FPinConnectionResponse(CONNECT_RESPONSE_DISALLOW, TEXT(""));
 }
 
 void UDialogueGraphSchema::GetGraphContextActions(FGraphContextMenuBuilder& ContextMenuBuilder) const
