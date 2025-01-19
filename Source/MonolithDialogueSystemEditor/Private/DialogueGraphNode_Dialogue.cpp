@@ -7,5 +7,5 @@
 
 UDialogueGraphNode_Dialogue::UDialogueGraphNode_Dialogue()
 {
-	NodeDataClass = UDialogueNodeData_Dialogue::StaticClass();
+	NodeDataClass = UDialogueNodeData_Query::StaticClass();
 }

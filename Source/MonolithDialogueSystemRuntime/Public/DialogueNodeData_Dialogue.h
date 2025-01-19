@@ -10,7 +10,7 @@
  * 
  */
 UCLASS()
-class MONOLITHDIALOGUESYSTEMRUNTIME_API UDialogueNodeData_Dialogue : public UDialogueNodeData_Base
+class MONOLITHDIALOGUESYSTEMRUNTIME_API UDialogueNodeData_Query : public UDialogueNodeData_Base
 {
 	GENERATED_BODY()
 

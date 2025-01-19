@@ -18,7 +18,7 @@ FText SDialogueGraphNode::GetDialogueText() const
 	UDialogueGraphNode_Dialogue* DialogueNode = Cast<UDialogueGraphNode_Dialogue>(GraphNode);
 	check(DialogueNode)
 
-	UDialogueNodeData_Dialogue* NodeData = Cast<UDialogueNodeData_Dialogue>(DialogueNode->GetDialogueNodeData());
+	UDialogueNodeData_Query* NodeData = Cast<UDialogueNodeData_Query>(DialogueNode->GetDialogueNodeData());
 	return NodeData->DialogueText;
 }
 
