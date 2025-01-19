@@ -16,7 +16,7 @@ class MONOLITHDIALOGUESYSTEMRUNTIME_API UDialogueNodeData_Query : public UDialog
 
 public:
 	UPROPERTY(EditAnywhere, meta=(MultiLine))
-	FText DialogueText;
+	FText QueryText;
 };
 
 UCLASS()
@@ -26,5 +26,5 @@ class MONOLITHDIALOGUESYSTEMRUNTIME_API UDialogueNodeData_Response : public UDia
 
 public:
 	UPROPERTY(EditAnywhere, meta=(MultiLine))
-	TArray<FText> DialogueText;
+	TArray<FText> ResponseTexts;
 };

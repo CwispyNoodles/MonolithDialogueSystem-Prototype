@@ -4,7 +4,7 @@
 #include "DialogueGraphPanelNodeFactory.h"
 
 #include "DialogueGraphNode_Alias.h"
-#include "DialogueGraphNode_Dialogue.h"
+#include "DialogueGraphNode_Response.h"
 #include "SDialogueGraphNode.h"
 #include "SDialogueGraphNode_Alias.h"
 
@@ -15,9 +15,9 @@ TSharedPtr<SGraphNode> FDialogueGraphPanelNodeFactory::CreateNode(UEdGraphNode* 
 	{
 		return SNew(SDialogueGraphNode_Alias, AliasNode);
 	}
-	if (UDialogueGraphNode_Dialogue* DialogueNode = Cast<UDialogueGraphNode_Dialogue>(Node))
+	if (UDialogueGraphNode_Response* DialogueNode = Cast<UDialogueGraphNode_Response>(Node))
 	{
-		return SNew(SDialogueGraphNode, DialogueNode);
+		return SNew(SDialogueGraphNode_Response, DialogueNode);
 	}
 	
 	return nullptr;

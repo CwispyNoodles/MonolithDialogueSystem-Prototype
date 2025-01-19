@@ -7,27 +7,27 @@
 #include "DialogueNodeData_Dialogue.h"
 #include "..\Public\DialogueGraphNode_Base.h"
 
-void SDialogueGraphNode::Construct(const FArguments& InArgs, UDialogueGraphNode_Base* InNode)
+void SDialogueGraphNode_Response::Construct(const FArguments& InArgs, UDialogueGraphNode_Base* InNode)
 {
 	GraphNode = InNode;
 	UpdateGraphNode();
 }
 
-FText SDialogueGraphNode::GetDialogueText() const
+FText SDialogueGraphNode_Response::GetDialogueText() const
 {
 	UDialogueGraphNode_Dialogue* DialogueNode = Cast<UDialogueGraphNode_Dialogue>(GraphNode);
 	check(DialogueNode)
 
 	UDialogueNodeData_Query* NodeData = Cast<UDialogueNodeData_Query>(DialogueNode->GetDialogueNodeData());
-	return NodeData->DialogueText;
+	return NodeData->QueryText;
 }
 
-void SDialogueGraphNode::UpdateGraphNode()
+void SDialogueGraphNode_Response::UpdateGraphNode()
 {
 	SGraphNode::UpdateGraphNode();
 }
 
-TSharedRef<SWidget> SDialogueGraphNode::CreateNodeContentArea()
+TSharedRef<SWidget> SDialogueGraphNode_Response::CreateNodeContentArea()
 {
 	// NODE CONTENT AREA
 	return SNew(SBorder)
@@ -56,7 +56,7 @@ TSharedRef<SWidget> SDialogueGraphNode::CreateNodeContentArea()
 				[
 					SAssignNew(DialogueText, STextBlock)
 					.MinDesiredWidth(260.0f)
-					.Text(this, &SDialogueGraphNode::GetDialogueText)
+					.Text(this, &SDialogueGraphNode_Response::GetDialogueText)
 					.WrapTextAt(250.0f)
 				]
 			]
