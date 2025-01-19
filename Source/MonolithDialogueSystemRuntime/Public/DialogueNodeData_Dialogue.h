@@ -18,3 +18,13 @@ public:
 	UPROPERTY(EditAnywhere, meta=(MultiLine))
 	FText DialogueText;
 };
+
+UCLASS()
+class MONOLITHDIALOGUESYSTEMRUNTIME_API UDialogueNodeData_Response : public UDialogueNodeData_Base
+{
+	GENERATED_BODY()
+
+public:
+	UPROPERTY(EditAnywhere, meta=(MultiLine))
+	TArray<FText> DialogueText;
+};
