@@ -66,6 +66,23 @@ public:
 protected:
 	 FText AliasName;
 };
+
+USTRUCT()
+struct MONOLITHDIALOGUESYSTEMEDITOR_API FDialogueGraphSchemaAction_NewNode_Response : public FDialogueGraphSchemaAction_NewNode
+{
+	GENERATED_BODY()
+
+public:
+	FDialogueGraphSchemaAction_NewNode_Response() 
+		: FDialogueGraphSchemaAction_NewNode()
+	{}
+
+	FDialogueGraphSchemaAction_NewNode_Response(UClass* InClassTemplate, FText InNodeCategory, FText InMenuDesc, FText InToolTip, FText InKeywords = FText::GetEmpty(), int32 InGrouping = 0)
+		: FDialogueGraphSchemaAction_NewNode(InClassTemplate, InNodeCategory, InMenuDesc, InToolTip, InKeywords, InGrouping)
+	{}
+
+	virtual UEdGraphNode* PerformAction(UEdGraph* ParentGraph, UEdGraphPin* FromPin, const FVector2D Location, bool bSelectNewNode) override;
+};
 /**
  * 
  */

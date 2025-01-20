@@ -30,6 +30,11 @@ void UDialogueGraphNode_Response::SyncPinsWithResponses()
 	
 }
 
+UDialogueNodeData_Response* UDialogueGraphNode_Response::GetResponseNodeData()
+{
+	return Cast<UDialogueNodeData_Response>(GetDialogueNodeData());
+}
+
 void UDialogueGraphNode_Response::AllocateDefaultPins()
 {
 	DefaultInputPin = CreatePin(EGPD_Input, TEXT("PinCategory_Default"), TEXT("Response In"));

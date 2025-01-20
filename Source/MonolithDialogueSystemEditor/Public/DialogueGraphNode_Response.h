@@ -6,6 +6,7 @@
 #include "DialogueGraphNode_Dialogue.h"
 #include "DialogueGraphNode_Response.generated.h"
 
+class UDialogueNodeData_Response;
 /**
  * 
  */
@@ -17,6 +18,7 @@ class MONOLITHDIALOGUESYSTEMEDITOR_API UDialogueGraphNode_Response : public UDia
 public:
 	UDialogueGraphNode_Response();
 	void SyncPinsWithResponses();
+	UDialogueNodeData_Response* GetResponseNodeData();
 
 public: // UEdGraphNode Interface
 	virtual FText GetNodeTitle(ENodeTitleType::Type titalType) const override { return FText::FromString("Response"); }

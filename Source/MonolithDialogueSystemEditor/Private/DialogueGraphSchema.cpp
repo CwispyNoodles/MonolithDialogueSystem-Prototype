@@ -9,6 +9,7 @@
 #include "DialogueGraphNode_Response.h"
 #include "DialogueGraphNode_Root.h"
 #include "DialogueNodeData_Alias.h"
+#include "DialogueNodeData_Dialogue.h"
 
 UEdGraphNode* FDialogueGraphSchemaAction_NewNode::PerformAction(UEdGraph* ParentGraph, UEdGraphPin* FromPin, const FVector2D Location, bool bSelectNewNode)
 {
@@ -52,6 +53,19 @@ UEdGraphNode* FDialogueGraphSchemaAction_NewNode_AliasOut::PerformAction(UEdGrap
 	ParentGraph->AddNode(MyNode, true, true);
 
 	return MyNode;
+}
+
+UEdGraphNode* FDialogueGraphSchemaAction_NewNode_Response::PerformAction(UEdGraph* ParentGraph, UEdGraphPin* FromPin,
+	const FVector2D Location, bool bSelectNewNode)
+{
+	UEdGraphNode* MyNode = FDialogueGraphSchemaAction_NewNode::PerformAction(ParentGraph, FromPin, Location, bSelectNewNode);
+	UDialogueGraphNode_Response* ResponseNode = Cast<UDialogueGraphNode_Response>(MyNode);
+
+	ResponseNode->GetResponseNodeData()->ResponseTexts.Add(FText());
+	ResponseNode->SyncPinsWithResponses();
+
+	return ResponseNode;
+	
 }
 
 void UDialogueGraphSchema::CreateDefaultNodesForGraph(UEdGraph& Graph) const
@@ -135,8 +149,8 @@ void UDialogueGraphSchema::GetGraphContextActions(FGraphContextMenuBuilder& Cont
 			FText::GetEmpty(),
 			0));
 
-	TSharedPtr<FDialogueGraphSchemaAction_NewNode> NewResponseNodeAction(
-		new FDialogueGraphSchemaAction_NewNode(
+	TSharedPtr<FDialogueGraphSchemaAction_NewNode_Response> NewResponseNodeAction(
+		new FDialogueGraphSchemaAction_NewNode_Response(
 			UDialogueGraphNode_Response::StaticClass(),
 			FText::FromString(TEXT("Nodes")),
 			FText::FromString(TEXT("New Response Node")),
