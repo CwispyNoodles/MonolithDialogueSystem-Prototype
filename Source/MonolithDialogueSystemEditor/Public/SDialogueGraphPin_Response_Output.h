@@ -3,13 +3,25 @@
 #pragma once
 
 #include "CoreMinimal.h"
+#include "SGraphPin.h"
 
 /**
  * 
  */
-class MONOLITHDIALOGUESYSTEMEDITOR_API SDialogueGraphPin_Response_Output
+class SDialogueGraphPin_Response_Output : public SGraphPin
 {
 public:
-	SDialogueGraphPin_Response_Output();
-	~SDialogueGraphPin_Response_Output();
+	SLATE_BEGIN_ARGS(SDialogueGraphPin_Response_Output)
+	{}
+	SLATE_END_ARGS()
+
+	void Construct(const FArguments& InArgs, UEdGraphPin* InPin);
+	FText GetResponseText() const;
+
+	TSharedPtr<STextBlock> ResponseText;
+
+protected:
+	virtual FSlateColor GetPinColor() const override {
+		return FSlateColor(FLinearColor::White);
+	}
 };

@@ -14,6 +14,10 @@ class MONOLITHDIALOGUESYSTEMEDITOR_API UDialogueGraphNode_Response : public UDia
 {
 	GENERATED_BODY()
 
+public:
+	UDialogueGraphNode_Response();
+	void SyncPinsWithResponses();
+
 public: // UEdGraphNode Interface
 	virtual FText GetNodeTitle(ENodeTitleType::Type titalType) const override { return FText::FromString("Response"); }
 	virtual FLinearColor GetNodeTitleColor() const override { return FLinearColor(FColor::Green); }

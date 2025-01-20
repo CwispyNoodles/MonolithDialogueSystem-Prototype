@@ -4,7 +4,9 @@
 #include "DialogueGraph.h"
 
 #include "DialogueGraphNode_Alias.h"
+#include "DialogueGraphNode_Response.h"
 #include "DialogueNodeData_Alias.h"
+#include "DialogueNodeData_Dialogue.h"
 #include "GraphEditAction.h"
 
 UDialogueGraph::UDialogueGraph()
@@ -34,13 +36,17 @@ void UDialogueGraph::HandleThisGraphModified(const FEdGraphEditAction& InEditAct
 
 	if (InEditAction.Action == GRAPHACTION_EditNode)
 	{
-		for (const UEdGraphNode* RemovedNode : InEditAction.Nodes)
+		for (const UEdGraphNode* EditedNode : InEditAction.Nodes)
 		{
-			if (const UDialogueGraphNode_Alias_In* AliasNode = Cast<UDialogueGraphNode_Alias_In>(RemovedNode))
+			if (const UDialogueGraphNode_Alias_In* AliasNode = Cast<UDialogueGraphNode_Alias_In>(EditedNode))
 			{
 				UDialogueNodeData_Alias_In* NodeData = Cast<UDialogueNodeData_Alias_In>(AliasNode->GetDialogueNodeData());
 				DialogueGraphData->AliasCounter.Unsubscribe(NodeData->Ticket);
 				NodeData->Ticket = DialogueGraphData->AliasCounter.Subscribe(NodeData->GetAliasName().ToString());
+			}
+			if (UDialogueGraphNode_Response* ResponseNode = (UDialogueGraphNode_Response*)EditedNode)
+			{
+				ResponseNode->SyncPinsWithResponses();
 			}
 		}
 	}

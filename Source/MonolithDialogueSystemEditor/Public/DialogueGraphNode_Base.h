@@ -24,7 +24,6 @@ public:
 	UDialogueNodeData_Base* GetDialogueNodeData() const { return DialogueNodeData; }
 	virtual void InitializeNodeData();
 	UEdGraphPin* GetDefaultInputPin() { return DefaultInputPin; }
-
 protected:
 	UPROPERTY()
 	TSubclassOf<UDialogueNodeData_Base> NodeDataClass;

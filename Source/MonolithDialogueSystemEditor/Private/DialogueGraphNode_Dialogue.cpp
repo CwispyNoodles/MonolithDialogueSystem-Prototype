@@ -5,7 +5,3 @@
 
 #include "DialogueNodeData_Dialogue.h"
 
-UDialogueGraphNode_Dialogue::UDialogueGraphNode_Dialogue()
-{
-	NodeDataClass = UDialogueNodeData_Query::StaticClass();
-}

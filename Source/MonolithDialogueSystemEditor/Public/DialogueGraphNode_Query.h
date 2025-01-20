@@ -14,6 +14,9 @@ class MONOLITHDIALOGUESYSTEMEDITOR_API UDialogueGraphNode_Query : public UDialog
 {
 	GENERATED_BODY()
 
+public:
+	UDialogueGraphNode_Query();
+
 public: // UEdGraphNode Interface
 	virtual FText GetNodeTitle(ENodeTitleType::Type titalType) const override { return FText::FromString("Query"); }
 	virtual FLinearColor GetNodeTitleColor() const override { return FLinearColor(FColor::Green); }
