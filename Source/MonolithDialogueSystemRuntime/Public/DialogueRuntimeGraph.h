@@ -3,9 +3,11 @@
 #pragma once
 
 #include "CoreMinimal.h"
+#include "DialogueNodeType.h"
 #include "UObject/Object.h"
 #include "DialogueRuntimeGraph.generated.h"
 
+enum class EDialogueNodeType;
 class UDialogueGraphData;
 class UDialogueNodeData_Base;
 
@@ -26,6 +28,9 @@ public:
 
 	UPROPERTY()
 	class UDialogueRuntimeNode* Parent = nullptr;
+
+	UPROPERTY()
+	TEnumAsByte<EEdGraphPinDirection> Direction;
 };
 
 UCLASS()
@@ -42,6 +47,9 @@ public:
 
 	UPROPERTY()
 	UDialogueNodeData_Base* NodeData = nullptr;
+
+	UPROPERTY()
+	EDialogueNodeType NodeType = EDialogueNodeType::None;
 };
 
 /**

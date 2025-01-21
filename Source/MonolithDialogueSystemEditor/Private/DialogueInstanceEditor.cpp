@@ -4,6 +4,9 @@
 #include "DialogueInstanceEditor.h"
 
 #include "DialogueGraph.h"
+#include "DialogueGraphNode_Alias.h"
+#include "DialogueGraphNode_Query.h"
+#include "DialogueGraphNode_Response.h"
 #include "DialogueGraphNode_Root.h"
 #include "..\Public\DialogueGraphNode_Base.h"
 #include "DialogueInstance.h"
@@ -35,6 +38,8 @@ void FDialogueInstanceEditor::InitDialogueInstanceEditor(const EToolkitMode::Typ
 	FEdGraphUtilities::RegisterVisualPinFactory(DialogueGraphPanelPinFactory);
 
 	WorkingAsset = Cast<UDialogueInstance>(InObject);
+	WorkingAsset->SetPreSaveListener([this] () { OnWorkingAssetPreSave(); });
+	
 	WorkingGraph = FBlueprintEditorUtils::CreateNewGraph
 	(
 		WorkingAsset,
@@ -42,8 +47,6 @@ void FDialogueInstanceEditor::InitDialogueInstanceEditor(const EToolkitMode::Typ
 		UDialogueGraph::StaticClass(),
 		UDialogueGraphSchema::StaticClass()
 	);
-
-	LoadGraph();
 
 	UDialogueGraph* DialogueGraph = Cast<UDialogueGraph>(WorkingGraph);
 	DialogueGraph->DialogueGraphData = NewObject<UDialogueGraphData>(WorkingGraph);
@@ -63,6 +66,8 @@ void FDialogueInstanceEditor::InitDialogueInstanceEditor(const EToolkitMode::Typ
 
 	AddApplicationMode(TEXT("FDialogueInstanceEditorMode"), MakeShareable(new FDialogueInstanceEditorMode(SharedThis(this))));
 	SetCurrentMode(TEXT("FDialogueInstanceEditorMode"));
+
+	LoadGraph();
 }
 
 void FDialogueInstanceEditor::SetSelectedNodeDetailsView(TSharedPtr<IDetailsView> DetailsView)
@@ -81,6 +86,11 @@ void FDialogueInstanceEditor::OnGraphSelectionChanged(const FGraphPanelSelection
 	{
 		SelectedNodeDetailsView->SetObject(nullptr);
 	}
+}
+
+void FDialogueInstanceEditor::OnWorkingAssetPreSave()
+{
+	SaveGraph();
 }
 
 void FDialogueInstanceEditor::BindGraphCommands()
@@ -195,6 +205,7 @@ void FDialogueInstanceEditor::SaveGraph()
 			RuntimePin->PinName = EditorPin->PinName;
 			RuntimePin->PinId = EditorPin->PinId;
 			RuntimePin->Parent = RuntimeNode;
+			RuntimePin->Direction = EditorPin->Direction;
 
 			if (EditorPin->HasAnyConnections())
 			{
@@ -207,6 +218,7 @@ void FDialogueInstanceEditor::SaveGraph()
 		}
 		UDialogueGraphNode_Base* EditorDialogueNode = Cast<UDialogueGraphNode_Base>(EditorNode);
 		RuntimeNode->NodeData = DuplicateObject(EditorDialogueNode->GetDialogueNodeData(), RuntimeNode);
+		RuntimeNode->NodeType = EditorDialogueNode->GetDialogueNodeType();
 
 		RuntimeGraph->Nodes.Add(RuntimeNode);
 	}
@@ -225,6 +237,8 @@ void FDialogueInstanceEditor::LoadGraph()
 	{
 		UDialogueRuntimeGraph* RuntimeGraph = NewObject<UDialogueRuntimeGraph>(WorkingAsset);
 		WorkingGraph->GetSchema()->CreateDefaultNodesForGraph(*WorkingGraph);
+		WorkingAsset->Graph = RuntimeGraph;
+		return;
 	}
 
 	TArray<std::pair<FGuid, FGuid>> Connections;
@@ -232,15 +246,60 @@ void FDialogueInstanceEditor::LoadGraph()
 
 	for (UDialogueRuntimeNode* RuntimeNode : WorkingAsset->Graph->Nodes)
 	{
-		// UDialogueGraphNode_Base* EditorNode = nullptr;
-		// if (RuntimeNode->NodeData->IsA(UDialogueGraphNode_Root::StaticClass()))
-		// {
-		// 	EditorNode = NewObject<UDialogueGraphNode_Root>(WorkingGraph);
-		// }
-		// else if (RuntimeNode->NodeData->IsA(UDialogueGraphNode_Alias::StaticClass()))
-		// {
-		// 	EditorNode = NewObject<>(WorkingGraph);
-		// }
+		UDialogueGraphNode_Base* EditorNode = nullptr;
+		switch (RuntimeNode->NodeType)
+		{
+		case EDialogueNodeType::Root:
+			EditorNode = NewObject<UDialogueGraphNode_Root>(WorkingGraph);
+			break;
+		case EDialogueNodeType::Query:
+			EditorNode = NewObject<UDialogueGraphNode_Query>(WorkingGraph);
+			break;
+		case EDialogueNodeType::Response:
+			EditorNode = NewObject<UDialogueGraphNode_Response>(WorkingGraph);
+			break;
+		case EDialogueNodeType::AliasIn:
+			EditorNode = NewObject<UDialogueGraphNode_Alias_In>(WorkingGraph);
+			break;
+		case EDialogueNodeType::AliasOut:
+			EditorNode = NewObject<UDialogueGraphNode_Alias_Out>(WorkingGraph);
+			break;
+		default: ;
+			continue;
+		}
+
+		EditorNode->CreateNewGuid();
+		EditorNode->SetPosition(RuntimeNode->Position);
+
+		if (!RuntimeNode->NodeData)
+		{
+			EditorNode->SetDialogueNodeData(DuplicateObject(RuntimeNode->NodeData, EditorNode));
+		}
+		else
+		{
+			EditorNode->InitializeNodeData();
+		}
+
+		for (UDialogueRuntimePin* RuntimePin : RuntimeNode->Pins)
+		{
+			FName Category = RuntimePin->Direction == EGPD_Input ? TEXT("Inputs") : TEXT("Outputs");
+			UEdGraphPin* EditorPin = EditorNode->CreatePin(RuntimePin->Direction, Category, RuntimePin->PinName);
+			EditorPin->PinId = RuntimePin->PinId;
+
+			if (RuntimePin->Connection)
+			{
+				Connections.Add(std::make_pair(RuntimePin->PinId, RuntimePin->Connection->PinId));
+			}
+			IdToPinMap.Add(RuntimePin->PinId, EditorPin);
+		}
+		WorkingGraph->AddNode(EditorNode, true, true);
+	}
+	for (std::pair<FGuid, FGuid> Connection : Connections)
+	{
+		UEdGraphPin* FromPin = IdToPinMap[Connection.first];
+		UEdGraphPin* ToPin = IdToPinMap[Connection.second];
+		FromPin->LinkedTo.Add(ToPin);
+		ToPin->LinkedTo.Add(FromPin);
 	}
 }
 
@@ -282,6 +341,13 @@ void FDialogueInstanceEditor::OnToolkitHostingStarted(const TSharedRef<IToolkit>
 void FDialogueInstanceEditor::OnToolkitHostingFinished(const TSharedRef<IToolkit>& Toolkit)
 {
 	
+}
+
+void FDialogueInstanceEditor::OnClose()
+{
+	SaveGraph();
+	WorkingAsset->SetPreSaveListener(nullptr);
+	FWorkflowCentricApplication::OnClose();
 }
 
 #undef LOCTEXT_NAMESPACE

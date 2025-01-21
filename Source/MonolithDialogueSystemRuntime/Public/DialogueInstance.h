@@ -2,6 +2,8 @@
 
 #pragma once
 
+#include <functional>
+
 #include "CoreMinimal.h"
 #include "DialogueRuntimeGraph.h"
 #include "UObject/Object.h"
@@ -18,4 +20,10 @@ class MONOLITHDIALOGUESYSTEMRUNTIME_API UDialogueInstance : public UObject
 public:
 	UPROPERTY()
 	UDialogueRuntimeGraph* Graph = nullptr;
+
+	void SetPreSaveListener(std::function<void()> InPreSaveListener) { OnPreSaveListener = InPreSaveListener; }
+	virtual void PreSave(FObjectPreSaveContext saveContext) override;
+	
+private: // Members
+	std::function<void()> OnPreSaveListener = nullptr;
 };

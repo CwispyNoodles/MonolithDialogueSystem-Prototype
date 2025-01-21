@@ -20,6 +20,7 @@ public:
 	void InitDialogueInstanceEditor(const EToolkitMode::Type Mode, const TSharedPtr<class IToolkitHost>& InitToolkitHost, UObject* InObject);
 	void SetSelectedNodeDetailsView(TSharedPtr<IDetailsView> DetailsView);
 	void OnGraphSelectionChanged(const FGraphPanelSelectionSet& Selection);
+	void OnWorkingAssetPreSave();
 
 	void SetWorkingGraphEditor(TSharedPtr<SGraphEditor> InWorkingGraphEditor) { WorkingGraphEditor = InWorkingGraphEditor; }
 
@@ -53,5 +54,6 @@ public: // FAssetEditorToolkit interface
 	virtual FString GetDocumentationLink() const override;
 	virtual void OnToolkitHostingStarted(const TSharedRef<class IToolkit>& Toolkit) override;
 	virtual void OnToolkitHostingFinished(const TSharedRef<class IToolkit>& Toolkit) override;
+	virtual void OnClose() override;
 };
 
