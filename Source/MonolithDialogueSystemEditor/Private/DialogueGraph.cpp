@@ -44,7 +44,8 @@ void UDialogueGraph::HandleThisGraphModified(const FEdGraphEditAction& InEditAct
 				DialogueGraphData->AliasCounter.Unsubscribe(NodeData->Ticket);
 				NodeData->Ticket = DialogueGraphData->AliasCounter.Subscribe(NodeData->GetAliasName().ToString());
 			}
-			if (UDialogueGraphNode_Response* ResponseNode = (UDialogueGraphNode_Response*)EditedNode)
+			UDialogueGraphNode_Base* Node = (UDialogueGraphNode_Base*)EditedNode;
+			if (UDialogueGraphNode_Response* ResponseNode = Cast<UDialogueGraphNode_Response>(Node))
 			{
 				ResponseNode->SyncPinsWithResponses();
 			}
