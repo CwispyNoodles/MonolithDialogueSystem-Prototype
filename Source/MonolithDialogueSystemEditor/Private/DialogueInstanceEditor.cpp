@@ -271,7 +271,7 @@ void FDialogueInstanceEditor::LoadGraph()
 		EditorNode->CreateNewGuid();
 		EditorNode->SetPosition(RuntimeNode->Position);
 
-		if (!RuntimeNode->NodeData)
+		if (RuntimeNode->NodeData)
 		{
 			EditorNode->SetDialogueNodeData(DuplicateObject(RuntimeNode->NodeData, EditorNode));
 		}
