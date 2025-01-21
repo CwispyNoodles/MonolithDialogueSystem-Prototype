@@ -2,14 +2,17 @@
 
 #pragma once
 
-#include "CoreMinimal.h"
+#include "DialogueNodeType.generated.h"
 
 /**
  * 
  */
-class MONOLITHDIALOGUESYSTEMRUNTIME_API DialogueNodeType
-{
-public:
-	DialogueNodeType();
-	~DialogueNodeType();
+UENUM()
+enum class EDialogueNodeType {
+	None,
+	Root,
+	Query,
+	Response,
+	AliasIn,
+	AliasOut
 };

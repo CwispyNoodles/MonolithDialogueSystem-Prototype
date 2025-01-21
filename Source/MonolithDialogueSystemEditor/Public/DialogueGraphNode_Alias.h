@@ -28,6 +28,7 @@ class MONOLITHDIALOGUESYSTEMEDITOR_API UDialogueGraphNode_Alias_In : public UDia
 
 public:
 	UDialogueGraphNode_Alias_In();
+	virtual EDialogueNodeType GetDialogueNodeType() override { return EDialogueNodeType::AliasIn; }
 
 public: // UEdGraphNode Interface
 	virtual FText GetNodeTitle(ENodeTitleType::Type titalType) const override { return FText::FromString("Alias In"); }
@@ -42,6 +43,7 @@ class MONOLITHDIALOGUESYSTEMEDITOR_API UDialogueGraphNode_Alias_Out : public UDi
 
 public:
 	UDialogueGraphNode_Alias_Out();
+	virtual EDialogueNodeType GetDialogueNodeType() override { return EDialogueNodeType::AliasOut; }
 	
 public: // UEdGraphNode Interface
 	virtual FText GetNodeTitle(ENodeTitleType::Type titalType) const override { return FText::FromString("Alias Out"); }

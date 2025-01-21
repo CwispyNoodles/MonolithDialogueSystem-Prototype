@@ -2,12 +2,3 @@
 
 
 #include "DialogueNodeType.h"
-
-
-DialogueNodeType::DialogueNodeType()
-{
-}
-
-DialogueNodeType::~DialogueNodeType()
-{
-}

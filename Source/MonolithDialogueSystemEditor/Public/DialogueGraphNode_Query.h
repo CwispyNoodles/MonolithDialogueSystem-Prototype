@@ -16,6 +16,7 @@ class MONOLITHDIALOGUESYSTEMEDITOR_API UDialogueGraphNode_Query : public UDialog
 
 public:
 	UDialogueGraphNode_Query();
+	virtual EDialogueNodeType GetDialogueNodeType() override { return EDialogueNodeType::Query; }
 
 public: // UEdGraphNode Interface
 	virtual FText GetNodeTitle(ENodeTitleType::Type titalType) const override { return FText::FromString("Query"); }

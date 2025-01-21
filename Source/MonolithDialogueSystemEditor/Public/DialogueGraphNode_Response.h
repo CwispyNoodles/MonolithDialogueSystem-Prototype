@@ -19,6 +19,7 @@ public:
 	UDialogueGraphNode_Response();
 	void SyncPinsWithResponses();
 	UDialogueNodeData_Response* GetResponseNodeData();
+	virtual EDialogueNodeType GetDialogueNodeType() override { return EDialogueNodeType::Response; }
 
 public: // UEdGraphNode Interface
 	virtual FText GetNodeTitle(ENodeTitleType::Type titalType) const override { return FText::FromString("Response"); }

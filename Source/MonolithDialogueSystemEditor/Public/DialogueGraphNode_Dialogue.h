@@ -13,5 +13,4 @@ UCLASS()
 class MONOLITHDIALOGUESYSTEMEDITOR_API UDialogueGraphNode_Dialogue : public UDialogueGraphNode_Base
 {
 	GENERATED_BODY()
-	
 };

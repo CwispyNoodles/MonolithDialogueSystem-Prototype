@@ -3,6 +3,7 @@
 #pragma once
 
 #include "CoreMinimal.h"
+#include "DialogueNodeType.h"
 #include "EdGraph/EdGraphNode.h"
 #include "DialogueGraphNode_Base.generated.h"
 
@@ -24,6 +25,7 @@ public:
 	UDialogueNodeData_Base* GetDialogueNodeData() const { return DialogueNodeData; }
 	virtual void InitializeNodeData();
 	UEdGraphPin* GetDefaultInputPin() { return DefaultInputPin; }
+	virtual EDialogueNodeType GetDialogueNodeType() { return EDialogueNodeType::None; }
 protected:
 	UPROPERTY()
 	TSubclassOf<UDialogueNodeData_Base> NodeDataClass;
