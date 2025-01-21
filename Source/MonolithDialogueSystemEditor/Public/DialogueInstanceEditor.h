@@ -41,6 +41,8 @@ private:
 
 protected:
 	UDialogueGraphNode_Base* GetSelectedNode(const FGraphPanelSelectionSet& Selection);
+	void SaveGraph();
+	void LoadGraph();
 	
 public: // FAssetEditorToolkit interface
 	virtual void RegisterTabSpawners(const TSharedRef<FTabManager>& InTabManager) override;

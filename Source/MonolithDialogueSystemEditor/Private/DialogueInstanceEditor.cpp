@@ -170,6 +170,58 @@ UDialogueGraphNode_Base* FDialogueInstanceEditor::GetSelectedNode(const FGraphPa
 	return nullptr;
 }
 
+void FDialogueInstanceEditor::SaveGraph()
+{
+	if (!WorkingAsset || !WorkingGraph)
+	{
+		return;
+	}
+
+	UDialogueRuntimeGraph* RuntimeGraph = NewObject<UDialogueRuntimeGraph>(WorkingAsset);
+	WorkingAsset->Graph = RuntimeGraph;
+
+	TArray<std::pair<FGuid, FGuid>> Connections;
+	TMap<FGuid, UDialogueRuntimePin*> IdToPinMap;
+
+	for (UEdGraphNode* EditorNode : WorkingGraph->Nodes)
+	{
+		UDialogueRuntimeNode* RuntimeNode = NewObject<UDialogueRuntimeNode>(RuntimeGraph);
+		RuntimeNode->Position = FVector2D(EditorNode->NodePosX, EditorNode->NodePosY);
+
+		for (UEdGraphPin* EditorPin : EditorNode->Pins)
+		{
+			UDialogueRuntimePin* RuntimePin = NewObject<UDialogueRuntimePin>(RuntimeNode);
+			RuntimePin->PinName = EditorPin->PinName;
+			RuntimePin->PinId = EditorPin->PinId;
+			RuntimePin->Parent = RuntimeNode;
+
+			if (EditorPin->HasAnyConnections())
+			{
+				std::pair<FGuid, FGuid> Connection = std::make_pair(EditorPin->PinId, EditorPin->LinkedTo[0]->PinId);
+				Connections.Add(Connection);
+			}
+
+			IdToPinMap.Add(EditorPin->PinId, RuntimePin);
+			RuntimeNode->Pins.Add(RuntimePin);
+		}
+		UDialogueGraphNode_Base* EditorDialogueNode = Cast<UDialogueGraphNode_Base>(EditorNode);
+		RuntimeNode->NodeData = DuplicateObject(EditorDialogueNode->GetDialogueNodeData(), RuntimeNode);
+
+		RuntimeGraph->Nodes.Add(RuntimeNode);
+	}
+
+	for (std::pair<FGuid, FGuid> Connection : Connections)
+	{
+		UDialogueRuntimePin* Pin1 = IdToPinMap[Connection.first];
+		UDialogueRuntimePin* Pin2 = IdToPinMap[Connection.second];
+		Pin1->Connection = Pin2;
+	}
+}
+
+void FDialogueInstanceEditor::LoadGraph()
+{
+}
+
 void FDialogueInstanceEditor::RegisterTabSpawners(const TSharedRef<FTabManager>& InTabManager)
 {
 	FWorkflowCentricApplication::RegisterTabSpawners(InTabManager);
