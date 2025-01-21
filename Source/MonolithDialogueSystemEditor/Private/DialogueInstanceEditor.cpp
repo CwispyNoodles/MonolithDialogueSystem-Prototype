@@ -4,6 +4,7 @@
 #include "DialogueInstanceEditor.h"
 
 #include "DialogueGraph.h"
+#include "DialogueGraphNode_Root.h"
 #include "..\Public\DialogueGraphNode_Base.h"
 #include "DialogueInstance.h"
 #include "DialogueInstanceEditorMode.h"
@@ -42,7 +43,7 @@ void FDialogueInstanceEditor::InitDialogueInstanceEditor(const EToolkitMode::Typ
 		UDialogueGraphSchema::StaticClass()
 	);
 
-	WorkingGraph->GetSchema()->CreateDefaultNodesForGraph(*WorkingGraph);
+	LoadGraph();
 
 	UDialogueGraph* DialogueGraph = Cast<UDialogueGraph>(WorkingGraph);
 	DialogueGraph->DialogueGraphData = NewObject<UDialogueGraphData>(WorkingGraph);
@@ -220,6 +221,27 @@ void FDialogueInstanceEditor::SaveGraph()
 
 void FDialogueInstanceEditor::LoadGraph()
 {
+	if (!WorkingAsset->Graph)
+	{
+		UDialogueRuntimeGraph* RuntimeGraph = NewObject<UDialogueRuntimeGraph>(WorkingAsset);
+		WorkingGraph->GetSchema()->CreateDefaultNodesForGraph(*WorkingGraph);
+	}
+
+	TArray<std::pair<FGuid, FGuid>> Connections;
+	TMap<FGuid, UEdGraphPin*> IdToPinMap;
+
+	for (UDialogueRuntimeNode* RuntimeNode : WorkingAsset->Graph->Nodes)
+	{
+		// UDialogueGraphNode_Base* EditorNode = nullptr;
+		// if (RuntimeNode->NodeData->IsA(UDialogueGraphNode_Root::StaticClass()))
+		// {
+		// 	EditorNode = NewObject<UDialogueGraphNode_Root>(WorkingGraph);
+		// }
+		// else if (RuntimeNode->NodeData->IsA(UDialogueGraphNode_Alias::StaticClass()))
+		// {
+		// 	EditorNode = NewObject<>(WorkingGraph);
+		// }
+	}
 }
 
 void FDialogueInstanceEditor::RegisterTabSpawners(const TSharedRef<FTabManager>& InTabManager)
