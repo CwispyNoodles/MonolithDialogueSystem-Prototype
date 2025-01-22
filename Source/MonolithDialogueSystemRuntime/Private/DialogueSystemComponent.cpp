@@ -42,6 +42,25 @@ FDialogueHandle UDialogueSystemComponent::StartDialogue()
 		if (UDialogueNodeData_Query* QueryData = Cast<UDialogueNodeData_Query>(ConnectionParent->NodeData))
 		{
 			DialogueHandle.QueryText = QueryData->QueryText;
+
+			for (UDialogueRuntimePin* QueryPin : ConnectionParent->Pins)
+			{
+				if (QueryPin->Direction == EGPD_Output)
+				{
+					Connection = QueryPin->Connection;
+					if (Connection)
+					{
+						ConnectionParent = Connection->Parent;
+						if (ConnectionParent)
+						{
+							if (UDialogueNodeData_Response* ResponseData = Cast<UDialogueNodeData_Response>(ConnectionParent->NodeData))
+							{
+								DialogueHandle.ResponseTexts = ResponseData->ResponseTexts;
+							}
+						}
+					}
+				}
+			}
 		}
 	}
 
