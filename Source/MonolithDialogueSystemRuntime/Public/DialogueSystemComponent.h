@@ -15,6 +15,13 @@ USTRUCT(BlueprintType)
 struct MONOLITHDIALOGUESYSTEMRUNTIME_API FDialogueHandle
 {
 	GENERATED_BODY()
+
+public:
+	UPROPERTY(BlueprintReadOnly)
+	FText QueryText;
+
+	UPROPERTY(BlueprintReadOnly)
+	TArray<FText> ResponseTexts; 
 	
 };
 
@@ -28,13 +35,13 @@ public:
 	UDialogueSystemComponent();
 
 	UFUNCTION(BlueprintCallable)
-	UDialogueInstance* GetWorkingDialogue() { return WorkingDialogue; }
-
-	UFUNCTION(BlueprintCallable)
 	FDialogueHandle StartDialogue();
 
+	UPROPERTY(BlueprintReadOnly)
+	UDialogueRuntimeNode* CurrentNode = nullptr;
+
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly)
-	TSubclassOf<UDialogueInstance> Dialogue = nullptr;
+	UDialogueInstance* Dialogue = nullptr;
 
 	UPROPERTY(BlueprintAssignable)
 	FDialogueEventSignature OnComponentInitialized;
@@ -44,10 +51,6 @@ public:
 
 	UPROPERTY(BlueprintAssignable)
 	FDialogueEventSignature OnDialogueEnd;
-
-private:
-	UPROPERTY()
-	UDialogueInstance* WorkingDialogue = nullptr;
 
 public: // UActorComponent Interface
 	// Called every frame

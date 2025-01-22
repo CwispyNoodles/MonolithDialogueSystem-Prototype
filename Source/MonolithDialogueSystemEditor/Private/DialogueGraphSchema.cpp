@@ -74,7 +74,6 @@ void UDialogueGraphSchema::CreateDefaultNodesForGraph(UEdGraph& Graph) const
 	UDialogueGraphNode_Root* MyNode = NodeCreator.CreateNode(true, UDialogueGraphNode_Root::StaticClass());
 	NodeCreator.Finalize();
 	SetNodeMetaData(MyNode, FNodeMetadata::DefaultGraphNode);
-	
 }
 
 const FPinConnectionResponse UDialogueGraphSchema::CanCreateConnection(const UEdGraphPin* A, const UEdGraphPin* B) const

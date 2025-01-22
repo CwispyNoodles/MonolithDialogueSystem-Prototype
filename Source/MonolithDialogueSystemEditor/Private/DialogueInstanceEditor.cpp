@@ -221,6 +221,11 @@ void FDialogueInstanceEditor::SaveGraph()
 		RuntimeNode->NodeType = EditorDialogueNode->GetDialogueNodeType();
 
 		RuntimeGraph->Nodes.Add(RuntimeNode);
+
+		if (EditorNode->IsA(UDialogueGraphNode_Root::StaticClass()))
+		{
+			RuntimeGraph->RootNode = RuntimeNode;
+		}
 	}
 
 	for (std::pair<FGuid, FGuid> Connection : Connections)

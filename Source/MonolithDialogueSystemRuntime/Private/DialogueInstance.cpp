@@ -5,14 +5,6 @@
 
 #include "UObject/ObjectSaveContext.h"
 
-UDialogueRuntimeNode* UDialogueInstance::GetFirstDialogueNode()
-{
-	if (!Graph)
-		return nullptr;
-
-	return nullptr;
-}
-
 void UDialogueInstance::PreSave(FObjectPreSaveContext saveContext)
 {
 	if (OnPreSaveListener)
