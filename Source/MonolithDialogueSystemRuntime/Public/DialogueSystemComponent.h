@@ -12,7 +12,7 @@ class UDialogueInstance;
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FDialogueEventSignature, UObject*, Payload);
 
 USTRUCT(BlueprintType)
-struct MONOLITHDIALOGUESYSTEMRUNTIME_API FDialogueHandle
+struct MONOLITHDIALOGUESYSTEMRUNTIME_API FDialogueText
 {
 	GENERATED_BODY()
 
@@ -34,8 +34,10 @@ public:
 	// Sets default values for this component's properties
 	UDialogueSystemComponent();
 
+	FDialogueText GetQueryAndResponse(UDialogueRuntimeNode* InRoot, int InIndex);
+
 	UFUNCTION(BlueprintCallable)
-	FDialogueHandle StartDialogue();
+	FDialogueText StartDialogue();
 
 	UPROPERTY(BlueprintReadOnly)
 	UDialogueRuntimeNode* CurrentNode = nullptr;

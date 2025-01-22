@@ -17,31 +17,24 @@ UDialogueSystemComponent::UDialogueSystemComponent()
 	// ...
 }
 
-FDialogueHandle UDialogueSystemComponent::StartDialogue()
+FDialogueText UDialogueSystemComponent::GetQueryAndResponse(UDialogueRuntimeNode* InRoot, int InIndex)
 {
-	if (!Dialogue)
+	FDialogueText DialogueText;
+	if (InRoot->Pins.IsValidIndex(InIndex))
 	{
-		return FDialogueHandle();
-	}
+		UDialogueRuntimePin* Pin = InRoot->Pins[InIndex];
 
-	UDialogueRuntimeGraph* Graph = Dialogue->Graph;
-	UDialogueRuntimeNode* RootNode = Graph->RootNode;
-
-	FDialogueHandle DialogueHandle;
-
-	for (UDialogueRuntimePin* Pin : RootNode->Pins)
-	{
 		UDialogueRuntimePin* Connection = Pin->Connection;
 		if (!Connection)
-			continue;
+			return DialogueText;
 
 		UDialogueRuntimeNode* ConnectionParent = Connection->Parent;
 		if (!ConnectionParent)
-			continue;
+			return DialogueText;
 
 		if (UDialogueNodeData_Query* QueryData = Cast<UDialogueNodeData_Query>(ConnectionParent->NodeData))
 		{
-			DialogueHandle.QueryText = QueryData->QueryText;
+			DialogueText.QueryText = QueryData->QueryText;
 
 			for (UDialogueRuntimePin* QueryPin : ConnectionParent->Pins)
 			{
@@ -55,7 +48,7 @@ FDialogueHandle UDialogueSystemComponent::StartDialogue()
 						{
 							if (UDialogueNodeData_Response* ResponseData = Cast<UDialogueNodeData_Response>(ConnectionParent->NodeData))
 							{
-								DialogueHandle.ResponseTexts = ResponseData->ResponseTexts;
+								DialogueText.ResponseTexts = ResponseData->ResponseTexts;
 							}
 						}
 					}
@@ -63,6 +56,24 @@ FDialogueHandle UDialogueSystemComponent::StartDialogue()
 			}
 		}
 	}
+
+	return DialogueText;
+
+}
+
+FDialogueText UDialogueSystemComponent::StartDialogue()
+{
+	if (!Dialogue)
+	{
+		return FDialogueText();
+	}
+
+	UDialogueRuntimeGraph* Graph = Dialogue->Graph;
+	UDialogueRuntimeNode* RootNode = Graph->RootNode;
+
+	return GetQueryAndResponse(RootNode, 0);
+
+	
 
 	// if (UDialogueRuntimeNode* Query = RootNode->Pins[0]->Parent)
 	// {
@@ -82,7 +93,6 @@ FDialogueHandle UDialogueSystemComponent::StartDialogue()
 	// 	// }
 	// }
 
-	return DialogueHandle;
 }
 
 
