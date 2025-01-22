@@ -65,5 +65,8 @@ public:
 	UDialogueGraphData* GraphData = nullptr;
 
 	UPROPERTY()
+	UDialogueRuntimeNode* RootNode = nullptr;
+
+	UPROPERTY()
 	TArray<UDialogueRuntimeNode*> Nodes;
 };

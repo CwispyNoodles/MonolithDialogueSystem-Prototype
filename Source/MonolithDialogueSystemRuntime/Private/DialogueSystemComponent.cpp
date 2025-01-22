@@ -3,19 +3,28 @@
 
 #include "DialogueSystemComponent.h"
 
+#include "DialogueInstance.h"
+
 
 // Sets default values for this component's properties
 UDialogueSystemComponent::UDialogueSystemComponent()
 {
 	// Set this component to be initialized when the game starts, and to be ticked every frame.  You can turn these features
 	// off to improve performance if you don't need them.
-	PrimaryComponentTick.bCanEverTick = true;
-
+	PrimaryComponentTick.bCanEverTick = false;
 	// ...
 }
 
-void UDialogueSystemComponent::StartDialogue()
+FDialogueHandle UDialogueSystemComponent::StartDialogue()
 {
+	// if (!WorkingDialogue)
+	// {
+	// 	WorkingDialogue = NewObject<UDialogueInstance>(this, Dialogue);
+	// }
+	//
+	// return WorkingDialogue->GetFirstDialogueNode();
+
+	return FDialogueHandle();
 }
 
 

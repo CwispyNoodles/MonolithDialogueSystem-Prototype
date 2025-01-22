@@ -6,10 +6,17 @@
 #include "Components/ActorComponent.h"
 #include "DialogueSystemComponent.generated.h"
 
-
+class UDialogueRuntimeNode;
 class UDialogueInstance;
 
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FDialogueEventSignature, UObject*, Payload);
+
+USTRUCT(BlueprintType)
+struct MONOLITHDIALOGUESYSTEMRUNTIME_API FDialogueHandle
+{
+	GENERATED_BODY()
+	
+};
 
 UCLASS(ClassGroup=(Custom), meta=(BlueprintSpawnableComponent))
 class MONOLITHDIALOGUESYSTEMRUNTIME_API UDialogueSystemComponent : public UActorComponent
@@ -24,7 +31,7 @@ public:
 	UDialogueInstance* GetWorkingDialogue() { return WorkingDialogue; }
 
 	UFUNCTION(BlueprintCallable)
-	void StartDialogue();
+	FDialogueHandle StartDialogue();
 
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly)
 	TSubclassOf<UDialogueInstance> Dialogue = nullptr;
@@ -40,7 +47,7 @@ public:
 
 private:
 	UPROPERTY()
-	UDialogueInstance* WorkingDialogue;
+	UDialogueInstance* WorkingDialogue = nullptr;
 
 public: // UActorComponent Interface
 	// Called every frame

@@ -18,6 +18,8 @@ class MONOLITHDIALOGUESYSTEMRUNTIME_API UDialogueInstance : public UObject
 	GENERATED_BODY()
 
 public:
+	UDialogueRuntimeNode* GetFirstDialogueNode();
+	
 	UPROPERTY()
 	UDialogueRuntimeGraph* Graph = nullptr;
 
