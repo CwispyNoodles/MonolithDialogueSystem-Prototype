@@ -17,12 +17,16 @@ UDialogueSystemComponent::UDialogueSystemComponent()
 	// ...
 }
 
-FDialogueText UDialogueSystemComponent::GetQueryAndResponse(UDialogueRuntimeNode* InRoot, int InIndex)
+FDialogueText UDialogueSystemComponent::GetQueryAndResponse(int InIndex)
 {
 	FDialogueText DialogueText;
-	if (InRoot->Pins.IsValidIndex(InIndex))
+	if (!CurrentNode)
 	{
-		UDialogueRuntimePin* Pin = InRoot->Pins[InIndex];
+		return DialogueText;
+	}
+	if (CurrentNode->Pins.IsValidIndex(InIndex))
+	{
+		UDialogueRuntimePin* Pin = CurrentNode->Pins[InIndex];
 
 		UDialogueRuntimePin* Connection = Pin->Connection;
 		if (!Connection)
@@ -44,6 +48,7 @@ FDialogueText UDialogueSystemComponent::GetQueryAndResponse(UDialogueRuntimeNode
 					if (Connection)
 					{
 						ConnectionParent = Connection->Parent;
+						CurrentNode = ConnectionParent;
 						if (ConnectionParent)
 						{
 							if (UDialogueNodeData_Response* ResponseData = Cast<UDialogueNodeData_Response>(ConnectionParent->NodeData))
@@ -69,9 +74,9 @@ FDialogueText UDialogueSystemComponent::StartDialogue()
 	}
 
 	UDialogueRuntimeGraph* Graph = Dialogue->Graph;
-	UDialogueRuntimeNode* RootNode = Graph->RootNode;
-
-	return GetQueryAndResponse(RootNode, 0);
+	CurrentNode = Graph->RootNode;
+	
+	return GetQueryAndResponse(0);
 
 	
 

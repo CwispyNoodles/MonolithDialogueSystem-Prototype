@@ -34,7 +34,8 @@ public:
 	// Sets default values for this component's properties
 	UDialogueSystemComponent();
 
-	FDialogueText GetQueryAndResponse(UDialogueRuntimeNode* InRoot, int InIndex);
+	UFUNCTION(BlueprintCallable)
+	FDialogueText GetQueryAndResponse(int InIndex);
 
 	UFUNCTION(BlueprintCallable)
 	FDialogueText StartDialogue();
