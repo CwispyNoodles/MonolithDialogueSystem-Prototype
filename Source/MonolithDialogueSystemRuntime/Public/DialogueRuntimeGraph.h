@@ -40,9 +40,6 @@ class MONOLITHDIALOGUESYSTEMRUNTIME_API UDialogueRuntimeNode : public UObject
 
 public:
 	UPROPERTY()
-	TArray<UDialogueRuntimePin*> Pins;
-
-	UPROPERTY()
 	UDialogueRuntimePin* InputPin;
 
 	UPROPERTY()
