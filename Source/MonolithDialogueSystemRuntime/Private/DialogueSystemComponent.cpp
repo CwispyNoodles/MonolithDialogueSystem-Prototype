@@ -24,9 +24,9 @@ FDialogueText UDialogueSystemComponent::GetQueryAndResponse(int InIndex)
 	{
 		return DialogueText;
 	}
-	if (CurrentNode->Pins.IsValidIndex(InIndex))
+	if (CurrentNode->OutputPins.IsValidIndex(InIndex))
 	{
-		UDialogueRuntimePin* Pin = CurrentNode->Pins[InIndex];
+		UDialogueRuntimePin* Pin = CurrentNode->OutputPins[InIndex];
 
 		UDialogueRuntimePin* Connection = Pin->Connection;
 		if (!Connection)
@@ -40,7 +40,7 @@ FDialogueText UDialogueSystemComponent::GetQueryAndResponse(int InIndex)
 		{
 			DialogueText.QueryText = QueryData->QueryText;
 
-			for (UDialogueRuntimePin* QueryPin : ConnectionParent->Pins)
+			for (UDialogueRuntimePin* QueryPin : ConnectionParent->OutputPins)
 			{
 				if (QueryPin->Direction == EGPD_Output)
 				{

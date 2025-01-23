@@ -214,7 +214,14 @@ void FDialogueInstanceEditor::SaveGraph()
 			}
 
 			IdToPinMap.Add(EditorPin->PinId, RuntimePin);
-			RuntimeNode->Pins.Add(RuntimePin);
+			if (RuntimePin->Direction == EGPD_Input)
+			{
+				RuntimeNode->InputPin = RuntimePin;
+			}
+			else
+			{
+				RuntimeNode->OutputPins.Add(RuntimePin);
+			}
 		}
 		UDialogueGraphNode_Base* EditorDialogueNode = Cast<UDialogueGraphNode_Base>(EditorNode);
 		RuntimeNode->NodeData = DuplicateObject(EditorDialogueNode->GetDialogueNodeData(), RuntimeNode);
@@ -285,9 +292,23 @@ void FDialogueInstanceEditor::LoadGraph()
 			EditorNode->InitializeNodeData();
 		}
 
-		for (UDialogueRuntimePin* RuntimePin : RuntimeNode->Pins)
+		if (RuntimeNode->InputPin)
 		{
-			FName Category = RuntimePin->Direction == EGPD_Input ? TEXT("Inputs") : TEXT("Outputs");
+			UDialogueRuntimePin* InputPin = RuntimeNode->InputPin;
+			FName Category = TEXT("Inputs");
+			UEdGraphPin* EditorPin = EditorNode->CreatePin(InputPin->Direction, Category, InputPin->PinName);
+			EditorPin->PinId = InputPin->PinId;
+
+			if (InputPin->Connection)
+			{
+				Connections.Add(std::make_pair(InputPin->PinId, InputPin->Connection->PinId));
+			}
+			IdToPinMap.Add(InputPin->PinId, EditorPin);
+		}
+
+		for (UDialogueRuntimePin* RuntimePin : RuntimeNode->OutputPins)
+		{
+			FName Category = TEXT("Outputs");
 			UEdGraphPin* EditorPin = EditorNode->CreatePin(RuntimePin->Direction, Category, RuntimePin->PinName);
 			EditorPin->PinId = RuntimePin->PinId;
 

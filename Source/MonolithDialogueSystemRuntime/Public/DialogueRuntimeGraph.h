@@ -43,6 +43,12 @@ public:
 	TArray<UDialogueRuntimePin*> Pins;
 
 	UPROPERTY()
+	UDialogueRuntimePin* InputPin;
+
+	UPROPERTY()
+	TArray<UDialogueRuntimePin*> OutputPins;
+	
+	UPROPERTY()
 	FVector2D Position;
 
 	UPROPERTY()
