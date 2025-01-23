@@ -233,6 +233,11 @@ void FDialogueInstanceEditor::SaveGraph()
 		{
 			RuntimeGraph->RootNode = RuntimeNode;
 		}
+
+		if (UDialogueGraphNode_Alias_Out* Alias_Out = Cast<UDialogueGraphNode_Alias_Out>(EditorNode))
+		{
+			RuntimeGraph->AliasToOutputMap.Add(Alias_Out->GetAliasOutData()->AliasName.ToString(), RuntimeNode);
+		}
 	}
 
 	for (std::pair<FGuid, FGuid> Connection : Connections)

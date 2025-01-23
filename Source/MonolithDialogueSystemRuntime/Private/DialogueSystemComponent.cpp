@@ -3,8 +3,8 @@
 
 #include "DialogueSystemComponent.h"
 
-#include "DialogueGraphData.h"
 #include "DialogueInstance.h"
+#include "DialogueNodeData_Alias.h"
 #include "DialogueNodeData_Dialogue.h"
 
 
@@ -25,6 +25,7 @@ FDialogueText UDialogueSystemComponent::GetQueryAndResponse(int InIndex, bool& b
 	{
 		return DialogueText;
 	}
+	
 	if (CurrentNode->OutputPins.IsValidIndex(InIndex))
 	{
 		UDialogueRuntimePin* Pin = CurrentNode->OutputPins[InIndex];
@@ -37,6 +38,15 @@ FDialogueText UDialogueSystemComponent::GetQueryAndResponse(int InIndex, bool& b
 		if (!ConnectionParent)
 			return DialogueText;
 
+		if (UDialogueNodeData_Alias_In* AliasData = Cast<UDialogueNodeData_Alias_In>(ConnectionParent->NodeData))
+		{
+			if (UDialogueRuntimeNode* AliasOut = Dialogue->Graph->AliasToOutputMap[AliasData->AliasName.ToString()])
+			{
+				CurrentNode = AliasOut;
+				DialogueText = GetQueryAndResponse(0, bFoundNewNode);
+			}
+		}
+		
 		if (UDialogueNodeData_Query* QueryData = Cast<UDialogueNodeData_Query>(ConnectionParent->NodeData))
 		{
 			DialogueText.QueryText = QueryData->QueryText;
@@ -80,27 +90,7 @@ FDialogueText UDialogueSystemComponent::StartDialogue()
 
 	bool bSuccess;
 	return GetQueryAndResponse(0, bSuccess);
-
 	
-
-	// if (UDialogueRuntimeNode* Query = RootNode->Pins[0]->Parent)
-	// {
-	// 	// Assume for now that the next node will be a query node
-	// 	UDialogueNodeData_Query* QueryData = Cast<UDialogueNodeData_Query>(Query->NodeData);
-	// 	DialogueHandle.QueryText = QueryData->QueryText;
-	//
-	// 	if (UDialogueRuntimeNode* Responses = Query->Pins[1]->Parent)
-	// 	{
-	// 		UDialogueNodeData_Response* ResponseData = Cast<UDialogueNodeData_Response>(Responses->NodeData);
-	// 		DialogueHandle.ResponseTexts = ResponseData->ResponseTexts;
-	// 	}
-	// 	
-	// 	// if (Parent->NodeType == EDialogueNodeType::AliasIn)
-	// 	// {
-	// 	// 	WorkingDialogue->Graph->GraphData->AliasToOutputMap.Find(Parent->NodeData);
-	// 	// }
-	// }
-
 }
 
 

@@ -20,6 +20,11 @@ UDialogueGraphNode_Alias_Out::UDialogueGraphNode_Alias_Out()
 	NodeDataClass = UDialogueNodeData_Alias_Out::StaticClass();
 }
 
+UDialogueNodeData_Alias_Out* UDialogueGraphNode_Alias_Out::GetAliasOutData()
+{
+	return Cast<UDialogueNodeData_Alias_Out>(GetDialogueNodeData());
+}
+
 void UDialogueGraphNode_Alias_Out::AllocateDefaultPins()
 {
 	CreatePin(EGPD_Output, TEXT("PinCategory_Default"), TEXT("Out Query"));

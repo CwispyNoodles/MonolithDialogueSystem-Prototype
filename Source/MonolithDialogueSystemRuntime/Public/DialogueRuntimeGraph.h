@@ -65,7 +65,7 @@ class MONOLITHDIALOGUESYSTEMRUNTIME_API UDialogueRuntimeGraph : public UObject
 
 public:
 	UPROPERTY()
-	UDialogueGraphData* GraphData = nullptr;
+	TMap<FString, UDialogueRuntimeNode*> AliasToOutputMap;
 
 	UPROPERTY()
 	UDialogueRuntimeNode* RootNode = nullptr;

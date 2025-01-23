@@ -7,7 +7,7 @@
 #include "DialogueGraphNode_Alias.generated.h"
 
 
-
+class UDialogueNodeData_Alias_Out;
 /**
  * 
  */
@@ -31,7 +31,7 @@ public:
 	virtual EDialogueNodeType GetDialogueNodeType() override { return EDialogueNodeType::AliasIn; }
 
 public: // UEdGraphNode Interface
-	virtual FText GetNodeTitle(ENodeTitleType::Type titalType) const override { return FText::FromString("Alias In"); }
+	virtual FText GetNodeTitle(ENodeTitleType::Type TitleType) const override { return FText::FromString("Alias In"); }
 	virtual void AllocateDefaultPins() override;
 	
 };
@@ -44,9 +44,10 @@ class MONOLITHDIALOGUESYSTEMEDITOR_API UDialogueGraphNode_Alias_Out : public UDi
 public:
 	UDialogueGraphNode_Alias_Out();
 	virtual EDialogueNodeType GetDialogueNodeType() override { return EDialogueNodeType::AliasOut; }
+	UDialogueNodeData_Alias_Out* GetAliasOutData(); 
 	
 public: // UEdGraphNode Interface
-	virtual FText GetNodeTitle(ENodeTitleType::Type titalType) const override { return FText::FromString("Alias Out"); }
+	virtual FText GetNodeTitle(ENodeTitleType::Type TitleType) const override { return FText::FromString("Alias Out"); }
 	virtual void AllocateDefaultPins() override;
 	
 };
