@@ -35,7 +35,7 @@ public:
 	UDialogueSystemComponent();
 
 	UFUNCTION(BlueprintCallable)
-	FDialogueText GetQueryAndResponse(int InIndex);
+	FDialogueText GetQueryAndResponse(int InIndex, bool& bFoundNewNode);
 
 	UFUNCTION(BlueprintCallable)
 	FDialogueText StartDialogue();

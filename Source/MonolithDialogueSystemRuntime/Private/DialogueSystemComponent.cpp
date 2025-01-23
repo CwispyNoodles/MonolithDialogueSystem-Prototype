@@ -17,8 +17,9 @@ UDialogueSystemComponent::UDialogueSystemComponent()
 	// ...
 }
 
-FDialogueText UDialogueSystemComponent::GetQueryAndResponse(int InIndex)
+FDialogueText UDialogueSystemComponent::GetQueryAndResponse(int InIndex, bool& bFoundNewNode)
 {
+	bFoundNewNode = false;
 	FDialogueText DialogueText;
 	if (!CurrentNode)
 	{
@@ -53,6 +54,7 @@ FDialogueText UDialogueSystemComponent::GetQueryAndResponse(int InIndex)
 						{
 							if (UDialogueNodeData_Response* ResponseData = Cast<UDialogueNodeData_Response>(ConnectionParent->NodeData))
 							{
+								bFoundNewNode = true;
 								DialogueText.ResponseTexts = ResponseData->ResponseTexts;
 							}
 						}
@@ -75,8 +77,9 @@ FDialogueText UDialogueSystemComponent::StartDialogue()
 
 	UDialogueRuntimeGraph* Graph = Dialogue->Graph;
 	CurrentNode = Graph->RootNode;
-	
-	return GetQueryAndResponse(0);
+
+	bool bSuccess;
+	return GetQueryAndResponse(0, bSuccess);
 
 	
 
