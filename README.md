@@ -4,7 +4,9 @@
 The Monolith Dialogue System is a custom editor for creating complex dialogue trees and was implemented using Unreal Engine's UEdGraph and Slate API.
 
 ### Showcase:
-Coming soon
+[![Watch the video](https://img.youtube.com/vi/7G0p58ha9n8/maxresdefault.jpg)](https://youtu.be/7G0p58ha9n8)
+
+### [Watch this video on YouTube](https://youtu.be/7G0p58ha9n8)
 
 ### Future Plans: 
 * Randomizer Node: Select connected query nodes at random.
