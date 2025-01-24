@@ -95,7 +95,7 @@ const FPinConnectionResponse UDialogueGraphSchema::CanCreateConnection(const UEd
 		}
 		if (B->GetOwningNode()->IsA(UDialogueGraphNode_Query::StaticClass()))
 		{
-			return FPinConnectionResponse(CONNECT_RESPONSE_BREAK_OTHERS_AB, TEXT(""));
+			return FPinConnectionResponse(CONNECT_RESPONSE_MAKE, TEXT(""));
 		}
 		return FPinConnectionResponse(CONNECT_RESPONSE_DISALLOW, TEXT(""));
 	}
@@ -125,7 +125,7 @@ const FPinConnectionResponse UDialogueGraphSchema::CanCreateConnection(const UEd
 	{
 		if (B->GetOwningNode()->IsA(UDialogueGraphNode_Query::StaticClass()))
 		{
-			return FPinConnectionResponse(CONNECT_RESPONSE_BREAK_OTHERS_AB, TEXT(""));
+			return FPinConnectionResponse(CONNECT_RESPONSE_MAKE, TEXT(""));
 		}
 		if (B->GetOwningNode()->IsA(UDialogueGraphNode_Alias_In::StaticClass()))
 		{
